@@ -1,21 +1,21 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const Event = require('./Event')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Event = require('./Event');
 
 const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    index: true
-  },
-  full_name: {
-    type: String
-  },
-  password_digest: {
-    type: String,
-    require: true
-  },
-  liked_events: [{ type: Schema.Types.ObjectId, ref: 'Event' }]
-})
+	email: {
+		type: String,
+		required: true,
+		index: true
+	},
+	full_name: {
+		type: String
+	},
+	password_digest: {
+		type: String,
+		require: true
+	},
+	liked_events: [{ type: Schema.Types.ObjectId, ref: 'Event' }]
+});
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema);
