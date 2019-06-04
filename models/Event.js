@@ -53,9 +53,9 @@ const EventSchema = new Schema({
 		type: Number,
 		required: true
 	},
-	type: {
+	category: {
 		type: Schema.Types.ObjectId,
-		ref: 'Type'
+		ref: 'Category'
 	},
 	topic: {
 		type: Schema.Types.ObjectId,
