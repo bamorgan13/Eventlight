@@ -10,9 +10,9 @@ const EventSchema = new Schema({
 		type: String,
 		required: true
 	},
-	creator_id: {
-		type: Number,
-		required: true
+	creator: {
+		type: Schema.Types.ObjectId,
+		ref: 'users'
 	},
 	organizer_name: {
 		type: String
@@ -35,9 +35,9 @@ const EventSchema = new Schema({
 		type: String,
 		required: true
 	},
-	city_id: {
-		type: Number,
-		required: true
+	city: {
+		type: Schema.Types.ObjectId,
+		ref: 'cities'
 	},
 	online_url: {
 		type: String
@@ -46,13 +46,13 @@ const EventSchema = new Schema({
 		type: Number,
 		required: true
 	},
-	type_id: {
-		type: Number,
-		required: true
+	type: {
+		type: Schema.Types.ObjectId,
+		ref: 'types'
 	},
-	topic_id: {
-		type: Number,
-		required: true
+	topic: {
+		type: Schema.Types.ObjectId,
+		ref: 'topics'
 	},
 	capacity: {
 		type: Number,
