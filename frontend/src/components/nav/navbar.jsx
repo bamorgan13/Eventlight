@@ -1,33 +1,35 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Dropdown from "./dropdown";
 
 class NavBar extends React.Component {
   constructor(props) {
-    super(props)
-    this.logoutUser = this.logoutUser.bind(this)
-    this.getLinks = this.getLinks.bind(this)
+    super(props);
+    this.logoutUser = this.logoutUser.bind(this);
+    this.getLinks = this.getLinks.bind(this);
   }
 
   logoutUser(e) {
-    e.preventDefault()
-    this.props.logout()
+    e.preventDefault();
+    this.props.logout();
   }
 
   // Selectively render links dependent on whether the user is logged in
   getLinks() {
     if (this.props.loggedIn) {
       return (
-        <div>
-          <Link to={'/foo'}>Foo</Link>
-          <Link to={'/bar'}>Bar</Link>
+        // return dropdown element instead?
+        <div className="nav-minor-protected">
+          <Link to="/foo" >Create Event</Link>
           <button onClick={this.logoutUser}>Logout</button>
         </div>
       )
     } else {
       return (
-        <div>
-          <Link to={'/register'}>Register</Link>
-          <Link to={'/login'}>Login</Link>
+        <div className="nav-minor-auth">
+          <Link to="/login" >Create Event</Link>
+          <Link to="/register" >Register</Link>
+          <Link to="/login" >Sign In</Link>
         </div>
       )
     }
@@ -35,12 +37,17 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>EventLite</h1>
-        {this.getLinks()}
-      </div>
+      <nav>
+        <div className="nav-major">
+          <h1>Eventlight</h1>
+          <Link to="/events" >Browse Events</Link>
+        </div>
+        <div className="nav-minor">
+          {this.getLinks()}
+        </div>
+      </nav>
     )
   }
 }
 
-export default NavBar
+export default NavBar;
