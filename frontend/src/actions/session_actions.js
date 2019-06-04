@@ -30,7 +30,7 @@ export const receiveErrors = errors => ({
 
 export const register = user => dispatch =>
   APIUtil.register(user).then(
-    () => dispatch(receiveUserSignIn()),
+    () => dispatch(login(user)),
     err => dispatch(receiveErrors(err.response.data))
   )
 
