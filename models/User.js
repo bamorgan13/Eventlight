@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Event = require('./Event');
 
 const UserSchema = new Schema({
 	email: {
 		type: String,
-		required: true
+		required: true,
+		index: true
 	},
 	full_name: {
 		type: String
@@ -13,10 +15,7 @@ const UserSchema = new Schema({
 		type: String,
 		require: true
 	},
-	liked_events: {
-		type: Array,
-		default: []
-	}
+	liked_events: [{ type: Schema.Types.ObjectId, ref: 'Event' }]
 });
 
-module.exports = User = mongoose.model('users', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

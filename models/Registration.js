@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 const RegistrationSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
-		ref: 'users'
+		ref: 'User'
 	},
 	event: {
 		type: Schema.Types.ObjectId,
-		ref: 'events'
+		ref: 'Event'
 	}
 });
 
-module.exports = Registration = mongoose.model('registrations', RegistrationSchema);
+module.exports = mongoose.model('Registration', RegistrationSchema);

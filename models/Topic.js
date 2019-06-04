@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TopicSchema = new Schema({
-	name: { type: String, required: true }
+	name: { type: String, required: true, index: true }
 });
 
-module.exports = Topic = mongoose.model('topics', TopicSchema);
+module.exports = mongoose.model('Topic', TopicSchema);

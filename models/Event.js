@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const image_storage_root = 'https://s3.amazonaws.com/whatever/';
 
 const EventSchema = new Schema({
 	title: {
 		type: String,
-		required: true
+		required: true,
+		index: true
 	},
 	description: {
 		type: String,
@@ -12,32 +14,37 @@ const EventSchema = new Schema({
 	},
 	creator: {
 		type: Schema.Types.ObjectId,
-		ref: 'users'
+		ref: 'User'
 	},
 	organizer_name: {
-		type: String
+		type: String,
+		index: true
 	},
 	organizer_description: {
 		type: String
 	},
 	start_date: {
 		type: Date,
-		required: true
+		required: true,
+		index: true
 	},
 	end_date: {
 		type: Date,
 		required: true
 	},
-	location_name: {
-		type: String
-	},
-	location_address: {
-		type: String,
-		required: true
-	},
-	city: {
-		type: Schema.Types.ObjectId,
-		ref: 'cities'
+	location: {
+		location_name: {
+			type: String,
+			index: true
+		},
+		location_address: {
+			type: String,
+			required: true
+		},
+		city: {
+			type: Schema.Types.ObjectId,
+			ref: 'City'
+		}
 	},
 	online_url: {
 		type: String
@@ -46,21 +53,22 @@ const EventSchema = new Schema({
 		type: Number,
 		required: true
 	},
-	category: {
+	type: {
 		type: Schema.Types.ObjectId,
-		ref: 'categories'
+		ref: 'Type'
 	},
 	topic: {
 		type: Schema.Types.ObjectId,
-		ref: 'topics'
+		ref: 'Topic'
 	},
 	capacity: {
 		type: Number,
 		required: true
 	},
 	image_url: {
-		type: String
+		type: String,
+		get: img_name => `${image_storage_root}${img_name}`
 	}
 });
 
-module.exports = Event = mongoose.model('events', EventSchema);
+module.exports = mongoose.model('Event', EventSchema);
