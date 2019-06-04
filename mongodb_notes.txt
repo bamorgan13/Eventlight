@@ -1,6 +1,0 @@
-var mongoose = require('mongoose')
-var mySchema = new Schema({ // my props });
-mongoose.model('models', Schema);
-mongoose.connect('mongodb://host/db');
-var Model = mongoose.model('models');
-
