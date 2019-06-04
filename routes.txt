@@ -3,7 +3,7 @@ Frontend Routes
 /
 
 /login
-/signup
+/register
 
 /events/?(location/topic/type/keyword)
 /events/:eventId
@@ -26,7 +26,7 @@ API CALL: DELETE api/likes/:likeId
 ON /login
 API CALL: POST session
 
-ON /signup
+ON /register
 API CALL: POST users
 
 ON /events/?(location/topic/type/keyword)
