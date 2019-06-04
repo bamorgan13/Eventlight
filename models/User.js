@@ -15,10 +15,7 @@ const UserSchema = new Schema({
     type: String,
     require: true
   },
-  liked_events: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Event'
-  }
+  liked_events: [{ type: Schema.Types.ObjectId, ref: 'Event' }]
 })
 
 module.exports = mongoose.model('User', UserSchema)
