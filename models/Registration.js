@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const EventRegistrationSchema = new Schema({
+const RegistrationSchema = new Schema({
 	user_id: {
 		type: Number,
 		required: true

@@ -31,6 +31,9 @@ We will need to:
 
 ## Group Members & Work Breakdown
 
+## References
+  - https://simplemaps.com/data/us-cities
+
 **Gordy Cooper**,
 **Bryce Morgan**,
 **Richard (Rich) Robinson**,
@@ -45,10 +48,18 @@ We will need to:
 
 ### Day 2
   - User authentication
+  - Navbar
+  - Splash page
+  - Events index page
 
 ### Day 3
+  - Likes page
+  - Events show page
+  - Events create/edit
 
 ### Day 4
+  - My Events page
+  - Registrations
 
 ### Day 5 (1/2 day)
-
+  - Overflow

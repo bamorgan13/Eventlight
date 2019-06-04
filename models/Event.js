@@ -28,8 +28,16 @@ const EventSchema = new Schema({
 		type: Date,
 		required: true
 	},
-	location_id: {
-		type: Number
+	location_name: {
+		type: String
+	},
+	location_address: {
+		type: String,
+		required: true
+	},
+	city_id: {
+		type: Number,
+		required: true
 	},
 	online_url: {
 		type: String

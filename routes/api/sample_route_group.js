@@ -1,6 +1,11 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-router.get('/test', (req, res) => res.json({ msg: 'This is the users route' }))
+router.get('/test', (req, res) => {
+	// logic
+	// db call
 
-module.exports = router
+	return res.json({ msg: 'This is the users route' });
+});
+
+module.exports = router;
