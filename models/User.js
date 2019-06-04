@@ -11,7 +11,7 @@ const UserSchema = new Schema({
 	full_name: {
 		type: String
 	},
-	password_digest: {
+	password: {
 		type: String,
 		require: true
 	},
