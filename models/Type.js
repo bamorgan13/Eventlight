@@ -7,3 +7,5 @@ const TypeSchema = new Schema({
 		required: true
 	}
 });
+
+module.exports = Type = mongoose.model('types', TypeSchema);

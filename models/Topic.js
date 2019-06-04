@@ -4,3 +4,5 @@ const Schema = mongoose.Schema;
 const TopicSchema = new Schema({
 	name: { type: String, required: true }
 });
+
+module.exports = Topic = mongoose.model('topics', TopicSchema);
