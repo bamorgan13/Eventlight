@@ -1,0 +1,110 @@
+.login {
+  width: 320px;
+  margin: auto;
+}
+.login__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login__form__logo {
+  height: 55px;
+  width: 55px;
+  background-size: cover;
+}
+.login__form__logo.first {
+  background: url('../assets/images/logo.png');
+  background-size: cover;
+}
+
+.login__form__logo.second {
+  /*  */
+}
+.login__form__headline {
+  font-size: 1.4rem;
+  letter-spacing: 0.25px;
+  font-weight: 700;
+}
+.login__form__subhead {
+  color: #6f7287;
+  font-size: 0.8rem;
+  margin: 0;
+  margin-bottom: 32px;
+}
+
+.login__form__email {
+  align-self: stretch;
+  display: flex;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.login__form__email input {
+  font-size: 14px;
+  line-height: 24px;
+  padding: 12px;
+  border: 1px solid #0000002e;
+  flex: 1;
+  border-radius: 2px;
+  color: #39364f;
+  outline: none;
+  transition: all 0.16s cubic-bezier(0.4, 0, 0.3, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.3, 1);
+}
+
+.login__form__email input.show {
+  padding-top: 18px;
+  padding-bottom: 4px;
+  border: 2px solid blue;
+}
+
+.login__form__email_label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  transition: all 0.16s cubic-bezier(0.4, 0, 0.3, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.3, 1);
+}
+
+.login__form__email_label.show {
+  color: blue;
+  top: 0;
+  left: 0;
+  font-size: 11px;
+  padding: 7px;
+  height: auto;
+  opacity: 1;
+}
+
+.login__form__email.first {
+  /*  */
+}
+
+.login__form__email.second {
+  background: #dbdae3;
+}
+.login__form__password {
+  /*  */
+}
+.login__form__password.first {
+  display: none;
+}
+.login__form__password.second {
+  /*  */
+}
+.login__form__submit {
+  color: white;
+  background-color: #d1410c;
+  height: 44px;
+  padding: 0 30px 1px;
+  line-height: 24px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.3, 1);
+  align-self: stretch;
+}

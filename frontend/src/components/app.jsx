@@ -8,8 +8,12 @@ import NavBarContainer from './nav/navbar_container'
 import LoginFormContainer from './session/login_form_container'
 import RegisterFormContainer from './session/register_form_container'
 
+const style = {
+  fontFamily: `Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif`
+}
+
 const App = () => (
-  <div>
+  <div style={style}>
     <NavBarContainer />
     <Switch>
       <Route exact path="/" component={MainPage} />
