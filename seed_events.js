@@ -201,5 +201,71 @@ db.events.insertMany([
 		capacity: null,
 		image_url:
 			'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F62139157%2F307411057973%2F1%2Foriginal.20190512-235213?w=800&auto=compress&rect=0%2C0%2C1200%2C600&s=ecbda2031777cf3b42ebcc49b792d029'
+	},
+	{
+		title: 'Annual Formal Ball & Dance Expo',
+		description:
+			'This great formal ball and expo features local talented dancers, singers and praise dance groups.',
+		creator: db.users.findOne({ full_name: 'Bryce Morgan' })._id,
+		organizer_name: null,
+		organizer_description: null,
+		start_date: new Date('2019-11-23T18:00:00.000-04:00'),
+		end_date: new Date('2019-11-23T22:00:00.000-04:00'),
+		location: {
+			location_name: 'Dover Downs Hotel & Casino Rollins Center',
+			location_address: '1131 North Dupont Highway',
+			city: db.cities.findOne({ city: 'Dover', state: 'DE' })._id
+		},
+		online_url: null,
+		price: 62,
+		category: db.categories.findOne({ name: 'Community' })._id,
+		type: db.types.findOne({ name: 'Gala' })._id,
+		capacity: null,
+		image_url:
+			'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F61698254%2F298756239381%2F1%2Foriginal.20190504-175737?w=800&auto=compress&rect=0%2C26%2C1440%2C720&s=1cdfffeb6c05849265a5d68981bd5693'
+	},
+	{
+		title: 'Real Estate Investing for Newbies and Seasoned Investors- Dover, DE Webinar',
+		description:
+			'Are you in control of you time, finances and schedule?\n\nPerhaps the plan of working 40 hours a week for 40 years so you can retire on 40 percent of your income is not for you. We show you how to increase your income while reducing taxes and interest so you have money to invest.\n\nDo you have a home mortgage, student loans or other amortized debt you want to pay off faster? We can show how to pay down your debt without changing your present lifestyle.\n\nHave you thought about investing in the lucrative real estate market, but don’t know where to start, have the money or time to do a “flip”? We have the information to help guide you through a “flip”!\n\nAre you working longer hours and not getting ahead?\n\nEinstein is often given credit for defining insanity as “doing the same thing over and over again and expecting different results”, is it time for you to make a change?\n\nWatch our webinar for Real Estate Investing Overview and see for yourself why you should be involved in Real Estate. This may be a life changing opportunity for you!',
+		creator: db.users.findOne({ full_name: 'Bryce Morgan' })._id,
+		organizer_name: 'REI',
+		organizer_description: null,
+		start_date: new Date('2019-06-10T19:00:00.000-04:00'),
+		end_date: new Date('2019-06-10T20:00:00.000-04:00'),
+		location: {
+			location_name: 'Webinar',
+			location_address: null,
+			city: db.cities.findOne({ city: 'Dover', state: 'DE' })._id
+		},
+		online_url: 'https://delreia.com/',
+		price: 0,
+		category: db.categories.findOne({ name: 'Business' })._id,
+		type: db.types.findOne({ name: 'Networking' })._id,
+		capacity: null,
+		image_url:
+			'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F61689004%2F130274179193%2F1%2Foriginal.20190504-100930?w=800&auto=compress&rect=0%2C25%2C440%2C220&s=99a9139184a55eaf62d671e64d7bc2b7'
+	},
+	{
+		title: 'Book Signing with Author Andrew Shaffer | Hope Rides Again',
+		description:
+			'Browseabout Books welcomes New York Times bestselling author Andrew Shaffer for a signing of his new book, Hope Rides Again.\n\nQuirk Books\n\nIn the sequel to the New York Times best-selling novel Hope Never Dies, Obama and Biden reprise their roles as BFFs-turned-detectives as they chase Obama’s stolen cell phone through the mean streets of Chicago–and right into a vast conspiracy.\n\nSet against the backdrop of a raucous city on St. Patrick’s Day, Joe and Obama race to find the shooter, only to uncover a vast conspiracy that goes deeper than the waters of Lake Michigan—which is exactly where they’ll spend the rest of their retirement if they’re not careful.\n\nAndrew Shaffer',
+		creator: db.users.findOne({ full_name: 'Bryce Morgan' })._id,
+		organizer_name: 'BROWSEABOUT BOOKS',
+		organizer_description: null,
+		start_date: new Date('2019-07-14T10:00:00.000-04:00'),
+		end_date: new Date('2019-07-14T12:00:00.000-04:00'),
+		location: {
+			location_name: 'Browseabout Books',
+			location_address: '133 Rehoboth Avenue',
+			city: db.cities.findOne({ city: 'Rehoboth Beach', state: 'DE' })._id
+		},
+		online_url: null,
+		price: 0,
+		category: db.categories.findOne({ name: 'Film & Media' })._id,
+		type: db.types.findOne({ name: 'Appearance' })._id,
+		capacity: null,
+		image_url:
+			'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F59023430%2F5582880504%2F1%2Foriginal.20190324-153705?w=800&auto=compress&rect=0%2C0%2C2160%2C1080&s=e294262f2671a9681653d8403338aea1'
 	}
 ])

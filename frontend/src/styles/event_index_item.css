@@ -23,6 +23,7 @@
 }
 
 .event-index-list__item__image-link {
+	min-width: 220px;
 	width: 220px;
 	display: block;
 }
@@ -35,9 +36,6 @@
 
 .event-index-list__item_image-link__image {
 	position: relative;
-	/* left: 50%; */
-	/* bottom: 0; */
-	/* transform: translateY(50%); */
 	max-width: 100%;
 	height: auto;
 	border-radius: 4px;
@@ -102,14 +100,22 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	transition: 0.4s;
 }
 
 .event-index-list__item__like-button:hover {
-	background: ;
+	background: rgb(245, 245, 245);
 }
 
 .like-icon {
 	background-image: url('./heart-outline.png');
+	background-size: contain;
+	width: 16px;
+	height: 16px;
+}
+
+.like-icon--active {
+	background-image: url('./like.png');
 	background-size: contain;
 	width: 16px;
 	height: 16px;
