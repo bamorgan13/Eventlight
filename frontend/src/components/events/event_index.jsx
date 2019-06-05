@@ -25,7 +25,7 @@ class EventIndex extends React.Component {
 		} else {
 			return (
 				<ul className="event-index-list">
-					{this.state.events.map(event => <EventIndexItem key={event.id} event={event} />)}
+					{this.state.events.map(event => <EventIndexItem key={event._id} event={event} />)}
 				</ul>
 			)
 		}

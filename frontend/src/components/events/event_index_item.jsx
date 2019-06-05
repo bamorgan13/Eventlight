@@ -5,11 +5,17 @@ class EventIndexItem extends React.Component {
 	render() {
 		const event = this.props.event
 
-		let formattedLocation =
-			event.location.location_address + ', ' + event.location.city.city + ', ' + event.location.city.state
+		const locationTerms = []
 		if (event.location.location_name) {
-			formattedLocation.splice(0, 0, event.location.location_name, ', ')
+			locationTerms.push(event.location.location_name)
 		}
+		if (event.location.location_address) {
+			locationTerms.push(event.location.location_address)
+		}
+		if (event.location.city) {
+			locationTerms.push(event.location.city.city, event.location.city.state)
+		}
+		const formattedLocation = locationTerms.join(', ')
 
 		let formattedPrice
 		if (event.price === 0) {

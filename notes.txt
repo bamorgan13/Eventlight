@@ -1,0 +1,12 @@
+##Importing seed data to MongoDB
+StackOverflow article
+https://stackoverflow.com/questions/4686500/how-to-use-mongoimport-to-import-csv
+
+Import command for Cities
+mongoimport --uri 'mongodb+srv://Event-Light_Admin_01:RichGordyBryce%5FELA01@eventlight-8eztt.mongodb.net/test?retryWrites=true&w=majority' --collection cities --type csv --headerline --file us_cities.csv --stopOnError --columnsHaveTypes
+
+Import command for Types
+mongoimport --uri 'mongodb+srv://Event-Light_Admin_01:RichGordyBryce%5FELA01@eventlight-8eztt.mongodb.net/test?retryWrites=true&w=majority' --collection types --type csv --headerline --file types.csv --stopOnError
+
+Import command for Categories
+mongoimport --uri 'mongodb+srv://Event-Light_Admin_01:RichGordyBryce%5FELA01@eventlight-8eztt.mongodb.net/test?retryWrites=true&w=majority' --collection categories --type csv --headerline --file categories.csv --stopOnError
