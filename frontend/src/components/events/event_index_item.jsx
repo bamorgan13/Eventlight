@@ -24,6 +24,11 @@ class EventIndexItem extends React.Component {
 			formattedPrice = `Starting at $${event.price}`
 		}
 
+		const dateOptions = { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+		let formattedDate = new Date(event.start_date).toLocaleString('en-US', dateOptions)
+		debugger
+		formattedDate = formattedDate.slice(0, -3).concat(formattedDate.slice(-2).toLowerCase())
+
 		return (
 			<li className="event-index-list__item">
 				<aside className="event-index-list__item__image-link">
@@ -40,7 +45,7 @@ class EventIndexItem extends React.Component {
 						<h3 className="event-index-list__item__title-link__title">{event.title}</h3>
 					</Link>
 					<div className="event-index-list__item__info">
-						<p className="event-index-list__item__info__date">{event.start_date}</p>
+						<p className="event-index-list__item__info__date">{formattedDate}</p>
 						<p className="event-index-list__item__info__location">{formattedLocation}</p>
 						<p className="event-index-list__item__info__price">{formattedPrice}</p>
 					</div>

@@ -10,3 +10,14 @@ mongoimport --uri 'mongodb+srv://Event-Light_Admin_01:RichGordyBryce%5FELA01@eve
 
 Import command for Categories
 mongoimport --uri 'mongodb+srv://Event-Light_Admin_01:RichGordyBryce%5FELA01@eventlight-8eztt.mongodb.net/test?retryWrites=true&w=majority' --collection categories --type csv --headerline --file categories.csv --stopOnError
+
+
+
+mongo shell installation
+https://docs.mongodb.com/manual/installation/
+
+connect to MongoDB
+https://docs.mongodb.com/manual/mongo/#tls-ssl-connection
+
+insertMany documentation for Events
+https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/#db.collection.insertMany
