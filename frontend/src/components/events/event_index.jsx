@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import EventIndexItem from './event_index_item'
+import '../../styles/event_index.css'
 
 class EventIndex extends React.Component {
 	constructor(props) {
@@ -16,16 +17,17 @@ class EventIndex extends React.Component {
 	}
 
 	componentWillReceiveProps(newState) {
-		const oldEventIds = pluck(this.state.events, '_id')
-		const newEventIds = pluck(newState.events, '_id')
-		if (this.state.events.length !== newState.events.length || !oldEventIds.every(id => newEventIds.includes(id))) {
+		const oldEventIds = Object.keys(this.state.events)
+		const newEventIds = Object.keys(newState.events)
+
+		if (oldEventIds.length !== newEventIds.length || !oldEventIds.every(id => newEventIds.includes(id))) {
 			this.setState({ events: newState.events })
 		}
 	}
 
 	render() {
 		if (this.state.events.length === 0) {
-			return <div>There are no events</div>
+			return <div className="no-events-found">There are no events</div>
 		} else {
 			return (
 				<ul className="event-index-list">
@@ -37,7 +39,3 @@ class EventIndex extends React.Component {
 }
 
 export default withRouter(EventIndex)
-
-function pluck(arr, key) {
-	return arr.map(obj => obj[key])
-}

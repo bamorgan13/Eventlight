@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 		.populate('type')
 		.populate('category')
 		.populate('location.city')
-		.sort({ start_date: -1 })
+		.sort({ start_date: 1 })
 		.then(events => res.json(events))
 		.catch(err => res.status(404).json({ noEventsFound: 'No events found' }))
 })

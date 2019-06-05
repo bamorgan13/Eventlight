@@ -156,5 +156,50 @@ db.events.insertMany([
 		capacity: null,
 		image_url:
 			'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F54948632%2F242217966589%2F1%2Foriginal.20190110-201817?w=800&auto=compress&rect=0%2C21%2C1200%2C600&s=3b786452741877462f7bfcb1db9abcb9'
+	},
+	{
+		title: 'Wine, Cheese and Glitter- DIY Glitter Your Sneakers or Shoes Workshop',
+		description:
+			'Wine, Cheese and Glitter- DIY Glitter Shoe Customazation Workshop\n\nGet that special sparkle that is sure to stand out with your hand designed sneaker or shoe. This glitter design can be added to flats,mid heel,high heel and wedges. Great for a customized unique look, prom, wedding or special occasion.\n\nJoin us and see why everyone is raving about the tremendous guidance and step by step directions iby you instructor who has a costume design background. The artist behind the brush can take it at their own pace and use their creative design and fashion background to help you take it to the next level. In 2 hours, you can construct a custom designed, sneaker, shoe or sandal.\n\nAre you ready to upgrade to Feel good kicks\n\nBring a clean pair of sneakers, shoes or sandals for a brand new look',
+		creator: db.users.findOne({ full_name: 'Bryce Morgan' })._id,
+		organizer_name: 'Tracey Evelyn',
+		organizer_description:
+			"Tracey Evelyn is a wardrobe consultant, personal shopper and licensed esthetician.  We are here to help emerging professionals to reinvent themselves. No more mediocracy!  It's time to be intentional",
+		start_date: new Date('2019-06-08T13:00:00.000-04:00'),
+		end_date: new Date('2019-06-08T15:00:00.000-04:00'),
+		location: {
+			location_name: 'Tracey Evelyn/ Perna & Abracht',
+			location_address: '610 Mller Hill 2nd Floor',
+			city: db.cities.findOne({ city: 'Kennett Square', state: 'PA' })._id
+		},
+		online_url: null,
+		price: 45,
+		category: db.categories.findOne({ name: 'Fashion' })._id,
+		type: db.types.findOne({ name: 'Class' })._id,
+		capacity: null,
+		image_url:
+			'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F63085222%2F154017519237%2F1%2Foriginal.20190529-200524?w=800&auto=compress&rect=0%2C647%2C1200%2C600&s=59ec0466b2e1e68739d6f59b844d6219'
+	},
+	{
+		title: "Father's Day Craft & Take",
+		description:
+			"This year I will be hosting a Father's day craft and take!\n\nWe will be crafting some cute father's day related items!\n\nEverything is completely safe and non toxic, so you can even bring the kids to help decorate your master piece!\n\nI will be providing Food and Drinks for everyone!\n\nAnd a (kid friendly) Movie!\n\nLet's all show Dad just how cool he really is!\n\nI hope to see you there! And I cannot wait to see your creations!",
+		creator: db.users.findOne({ full_name: 'Bryce Morgan' })._id,
+		organizer_name: null,
+		organizer_description: null,
+		start_date: new Date('2019-06-14T11:00:00.000-04:00'),
+		end_date: new Date('2019-06-14T14:00:00.000-04:00'),
+		location: {
+			location_name: 'South County Regional Branch, Camden County Library System',
+			location_address: '35 Cooper Folly Road',
+			city: db.cities.findOne({ city: 'Atco', state: 'NJ' })._id
+		},
+		online_url: null,
+		price: 12,
+		category: db.categories.findOne({ name: 'Hobbies' })._id,
+		type: db.types.findOne({ name: 'Party' })._id,
+		capacity: null,
+		image_url:
+			'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F62139157%2F307411057973%2F1%2Foriginal.20190512-235213?w=800&auto=compress&rect=0%2C0%2C1200%2C600&s=ecbda2031777cf3b42ebcc49b792d029'
 	}
 ])
