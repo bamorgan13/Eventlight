@@ -1,0 +1,108 @@
+.splash-page img {
+  display: block;
+  width: 100vw;
+}
+
+.splash-header-search {
+  position: relative;
+  height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 25px;
+  padding-bottom: 72px;
+}
+
+.splash-header-search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin: 0 auto;
+  top: -50px;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  width: calc(100vw - 74px);
+  max-width: 1250px;
+  background-color: #1e0a3c;
+  border-top: 2px solid #1e0a3c;
+  border-bottom: 2px solid #1e0a3c;
+  box-sizing: border-box;
+}
+
+.splash-header-search-form-content {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column; 
+  padding: 16px;
+  position: relative;
+  color: white;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.search-form-input-info {
+  padding: 0 12px;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.splash-header-search-form-content input, select {
+  flex: 1 1 auto;
+  background: transparent;
+  padding: 12px 14px;
+  font-weight: 600;
+  color: white;
+  border: none;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  height: 45px;
+}
+
+.event-content, .location-content {
+  border-right: 1px solid white;
+}
+
+.date-content {
+  border-right: 1px solid transparent;
+}
+
+.splash-header-search-form-content input::placeholder {
+  font-weight: 600;
+  color: white;
+}
+
+.input-styling-underline {
+  position: absolute;
+  bottom: 26px;
+  left: 28px;
+  right: 28px;
+  display: block;
+  content: "";
+  height: 0;
+  border-bottom: 1px solid #f05537; 
+}
+
+.splash-header-search-form-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.splash-header-search-form-submit button {
+  height: 44px;
+  box-sizing: border-box;
+  text-align: center;
+  width: 72px;
+  padding: 0;
+  border: 2px solid rgb(209, 65, 12);
+  background: rgb(209, 65, 12);
+  color: white;
+}
+
+.splash-header-search-form-submit button:hover {
+  cursor: pointer;
+  background: rgb(218, 71, 24);
+}

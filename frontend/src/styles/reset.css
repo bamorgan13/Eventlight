@@ -19,6 +19,7 @@ time, mark, audio, video {
     background:transparent;
     font-family: "Neue Plak", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Helvetica, Tahoma, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
+    line-height: inherit;
 }
 
 a {
