@@ -7,20 +7,22 @@ import MainPage from './main/main_page'
 import NavBarContainer from './nav/navbar_container'
 import LoginFormContainer from './session/login_form_container'
 import RegisterFormContainer from './session/register_form_container'
+import EventIndexContainer from './events/event_index_container'
 
 const style = {
-  fontFamily: `Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif`
+	fontFamily: `Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif`
 }
 
 const App = () => (
-  <div style={style}>
-    <NavBarContainer />
-    <Switch>
-      <Route exact path="/" component={MainPage} />
-      <AuthRoute exact path="/login" component={LoginFormContainer} />
-      <AuthRoute exact path="/register" component={RegisterFormContainer} />
-    </Switch>
-  </div>
+	<div style={style}>
+		<NavBarContainer />
+		<Switch>
+			<Route exact path="/" component={MainPage} />
+			<AuthRoute exact path="/login" component={LoginFormContainer} />
+			<AuthRoute exact path="/register" component={RegisterFormContainer} />
+			<Route exact path="/events" component={EventIndexContainer} />
+		</Switch>
+	</div>
 )
 
 export default App
