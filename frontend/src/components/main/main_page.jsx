@@ -14,12 +14,13 @@ class MainPage extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputFromCalendar = this.handleInputFromCalendar.bind(this);
     this.closeCalendar = this.closeCalendar.bind(this);
   }
 
   componentWillMount() {
-    document.addEventListener("click", this.handleClick)
+    document.addEventListener("click", this.handleClick);
   }
 
   handleClick(event) {
@@ -33,7 +34,8 @@ class MainPage extends React.Component {
     return event => {
       if (field === "date") {
         if (event.target.value === "Pick a date...") {
-          this.setState({ calendarShow: true, calendarClass: "active" });
+          searchParams[field] = "";
+          this.setState({ calendarShow: true, calendarClass: "active", searchParams });
         } else {
           const datesAsIntegers = event.target.value.split(",").map( date => parseInt(date));
           searchParams[field] = datesAsIntegers;
@@ -44,6 +46,23 @@ class MainPage extends React.Component {
         this.setState({ searchParams });
       }
     };
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { searchParams } = this.state;
+    const locationCityState = searchParams.location.split(",");
+    const filterParams = { 
+      title: searchParams.event, 
+      city: { 
+        city: locationCityState[0], 
+        state: locationCityState[1]
+      },
+      // switching naming convention to snake case to agree with backend filter parsing
+      start_date: searchParams.date[0],
+      end_date: searchParams.date[1]
+    };
+    // send up search params here
   }
 
   closeCalendar(event) {
@@ -121,24 +140,28 @@ class MainPage extends React.Component {
     const dateOptions = this.getDates();
     const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions;
     const dateInputEle = this.state.calendarShow ? (
-      <div>
-        <div>{this.formatDates(this.state.searchParams.date)} <span onClick={this.closeCalendar}>&times;</span></div>
+      <div className="search-form-select-wrapper">
+        <div>{this.formatDates(this.state.searchParams.date)}</div>
         <Calendar className={`search-form-calendar-${this.state.calendarClass}`} selectRange={true} returnValue="range" onChange={this.handleInputFromCalendar}/>
+        <div className="search-form-select-close" onClick={this.closeCalendar}>&times;</div>
       </div>
     ) : (
-      <select onChange={this.handleInput("date")} defaultValue="">
-        <option value="" disabled={true}>Any Date</option>
-        <option value={today}>Today</option>
-        <option value={tomorrow}>Tomorrow</option>
-        <option value={thisWeekend}>This weekend</option>
-        <option value={thisWeek}>This week</option>
-        <option value={nextWeek}>Next week</option>
-        <option value={thisMonth}>This month</option>
-        <option value={nextMonth}>Next month</option>
-        <option>Pick a date...</option>
-      </select>
+      <div className="search-form-select-wrapper">
+        <select onChange={this.handleInput("date")} defaultValue="">
+          <option value="" disabled={true}>Any Date</option>
+          <option value={today}>Today</option>
+          <option value={tomorrow}>Tomorrow</option>
+          <option value={thisWeekend}>This weekend</option>
+          <option value={thisWeek}>This week</option>
+          <option value={nextWeek}>Next week</option>
+          <option value={thisMonth}>This month</option>
+          <option value={nextMonth}>Next month</option>
+          <option>Pick a date...</option>
+        </select>
+        <div className="search-form-select-arrow"/>
+      </div>
     );
-    console.log(this.state);
+
     return (
       <div className="splash-page">
         <div className="splash-header">
@@ -154,18 +177,16 @@ class MainPage extends React.Component {
               </div>
               <div className="splash-header-search-form-content location-content">
                 <div className="search-form-input-info">In</div>
-                <input type="text" placeholder="Location" value={this.state.location} onChange={this.handleInput("location")}/>
+                <input type="text" placeholder="Location    (e.g. San Francisco, CA)" value={this.state.location} onChange={this.handleInput("location")}/>
                 <div className="input-styling-underline" />
               </div>
               <div className="splash-header-search-form-content date-content">
                 <div className="search-form-input-info">On</div>
-                <div className="search-form-select-wrapper">
-                  {dateInputEle}
-                </div>
+                {dateInputEle}
                 <div className="input-styling-underline" />
               </div>
               <div className="splash-header-search-form-submit">
-                <button><i className="fas fa-search"></i></button>
+                <button onClick={this.handleSubmit}><i className="fas fa-search"></i></button>
               </div>
             </form>
           </div>

@@ -84,12 +84,23 @@
   cursor: pointer;
 }
 
-.search-form-select-wrapper:after {
+.search-form-select-close {
+  position: absolute;
+  top: -5px;
+  right: 4px;
+  font-size: 20px;
+}
+
+.search-form-select-close:hover {
+  cursor: pointer;
+}
+
+.search-form-select-arrow:after {
 	font-family: "Font Awesome 5 Free";
   	content: "\f107";
   	font-size: 15px;
-    position: absolute;
     font-weight: 900;
+    position: absolute;
   	top: -2px;
   	right: 5px;
   	color: white;
@@ -149,6 +160,7 @@
   border: 2px solid rgb(209, 65, 12);
   background: rgb(209, 65, 12);
   color: white;
+  border-radius: 4px;
 }
 
 .splash-header-search-form-submit button:hover {
