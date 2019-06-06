@@ -10,16 +10,6 @@ import RegisterFormContainer from './session/register_form_container'
 import EventIndexContainer from './events/event_index_container'
 
 const App = () => (
-<<<<<<< HEAD
-  <div>
-    <NavBarContainer />
-    <Switch>
-      <Route exact path="/" component={MainPage} />
-      <AuthRoute exact path="/login" component={LoginFormContainer} />
-      <AuthRoute exact path="/register" component={RegisterFormContainer} />
-    </Switch>
-  </div>
-=======
 	<div>
 		<NavBarContainer />
 		<Switch>
@@ -29,7 +19,6 @@ const App = () => (
 			<Route exact path="/events" component={EventIndexContainer} />
 		</Switch>
 	</div>
->>>>>>> master
 )
 
 export default App
