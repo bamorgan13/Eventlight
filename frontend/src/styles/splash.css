@@ -101,6 +101,10 @@
   top: 22px;
 }
 
+.search-form-calendar-hidden {
+  display: none;
+}
+
 .splash-header-search-form-content select:focus {
   outline: none;
 }

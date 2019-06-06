@@ -7,13 +7,15 @@ class MainPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-       searchParams: { event: "", location: "", date: [] },
-       calendarShow: false
+       searchParams: { event: "", location: "", date: "" },
+       calendarShow: false,
+       calendarClass: "hidden",
      };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleInputFromCalendar = this.handleInputFromCalendar.bind(this);
+    this.closeCalendar = this.closeCalendar.bind(this);
   }
 
   componentWillMount() {
@@ -22,17 +24,32 @@ class MainPage extends React.Component {
 
   handleClick(event) {
     if (this.state.calendarShow && !event.target.className.includes("react-calendar") && event.target.nodeName !== "ABBR") {
-      this.setState({ calendarShow: false });
+      this.setState({ calendarClass: "hidden" });
     } 
   }
 
   handleInput(field) {
     const { searchParams } = this.state;
     return event => {
-      searchParams[field] = event.target.value;
-      this.setState({ searchParams });
-      if (field === "date" && event.target.value === "Pick a date...") this.setState({ calendarShow: true });
+      if (field === "date") {
+        if (event.target.value === "Pick a date...") {
+          this.setState({ calendarShow: true, calendarClass: "active" });
+        } else {
+          const datesAsIntegers = event.target.value.split(",").map( date => parseInt(date));
+          searchParams[field] = datesAsIntegers;
+          this.setState({ searchParams });
+        }
+      } else {
+        searchParams[field] = event.target.value;
+        this.setState({ searchParams });
+      }
     };
+  }
+
+  closeCalendar(event) {
+    const { searchParams } = this.state;
+    searchParams.date = "";
+    this.setState({ calendarShow: false, calendarClass: "hidden", searchParams });
   }
 
   handleInputFromCalendar(dateRange) {
@@ -40,27 +57,27 @@ class MainPage extends React.Component {
     const startDate = dateRange[0].setHours(0,0,0,0);
     const endDate = dateRange[1].setHours(23,59,59,999);
     searchParams.date = [startDate, endDate]
-    // this.setState({ searchParams, calendarShow: false });
     this.setState({ searchParams });
   }
 
   formatDates(dates) {
+      if (typeof dates === "string") return "";
+      const datesList = dates.map( date => new Date(date) );
       const monthNames = [
         "January", "February", "March",
         "April", "May", "June", "July",
         "August", "September", "October",
         "November", "December"
       ];
-      let prettyFormat      
-      dates.forEach(date => {
+      let prettyFormat = [];      
+      datesList.forEach(date => {
         const day = date.getDate();
         const monthIndex = date.getMonth();
         const year = date.getFullYear();
       
-        prettyFormat += day + ' ' + monthNames[monthIndex] + ' ' + year;
+        prettyFormat.push(day + ' ' + monthNames[monthIndex] + ' ' + year);
       })
-
-    return new Date(prettyFormat);
+    return prettyFormat.join(" - ");
   }
 
   getDates() {
@@ -105,8 +122,8 @@ class MainPage extends React.Component {
     const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions;
     const dateInputEle = this.state.calendarShow ? (
       <div>
-        <div>{this.formatDates(this.state.searchParams.date)}</div>
-        <Calendar selectRange={true} returnValue="range" onChange={this.handleInputFromCalendar}/>
+        <div>{this.formatDates(this.state.searchParams.date)} <span onClick={this.closeCalendar}>&times;</span></div>
+        <Calendar className={`search-form-calendar-${this.state.calendarClass}`} selectRange={true} returnValue="range" onChange={this.handleInputFromCalendar}/>
       </div>
     ) : (
       <select onChange={this.handleInput("date")} defaultValue="">
@@ -118,10 +135,10 @@ class MainPage extends React.Component {
         <option value={nextWeek}>Next week</option>
         <option value={thisMonth}>This month</option>
         <option value={nextMonth}>Next month</option>
-        <option value="Pick a date...">Pick a date...</option>
+        <option>Pick a date...</option>
       </select>
     );
-
+    console.log(this.state);
     return (
       <div className="splash-page">
         <div className="splash-header">
