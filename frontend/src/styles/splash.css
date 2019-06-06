@@ -60,6 +60,11 @@
   line-height: 1.5rem;
   height: 21px;
 }
+
+.splash-header-search-form-content input:focus {
+  outline: none;
+}
+
 .splash-header-search-form-content select {
   font-size: 1.125rem;
   line-height: 1.5rem;
@@ -166,4 +171,34 @@
 .splash-header-search-form-submit button:hover {
   cursor: pointer;
   background: rgb(218, 71, 24);
+}
+
+.autocomplete-dropdown-hidden {
+  display: none;
+}
+
+.autocomplete-dropdown-active {
+  position: absolute;
+  background: white;
+  box-shadow: 0 1px 17px 0 rgba(40,44,53,0.1), 0 2px 4px 0 rgba(40,44,53,0.1);
+  color: black;
+  top: 70px;
+  left: 30px;
+  right: 30px;
+  height: 500px;
+  overflow-y: auto;
+}
+
+.autocomplete-dropdown-list-item {
+  padding: 16px 24px;
+}
+
+.autocomplete-dropdown-list-item-info {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.autocomplete-dropdown-list-item-desc {
+  font-size: 12px;
+  color: #6f7287;
 }

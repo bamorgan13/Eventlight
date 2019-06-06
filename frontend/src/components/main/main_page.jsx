@@ -1,15 +1,18 @@
 import React from 'react';
 import splashImage from "./bg-desktop-snowglobe.jpg";
 import Calendar from "react-calendar";
+import AutocompleteDropdownContainer from "./autocomplete_dropdown_container";
 import "../../styles/splash.css";
 
 class MainPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-       searchParams: { event: "", location: "", date: "" },
-       calendarShow: false,
-       calendarClass: "hidden",
+      searchParams: { event: "", location: "", date: "" },
+      calendarShow: false,
+      calendarClass: "hidden",
+      eventDropdownShow: "hidden",
+      locationDropdownShow: "hidden"
      };
 
     this.handleClick = this.handleClick.bind(this);
@@ -21,6 +24,18 @@ class MainPage extends React.Component {
 
   componentWillMount() {
     document.addEventListener("click", this.handleClick);
+  }
+
+  showInputDropdown(dropdownType) {
+    return event => {
+      this.setState({ [`${dropdownType}DropdownShow`]: "active" });
+    };
+  }
+  
+  hideInputDropdown(dropdownType) {
+    return event => {
+      this.setState({ [`${dropdownType}DropdownShow`]: "hidden" });
+    };
   }
 
   handleClick(event) {
@@ -162,7 +177,7 @@ class MainPage extends React.Component {
         <div className="search-form-select-arrow"/>
       </div>
     );
-
+    
     return (
       <div className="splash-page">
         <div className="splash-header">
@@ -173,13 +188,27 @@ class MainPage extends React.Component {
             <form className="splash-header-search-form">
               <div className="splash-header-search-form-content event-content">
                 <div className="search-form-input-info">Looking for</div>
-                <input type="text" placeholder="Event" value={this.state.event} onChange={this.handleInput("event")}/>
+                <input 
+                  type="text" 
+                  onFocus={this.showInputDropdown(("event"))} 
+                  onBlur={this.hideInputDropdown(("event"))} 
+                  placeholder="Event" value={this.state.event} 
+                  onChange={this.handleInput("event")}
+                />
                 <div className="input-styling-underline" />
+                <AutocompleteDropdownContainer dropdownType="event" dropdownShow={this.state.eventDropdownShow}/>
               </div>
               <div className="splash-header-search-form-content location-content">
                 <div className="search-form-input-info">In</div>
-                <input type="text" placeholder="Location" value={this.state.location} onChange={this.handleInput("location")}/>
+                <input 
+                  type="text" 
+                  onFocus={this.showInputDropdown("location")} 
+                  onBlur={this.hideInputDropdown("location")} 
+                  placeholder="Location" value={this.state.location} 
+                  onChange={this.handleInput("location")}
+                />
                 <div className="input-styling-underline" />
+                <AutocompleteDropdownContainer dropdownType="location" dropdownShow={this.state.locationDropdownShow}/>
               </div>
               <div className="splash-header-search-form-content date-content">
                 <div className="search-form-input-info">On</div>

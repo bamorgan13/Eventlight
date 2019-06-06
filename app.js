@@ -5,6 +5,7 @@ const db = require('./config/keys').mongoURI
 const bodyParser = require('body-parser')
 const users = require('./routes/api/users')
 const events = require('./routes/api/events')
+const cities = require('./routes/api/cities')
 const passport = require('passport')
 
 mongoose
@@ -23,5 +24,6 @@ app.use(bodyParser.json())
 app.get('/', (_, res) => res.send('Eventlight all day'))
 app.use('/api/users', users)
 app.use('/api/events', events)
+app.use('/api/cities', cities)
 
 app.listen(port, () => console.log(`Server is running on port ${port}`))
