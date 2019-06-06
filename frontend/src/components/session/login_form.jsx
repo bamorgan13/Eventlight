@@ -11,8 +11,13 @@ class LoginForm extends React.Component {
       password: '',
       page: 1,
       email_focus: false,
+      password_focus: false,
+      reveal_password: false,
       errors: {}
     }
+
+    this.email_ref = React.createRef()
+    this.password_ref = React.createRef()
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.renderErrors = this.renderErrors.bind(this)
@@ -25,7 +30,7 @@ class LoginForm extends React.Component {
     }
 
     // Set or clear errors
-    if (nextProps.errors.keys.length > 0) {
+    if (Object.keys(nextProps.errors).length > 0) {
       this.setState({ errors: nextProps.errors, page: 1 })
     }
     this.setState({ errors: nextProps.errors })
@@ -51,6 +56,9 @@ class LoginForm extends React.Component {
       this.props.login(user)
     } else {
       this.setState({ page: 2 })
+      this.props.checkForExistingEmail(this.state.email).then(exists => {
+        if (!exists) this.props.history.push('/register')
+      })
     }
   }
 
@@ -71,6 +79,13 @@ class LoginForm extends React.Component {
     let headline, subhead, button_label, page
 
     const show_email_label = this.state.email_focus || this.state.email
+
+    const show_password_label = this.state.password_focus || this.state.password
+
+    const show_edit_email_icon_class =
+      this.state.page === 1
+        ? 'login__form__email_edit_hidden'
+        : 'login__form__email_edit_show'
 
     if (this.state.page === 1) {
       page = 'first'
@@ -97,8 +112,8 @@ class LoginForm extends React.Component {
             >
               Email address
             </div>
-
             <input
+              ref={this.email_ref}
               className={`${show_email_label ? 'show' : ''} `}
               type="text"
               value={this.state.email}
@@ -107,14 +122,55 @@ class LoginForm extends React.Component {
               onFocus={() => this.setState({ email_focus: true })}
               onBlur={() => this.setState({ email_focus: false })}
             />
+            <div
+              className={show_edit_email_icon_class}
+              onClick={() =>
+                this.setState({
+                  page: this.state.page === 1 ? 2 : 1
+                })
+              }
+            >
+              <i className={`fas fa-pencil-alt`} />
+            </div>
           </div>
-          <input
-            type="password"
-            value={this.state.password}
-            onChange={this.update('password')}
-            className={`login__form__password ${page}`}
-            placeholder="Password"
-          />
+          <div
+            className={`login__form__password ${page} ${
+              this.state.password_focus ? 'focused' : 'unfocused'
+            }`}
+          >
+            <div
+              className={`login__form__password_label ${
+                show_password_label ? 'show' : ''
+              } `}
+            >
+              Password
+            </div>
+            <input
+              ref={this.password_ref}
+              className={`${show_password_label ? 'show' : ''} `}
+              type={this.state.reveal_password ? 'text' : 'password'}
+              value={this.state.password}
+              onChange={this.update('password')}
+              placeholder={show_password_label ? '' : 'Password'}
+              onFocus={() => this.setState({ password_focus: true })}
+              onBlur={() => this.setState({ password_focus: false })}
+            />
+            <div
+              className="password_icon"
+              onClick={() => {
+                this.setState({
+                  reveal_password: !this.state.reveal_password
+                })
+                this.password_ref.current.focus()
+              }}
+            >
+              {this.state.reveal_password ? (
+                <i className="fas fa-eye-slash" />
+              ) : (
+                <i className="fas fa-eye" />
+              )}
+            </div>
+          </div>
           <input
             type="submit"
             value={button_label}

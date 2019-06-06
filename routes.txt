@@ -25,6 +25,7 @@ API CALL: DELETE api/likes/:likeId
 
 ON /login
 API CALL: POST session
+API CALL: GET users/check_email
 
 ON /register
 API CALL: POST users
