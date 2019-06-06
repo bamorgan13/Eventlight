@@ -62,7 +62,8 @@ class MainPage extends React.Component {
       start_date: searchParams.date[0],
       end_date: searchParams.date[1]
     };
-    // send up search params here
+    this.props.updateFilter(filterParams);
+    this.props.history.push("./events");
   }
 
   closeCalendar(event) {
@@ -121,13 +122,13 @@ class MainPage extends React.Component {
       }
     }
     returnDates["thisWeekend"] = [thisWeekendStart, thisWeekendEnd];
-    const thisWeekStart = now;
+    const thisWeekStart = now.setHours(0,0,0,0);
     const thisWeekEnd = thisWeekendEnd;
     returnDates["thisWeek"] = [thisWeekStart, thisWeekEnd];
     const nextWeekStart = thisWeekEnd + 1;
     const nextWeekEnd = new Date(new Date(nextWeekStart).setDate(new Date(nextWeekStart).getDate() + 6)).setHours(23,59,59,999);
     returnDates["nextWeek"] = [nextWeekStart, nextWeekEnd];
-    const thisMonthStart = now;
+    const thisMonthStart = now.setHours(0,0,0,0);
     const thisMonthEnd = new Date(new Date(new Date(thisMonthStart).setDate(32)).setDate(0)).setHours(23,59,59,999);
     returnDates["thisMonth"] = [thisMonthStart, thisMonthEnd];
     const nextMonthStart = thisMonthEnd + 1;
@@ -177,7 +178,7 @@ class MainPage extends React.Component {
               </div>
               <div className="splash-header-search-form-content location-content">
                 <div className="search-form-input-info">In</div>
-                <input type="text" placeholder="Location    (e.g. San Francisco, CA)" value={this.state.location} onChange={this.handleInput("location")}/>
+                <input type="text" placeholder="Location" value={this.state.location} onChange={this.handleInput("location")}/>
                 <div className="input-styling-underline" />
               </div>
               <div className="splash-header-search-form-content date-content">
