@@ -23,3 +23,5 @@ export const checkForExistingEmail = email => {
     }
   })
 }
+
+export const getCurrentUser = () => axios.get('/api/users/current')

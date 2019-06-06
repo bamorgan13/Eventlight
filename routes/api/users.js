@@ -17,7 +17,9 @@ router.get(
     res.json({
       id: req.user.id,
       full_name: req.user.full_name,
-      email: req.user.email
+      email: req.user.email,
+      liked_events: req.user.liked_events,
+      registrations: req.user.registrations
     })
   }
 )
@@ -64,7 +66,9 @@ router.post('/register', (req, res) => {
               const payload = {
                 id: user.id,
                 email: user.email,
-                full_name: user.full_name
+                full_name: user.full_name,
+                liked_events: user.liked_events,
+                registrations: user.registrations
               }
 
               jwt.sign(
@@ -107,7 +111,9 @@ router.post('/login', (req, res) => {
         const payload = {
           id: user.id,
           email: user.email,
-          full_name: user.full_name
+          full_name: user.full_name,
+          liked_events: user.liked_events,
+          registrations: user.registrations
         }
 
         jwt.sign(
