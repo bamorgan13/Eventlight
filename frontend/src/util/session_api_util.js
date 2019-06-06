@@ -15,3 +15,11 @@ export const register = userData => {
 export const login = userData => {
   return axios.post('/api/users/login', userData)
 }
+
+export const checkForExistingEmail = email => {
+  return axios.get('/api/users/check_email', {
+    params: {
+      email
+    }
+  })
+}

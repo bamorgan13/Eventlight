@@ -1,7 +1,8 @@
 import {
   RECEIVE_CURRENT_USER,
   RECEIVE_USER_LOGOUT,
-  RECEIVE_USER_SIGN_IN
+  RECEIVE_USER_SIGN_IN,
+  BEGIN_SIGNUP
 } from '../actions/session_actions'
 
 const initialState = {
@@ -26,6 +27,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isSignedIn: true
+      }
+    case BEGIN_SIGNUP:
+      return {
+        ...state,
+        signup_email: action.email
       }
     default:
       return state

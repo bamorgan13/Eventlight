@@ -5,7 +5,8 @@ import RegisterForm from './register_form'
 const mapStateToProps = state => {
   return {
     signedIn: state.session.isSignedIn,
-    errors: state.errors.session
+    errors: state.errors.session,
+    signup_email: state.session.signup_email || ''
   }
 }
 

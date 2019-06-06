@@ -5,6 +5,7 @@ export const RECEIVE_USER_LOGOUT = 'RECEIVE_USER_LOGOUT'
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS'
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER'
 export const RECEIVE_USER_SIGN_IN = 'RECEIVE_USER_SIGN_IN'
+export const BEGIN_SIGNUP = 'BEGIN_SIGNUP'
 
 // Simple Action Creators ---------------------------------
 
@@ -55,3 +56,18 @@ export const logout = () => dispatch => {
   // Dispatch a logout action
   dispatch(logoutUser())
 }
+
+export const checkForExistingEmail = email => dispatch =>
+  APIUtil.checkForExistingEmail(email)
+    .then(res => {
+      const exists = res.data.exists
+      if (!exists)
+        dispatch({
+          type: BEGIN_SIGNUP,
+          email
+        })
+      return exists
+    })
+    .catch(err => {
+      dispatch(receiveErrors(err.response.data))
+    })

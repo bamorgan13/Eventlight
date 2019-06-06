@@ -1,0 +1,60 @@
+Frontend Routes
+
+/
+
+/login
+/register
+
+/events/?(location/topic/type/keyword)
+/events/:eventId
+/events/:eventId/edit
+
+/likes
+/registrations
+
+/myevents
+/myevents/create
+
+
+/////////////////
+
+ON /
+API CALL: GET api/events
+API CALL: POST api/likes/:eventId
+API CALL: DELETE api/likes/:likeId
+
+ON /login
+API CALL: POST session
+API CALL: GET users/check_email
+
+ON /register
+API CALL: POST users
+
+ON /events/?(location/topic/type/keyword)
+API CALL: GET api/events
+API CALL: POST api/likes/:eventId
+API CALL: DELETE api/likes/:likeId
+
+ON /events/:eventId
+API CALL: GET api/events/:eventId
+API CALL: POST api/likes/:eventId
+API CALL: DELETE api/likes/:likeId
+API CALL: POST api/registrations
+
+ON /events/:eventId/edit
+API CALL: PATCH api/events/:eventId
+API CALL: DELETE api/events/:eventId
+ 
+ON /likes
+API CALL: GET api/likes
+API CALL: DELETE api/likes/:likeId
+
+ON /registrations
+API CALL: GET api/registrations
+API CALL: DELETE api/registrations/:registrationId
+ 
+ON /myevents
+API CALL: GET api/events
+
+ON /myevents/create
+API CALL: POST api/events
