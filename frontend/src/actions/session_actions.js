@@ -71,3 +71,13 @@ export const checkForExistingEmail = email => dispatch =>
     .catch(err => {
       dispatch(receiveErrors(err.response.data))
     })
+
+export const getCurrentUser = () => dispatch => {
+  return APIUtil.getCurrentUser()
+    .then(res => {
+      dispatch(receiveCurrentUser(res.data))
+    })
+    .catch(err => {
+      dispatch(receiveErrors(err.response.data))
+    })
+}

@@ -5,6 +5,8 @@ import {
   BEGIN_SIGNUP
 } from '../actions/session_actions'
 
+import { UPDATE_LIKES } from '../actions/user_actions'
+
 const initialState = {
   isAuthenticated: false,
   user: {}
@@ -32,6 +34,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         signup_email: action.email
+      }
+    case UPDATE_LIKES:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          liked_events: action.liked_events
+        }
       }
     default:
       return state

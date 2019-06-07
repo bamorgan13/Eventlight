@@ -1,6 +1,7 @@
 .login {
   width: 320px;
   margin: auto;
+  margin-top: 63px;
 }
 .login__form {
   display: flex;
@@ -19,7 +20,7 @@
 }
 
 .login__form__logo.second {
-  background: url('../assets/images/happy.jpg');
+  background: url('../assets/images/welcome.png');
   background-size: cover;
 }
 
@@ -215,6 +216,7 @@
 .register {
   width: 320px;
   margin: auto;
+  margin-top: 63px;
 }
 
 .register__form {
@@ -226,7 +228,7 @@
 .register__form__logo {
   height: 55px;
   width: 55px;
-  background: url('../assets/images/happy.jpg');
+  background: url('../assets/images/welcome.png');
   background-size: cover;
 }
 
