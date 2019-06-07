@@ -1,12 +1,18 @@
 import { getEvents, getEvent, getLikedEvents } from '../util/event_api_util'
 
 export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
+export const RECEIVE_LIKED_EVENTS = 'RECEIVE_LIKED_EVENTS'
 export const RECEIVE_EVENT = 'RECEIVE_EVENT'
 export const RECEIVE_EVENT_ERRORS = 'RECEIVE_EVENT_ERRORS'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 
 export const receiveEvents = events => ({
 	type: RECEIVE_EVENTS,
+	events
+})
+
+export const receiveLikedEvents = events => ({
+	type: RECEIVE_LIKED_EVENTS,
 	events
 })
 
@@ -36,5 +42,5 @@ export const fetchEvent = id => dispatch =>
 
 export const fetchLikedEvents = () => dispatch =>
 	getLikedEvents()
-		.then(events => dispatch(receiveEvents(events)))
+		.then(events => dispatch(receiveLikedEvents(events)))
 		.catch(errors => dispatch(receiveEventErrors(errors)))

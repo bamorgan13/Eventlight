@@ -4,7 +4,7 @@ import EventIndex from './event_index'
 
 const msp = state => {
 	return {
-		events: Object.values(state.events)
+		events: Object.values(state.events.all)
 	}
 }
 

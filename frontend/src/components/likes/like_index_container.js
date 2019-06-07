@@ -4,7 +4,7 @@ import LikesPage from './likes_page'
 
 const msp = state => {
   return {
-    events: Object.values(state.events)
+    events: Object.values(state.events.liked_events)
   }
 }
 

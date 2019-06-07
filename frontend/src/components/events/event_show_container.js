@@ -8,7 +8,7 @@ const msp = (state, ownProps) => {
 	const eventId = ownProps.match.params.eventId
 	return {
 		eventId,
-		event: state.events[eventId],
+		event: state.events.all[eventId],
 		isLiked: isLiked(state, eventId)
 	}
 }
