@@ -82,4 +82,12 @@ router.get("/auto", (req, res) => {
     .catch( error => res.status(404).json({ noEventsFound: "No events found" }));
 });
 
+router.get('/:id', (req, res) => {
+	const eventId = req.query._id
+	Event.findById(eventId)
+		.populate({ path: 'location.city' })
+		.then(event => res.json(event))
+		.catch(err => res.status(404).json({ invalidEventId: 'Event not found' }))
+})
+
 module.exports = router
