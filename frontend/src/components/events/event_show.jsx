@@ -15,7 +15,7 @@ class EventShow extends React.Component {
 	}
 
 	render() {
-		const event = this.props.event
+		const { event, isLiked, toggleLikeEvent } = this.props
 
 		if (!event) {
 			return <div>Event not found</div>
@@ -60,8 +60,8 @@ class EventShow extends React.Component {
 					</div>
 					<div className="like-and-register">
 						<div className="like-container fade-in delay-12">
-							<button className="like-button">
-								<div className="like-icon" />
+							<button className="like-button" onClick={() => toggleLikeEvent(event._id)}>
+								<div className={isLiked ? 'like-icon--active' : 'like-icon'} />
 							</button>
 						</div>
 						<div className="register-container fade-in delay-18">
