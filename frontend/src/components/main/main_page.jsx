@@ -1,7 +1,7 @@
 import React from 'react';
 import splashImage from "./bg-desktop-snowglobe.jpg";
 import Calendar from "react-calendar";
-import AutocompleteDropdownContainer from "./autocomplete_dropdown_container";
+import AutocompleteDropdown from "./autocomplete_dropdown";
 import * as SearchUtil from "../../util/search_util";
 import "../../styles/splash.css";
 
@@ -9,17 +9,18 @@ class MainPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      searchParams: { event: "", location: "", date: "" },
+      searchParams: { event: "", city: "", date: "" },
       calendarShow: false,
       calendarClass: "hidden",
       eventDropdownShow: "hidden",
-      locationDropdownShow: "hidden"
+      cityDropdownShow: "hidden"
      };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputFromCalendar = this.handleInputFromCalendar.bind(this);
+    this.autocomplete = this.autocomplete.bind(this);
     this.closeCalendar = this.closeCalendar.bind(this);
     this.debouncedFetchCities = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this);
     this.debouncedFetchEvents = SearchUtil.debounce(this.fetchEventValues.bind(this), 500).bind(this);
@@ -30,29 +31,30 @@ class MainPage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchParams.location !== this.state.searchParams.location) {
+    console.log(this.state.searchParams)
+    if (prevState.searchParams.city !== this.state.searchParams.city) {
       this.debouncedFetchCities();
     } else if (prevState.searchParams.event !== this.state.searchParams.event) {
       this.debouncedFetchEvents();
     }
   }
 
-  showInputDropdown(dropdownType) {
+  toggleInputDropdown(dropdownType) {
     return event => {
       this.setState({ [`${dropdownType}DropdownShow`]: "active" });
     };
   }
   
-  hideInputDropdown(dropdownType) {
-    return event => {
-      this.setState({ [`${dropdownType}DropdownShow`]: "hidden" });
-    };
-  }
-
   handleClick(event) {
     if (this.state.calendarShow && !event.target.className.includes("react-calendar") && event.target.nodeName !== "ABBR") {
       this.setState({ calendarClass: "hidden" });
-    } 
+    } else if (!event.target.className.includes("autocomplete")) {
+      if (this.state.eventDropdownShow === "active" && !event.target.className.includes("event")) {
+        this.setState({ eventDropdownShow: "hidden" });
+      } else if (this.state.cityDropdownShow === "active" && !event.target.className.includes("city")) {
+        this.setState({ cityDropdownShow: "hidden" });
+      }
+    }
   }
 
   handleInput(field) {
@@ -75,8 +77,17 @@ class MainPage extends React.Component {
     };
   }
 
+  autocomplete(field) {
+    const { searchParams } = this.state;
+    const newSearchParams = Object.assign({}, searchParams);
+    return autocompleteValue => {
+      newSearchParams[field] = autocompleteValue;
+      this.setState({ searchParams: newSearchParams });
+    }
+  }
+
   fetchCityValues() {
-    this.props.fetchCities({ city: this.state.searchParams.location });
+    this.props.fetchCities({ city: this.state.searchParams.city });
   }
 
   fetchEventValues() {
@@ -86,12 +97,12 @@ class MainPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { searchParams } = this.state;
-    const locationCityState = searchParams.location.split(",");
+    const cityState = searchParams.city.split(",");
     const filterParams = { 
       title: searchParams.event, 
       city: { 
-        city: locationCityState[0], 
-        state: locationCityState[1]
+        city: cityState[0], 
+        state: cityState[1]
       },
       // switching naming convention to snake case to agree with backend filter parsing
       start_date: searchParams.date[0],
@@ -197,8 +208,8 @@ class MainPage extends React.Component {
         <div className="search-form-select-arrow"/>
       </div>
     );
-
-    return (
+      console.log("rendering!")
+        return (
       <div className="splash-page">
         <div className="splash-header">
           <div className="splash-header-image">
@@ -210,25 +221,37 @@ class MainPage extends React.Component {
                 <div className="search-form-input-info">Looking for</div>
                 <input 
                   type="text" 
-                  onFocus={this.showInputDropdown(("event"))} 
-                  onBlur={this.hideInputDropdown(("event"))} 
+                  value={this.state.searchParams.event}
+                  className="search-form-input-event"
+                  onMouseDown={this.toggleInputDropdown(("event"))} 
                   placeholder="Event" value={this.state.event} 
                   onChange={this.handleInput("event")}
                 />
                 <div className="input-styling-underline" />
-                <AutocompleteDropdownContainer dropdownType="event" dropdownShow={this.state.eventDropdownShow}/>
+                <AutocompleteDropdown 
+                  dropdownType="events" 
+                  dropdownShow={this.state.eventDropdownShow} 
+                  autocomplete={this.autocomplete("event")}
+                  cities={this.props.cities}
+                />
               </div>
-              <div className="splash-header-search-form-content location-content">
+              <div className="splash-header-search-form-content city-content">
                 <div className="search-form-input-info">In</div>
                 <input 
                   type="text" 
-                  onFocus={this.showInputDropdown("location")} 
-                  onBlur={this.hideInputDropdown("location")} 
-                  placeholder="Location" value={this.state.location} 
-                  onChange={this.handleInput("location")}
+                  value={this.state.searchParams.city}
+                  className="search-form-input-city"
+                  onMouseDown={this.toggleInputDropdown("city")} 
+                  placeholder="Location" value={this.state.city} 
+                  onChange={this.handleInput("city")}
                 />
                 <div className="input-styling-underline" />
-                <AutocompleteDropdownContainer dropdownType="location" dropdownShow={this.state.locationDropdownShow}/>
+                <AutocompleteDropdown 
+                  dropdownType="cities" 
+                  dropdownShow={this.state.cityDropdownShow} 
+                  autocomplete={this.autocomplete("city")}
+                  cities={this.props.cities}
+                />
               </div>
               <div className="splash-header-search-form-content date-content">
                 <div className="search-form-input-info">On</div>

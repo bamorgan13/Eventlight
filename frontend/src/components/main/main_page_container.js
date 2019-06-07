@@ -5,7 +5,7 @@ import { fetchCities } from "../../actions/city_actions";
 
 const mstp = state => {
   return {
-    
+    cities: Object.values(state.ui.autocomplete.cities)
   };
 };
 
