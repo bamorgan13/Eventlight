@@ -1,4 +1,4 @@
-import { RECEIVE_EVENTS } from '../actions/event_actions'
+import { RECEIVE_EVENTS, RECEIVE_EVENT } from '../actions/event_actions'
 
 const EventsReducer = (state = {}, action) => {
 	Object.freeze(state)
@@ -6,6 +6,9 @@ const EventsReducer = (state = {}, action) => {
 	switch (action.type) {
 		case RECEIVE_EVENTS:
 			action.events.data.forEach(event => (newState[event._id] = event))
+			return newState
+		case RECEIVE_EVENT:
+			newState[action.event.data._id] = action.event.data
 			return newState
 		default:
 			return state
