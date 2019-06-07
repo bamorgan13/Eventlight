@@ -61,4 +61,21 @@ router.get('/', (req, res) => {
 		})
 })
 
+router.get("/auto", (req, res) => {
+	let queryRegex = new RegExp(req.query.event);
+  queryRegex = new RegExp(queryRegex.source, queryRegex.flags + "i")
+  Event.find({ title: queryRegex })
+		// .aggregate({
+		// 	$lookup: {
+		// 		from: "cities",
+		// 		localField: "location.city",
+		// 		foreignField: "_id",
+		// 		as: "cities"
+		// 	}
+		// })
+		.limit(10)
+    .then( events => res.json(events))
+    .catch( error => res.status(404).json({ noEventsFound: "No events found" }));
+});
+
 module.exports = router

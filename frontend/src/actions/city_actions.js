@@ -16,10 +16,10 @@ export const clearCities = () => {
   };
 };
 
-export const fetchCities = filter => {
+export const fetchCitiesAuto = filter => {
   return dispatch => {
     if (!filter.city) return dispatch(clearCities());
-    return CityApiUtil.fetchCities(filter)
+    return CityApiUtil.fetchCitiesAuto(filter)
       .then( cities => dispatch(receiveCities(cities)) );
   };
 };

@@ -1,10 +1,7 @@
 import React from "react";
+const moment = require("moment");
 
 class AutocompleteDropdown extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   runAutocomplete(value) {
     return event => {
       this.props.autocomplete(value)
@@ -12,16 +9,28 @@ class AutocompleteDropdown extends React.Component {
   }
 
   render() {
-    // const listItems = this.props[this.props.dropdownType].map( val => 
-    const listItems = this.props.cities.map( val => {
-      return (
-      <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.city)}>
-        <div className="autocomplete-dropdown-list-item-info">
-          {val.city}
-          <div className="autocomplete-dropdown-list-item-desc">{val.state}, United States</div>
-        </div>
-      </li> 
-      );
+    const { dropdownType } = this.props;
+    const listItems = this.props[dropdownType].map( val => {
+      if (dropdownType === "events") {
+        return (
+        <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.title)}>
+          <div className="autocomplete-dropdown-list-item-primary">
+            {val.title}
+            <div className="autocomplete-dropdown-list-item-secondary">{moment(new Date(val.start_date)).format("llll")}</div>
+            <div className="autocomplete-dropdown-list-item-tertiary">{val.location.location_name + val.location.city}</div>
+          </div>
+        </li> 
+        );
+      } else {
+        return (
+        <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.city)}>
+          <div className="autocomplete-dropdown-list-item-primary">
+            {val.city}
+            <div className="autocomplete-dropdown-list-item-secondary">{val.state}, United States</div>
+          </div>
+        </li> 
+        );
+      }
     });
 
     return (

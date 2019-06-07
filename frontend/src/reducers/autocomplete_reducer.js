@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import CityReducer from "./cities_reducer";
+import CityAutocompleteReducer from "./cities_autocomplete_reducer";
+import EventAutocompleteReducer from "./events_autocomplete_reducer";
 
 const AutocompleteReducer = combineReducers({
-  cities: CityReducer,
+  cities: CityAutocompleteReducer,
+  events: EventAutocompleteReducer
 });
 
 export default AutocompleteReducer;

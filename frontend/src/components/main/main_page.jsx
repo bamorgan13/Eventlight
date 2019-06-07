@@ -13,7 +13,7 @@ class MainPage extends React.Component {
       calendarShow: false,
       calendarClass: "hidden",
       eventDropdownShow: "hidden",
-      cityDropdownShow: "hidden"
+      cityDropdownShow: "hidden",
      };
 
     this.handleClick = this.handleClick.bind(this);
@@ -22,20 +22,23 @@ class MainPage extends React.Component {
     this.handleInputFromCalendar = this.handleInputFromCalendar.bind(this);
     this.autocomplete = this.autocomplete.bind(this);
     this.closeCalendar = this.closeCalendar.bind(this);
-    this.debouncedFetchCities = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this);
-    this.debouncedFetchEvents = SearchUtil.debounce(this.fetchEventValues.bind(this), 500).bind(this);
+    this.debouncedfetchCitiesAuto = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this);
+    this.debouncedFetchEventsAuto = SearchUtil.debounce(this.fetchEventValues.bind(this), 500).bind(this);
   }
 
   componentWillMount() {
     document.addEventListener("click", this.handleClick);
   }
 
+  componentDidMount() {
+    setTimeout(() => this.props.fetchEventsAuto({ event: "" }), 3000);
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state.searchParams)
     if (prevState.searchParams.city !== this.state.searchParams.city) {
-      this.debouncedFetchCities();
+      this.debouncedfetchCitiesAuto();
     } else if (prevState.searchParams.event !== this.state.searchParams.event) {
-      this.debouncedFetchEvents();
+      this.debouncedFetchEventsAuto();
     }
   }
 
@@ -87,11 +90,11 @@ class MainPage extends React.Component {
   }
 
   fetchCityValues() {
-    this.props.fetchCities({ city: this.state.searchParams.city });
+    this.props.fetchCitiesAuto({ city: this.state.searchParams.city });
   }
 
   fetchEventValues() {
-    console.log("will fetch events");
+    this.props.fetchEventsAuto({ event: this.state.searchParams.event });
   }
 
   handleSubmit(event) {
@@ -208,7 +211,7 @@ class MainPage extends React.Component {
         <div className="search-form-select-arrow"/>
       </div>
     );
-      console.log("rendering!")
+
         return (
       <div className="splash-page">
         <div className="splash-header">
@@ -224,7 +227,7 @@ class MainPage extends React.Component {
                   value={this.state.searchParams.event}
                   className="search-form-input-event"
                   onMouseDown={this.toggleInputDropdown(("event"))} 
-                  placeholder="Event" value={this.state.event} 
+                  placeholder="Event" 
                   onChange={this.handleInput("event")}
                 />
                 <div className="input-styling-underline" />
@@ -232,7 +235,7 @@ class MainPage extends React.Component {
                   dropdownType="events" 
                   dropdownShow={this.state.eventDropdownShow} 
                   autocomplete={this.autocomplete("event")}
-                  cities={this.props.cities}
+                  events={this.props.events}
                 />
               </div>
               <div className="splash-header-search-form-content city-content">
@@ -242,7 +245,7 @@ class MainPage extends React.Component {
                   value={this.state.searchParams.city}
                   className="search-form-input-city"
                   onMouseDown={this.toggleInputDropdown("city")} 
-                  placeholder="Location" value={this.state.city} 
+                  placeholder="Location"
                   onChange={this.handleInput("city")}
                 />
                 <div className="input-styling-underline" />

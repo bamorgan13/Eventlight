@@ -14,7 +14,7 @@ const defaultState = {
 };
 
 
-const CitiesReducer = (state = defaultState, action) => {
+const CitiesAutocompleteReducer = (state = defaultState, action) => {
   Object.freeze(state);
 
   switch (action.type) {
@@ -31,4 +31,4 @@ const CitiesReducer = (state = defaultState, action) => {
   }
 };
 
-export default CitiesReducer;
+export default CitiesAutocompleteReducer;
