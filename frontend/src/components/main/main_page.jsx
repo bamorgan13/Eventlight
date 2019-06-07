@@ -80,23 +80,6 @@ class MainPage extends React.Component {
     };
   }
 
-  autocomplete(field) {
-    const { searchParams } = this.state;
-    const newSearchParams = Object.assign({}, searchParams);
-    return autocompleteValue => {
-      newSearchParams[field] = autocompleteValue;
-      this.setState({ searchParams: newSearchParams });
-    }
-  }
-
-  fetchCityValues() {
-    this.props.fetchCitiesAuto({ city: this.state.searchParams.city });
-  }
-
-  fetchEventValues() {
-    this.props.fetchEventsAuto({ event: this.state.searchParams.event });
-  }
-
   handleSubmit(event) {
     event.preventDefault();
     const { searchParams } = this.state;
@@ -115,6 +98,23 @@ class MainPage extends React.Component {
     this.props.history.push("./events");
   }
 
+  autocomplete(field) {
+    const { searchParams } = this.state;
+    const newSearchParams = Object.assign({}, searchParams);
+    return autocompleteValue => {
+      newSearchParams[field] = autocompleteValue;
+      this.setState({ searchParams: newSearchParams });
+    }
+  }
+
+  fetchCityValues() {
+    this.props.fetchCitiesAuto({ city: this.state.searchParams.city });
+  }
+
+  fetchEventValues() {
+    this.props.fetchEventsAuto({ event: this.state.searchParams.event });
+  }
+
   closeCalendar(event) {
     const { searchParams } = this.state;
     searchParams.date = "";
@@ -129,69 +129,13 @@ class MainPage extends React.Component {
     this.setState({ searchParams });
   }
 
-  formatDates(dates) {
-      if (typeof dates === "string") return "";
-      const datesList = dates.map( date => new Date(date) );
-      const monthNames = [
-        "January", "February", "March",
-        "April", "May", "June", "July",
-        "August", "September", "October",
-        "November", "December"
-      ];
-      let prettyFormat = [];      
-      datesList.forEach(date => {
-        const day = date.getDate();
-        const monthIndex = date.getMonth();
-        const year = date.getFullYear();
-      
-        prettyFormat.push(day + ' ' + monthNames[monthIndex] + ' ' + year);
-      })
-    return prettyFormat.join(" - ");
-  }
-
-  getDates() {
-    let returnDates = {};
-    const now = new Date();
-    const todayStart = new Date().setHours(0,0,0,0);
-    const todayEnd = new Date().setHours(23,59,59,999);
-    returnDates["today"] = [todayStart, todayEnd];
-    const tomorrowStart = todayEnd + 1;
-    const tomorrowEnd = new Date(todayEnd).setDate(now.getDate() + 1);
-    returnDates["tomorrow"] = [tomorrowStart, tomorrowEnd];
-    let thisWeekendStart;
-    let thisWeekendEnd;
-    for (let i = 0; i < 7; i++) {
-      thisWeekendStart = null;
-      thisWeekendEnd = null;
-      const day = new Date(new Date(now).setDate(now.getDate() + i));
-      if (day.getDay() === 6) {
-        thisWeekendStart = day.setHours(0,0,0,0);
-        thisWeekendEnd = new Date(new Date(day).setDate(day.getDate() + 1)).setHours(23,59,59,999);
-        break;
-      }
-    }
-    returnDates["thisWeekend"] = [thisWeekendStart, thisWeekendEnd];
-    const thisWeekStart = now.setHours(0,0,0,0);
-    const thisWeekEnd = thisWeekendEnd;
-    returnDates["thisWeek"] = [thisWeekStart, thisWeekEnd];
-    const nextWeekStart = thisWeekEnd + 1;
-    const nextWeekEnd = new Date(new Date(nextWeekStart).setDate(new Date(nextWeekStart).getDate() + 6)).setHours(23,59,59,999);
-    returnDates["nextWeek"] = [nextWeekStart, nextWeekEnd];
-    const thisMonthStart = now.setHours(0,0,0,0);
-    const thisMonthEnd = new Date(new Date(new Date(thisMonthStart).setDate(32)).setDate(0)).setHours(23,59,59,999);
-    returnDates["thisMonth"] = [thisMonthStart, thisMonthEnd];
-    const nextMonthStart = thisMonthEnd + 1;
-    const nextMonthEnd = new Date(new Date(new Date(nextMonthStart).setDate(32)).setDate(0)).setHours(23,59,59,999);
-    returnDates["nextMonth"] = [nextMonthStart, nextMonthEnd];
-    return returnDates;
-  }
-
   render() {
-    const dateOptions = this.getDates();
+    const dateOptions = SearchUtil.getDates();
     const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions;
+    
     const dateInputEle = this.state.calendarShow ? (
       <div className="search-form-select-wrapper">
-        <div>{this.formatDates(this.state.searchParams.date)}</div>
+        <div>{SearchUtil.formatDates(this.state.searchParams.date)}</div>
         <Calendar className={`search-form-calendar-${this.state.calendarClass}`} selectRange={true} returnValue="range" onChange={this.handleInputFromCalendar}/>
         <div className="search-form-select-close" onClick={this.closeCalendar}>&times;</div>
       </div>
