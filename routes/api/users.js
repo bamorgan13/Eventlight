@@ -14,13 +14,17 @@ router.get(
   '/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    res.json({
-      id: req.user.id,
-      full_name: req.user.full_name,
-      email: req.user.email,
-      liked_events: req.user.liked_events,
-      registrations: req.user.registrations
-    })
+    if (req.user) {
+      res.json({
+        id: req.user.id,
+        full_name: req.user.full_name,
+        email: req.user.email,
+        liked_events: req.user.liked_events,
+        registrations: req.user.registrations
+      })
+    } else {
+      res.status(400).json({ error: 'No current user' })
+    }
   }
 )
 
