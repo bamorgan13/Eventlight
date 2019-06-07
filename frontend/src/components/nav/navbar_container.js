@@ -6,6 +6,7 @@ import NavBar from './navbar'
 
 const mapStateToProps = state => ({
   loggedIn: loggedIn(state),
+  user: state.session.user,
   numLiked: numLiked(state),
   numRegistrations: numRegistrations(state)
 })

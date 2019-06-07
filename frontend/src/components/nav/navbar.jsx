@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import '../../styles/navbar.css'
+import Avatar from '../users/avatar'
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class NavBar extends React.Component {
 
   getDropdown() {
     const { dropdownHover } = this.state
-    const { numLiked, numRegistrations } = this.props
+    const { numLiked, numRegistrations, user } = this.props
 
     return (
       <div
@@ -46,7 +47,7 @@ class NavBar extends React.Component {
         onMouseEnter={this.toggleHover}
         onMouseLeave={this.toggleHover}
       >
-        Avatar
+        <Avatar user={user} />
         <ul className={`nav-minor-dropdown-list-${dropdownHover}`}>
           <li className="nav-minor-dropdown-list-item browse-events-item">
             <Link to="/events">Browse Events</Link>

@@ -9,6 +9,7 @@ import LoginFormContainer from './session/login_form_container'
 import RegisterFormContainer from './session/register_form_container'
 import EventIndexContainer from './events/event_index_container'
 import LikeIndexContainer from './likes/like_index_container'
+import RegistrationsPage from './registrations/registrations_page'
 
 const style = {
   fontFamily: `Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif`
@@ -22,7 +23,12 @@ const App = () => (
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/register" component={RegisterFormContainer} />
       <Route exact path="/events" component={EventIndexContainer} />
-      <Route exact path="/likes" component={LikeIndexContainer} />
+      <ProtectedRoute exact path="/likes" component={LikeIndexContainer} />
+      <ProtectedRoute
+        exact
+        path="/registrations"
+        component={RegistrationsPage}
+      />
     </Switch>
   </div>
 )
