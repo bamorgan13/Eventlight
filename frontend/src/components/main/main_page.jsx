@@ -2,6 +2,7 @@ import React from 'react';
 import splashImage from "./bg-desktop-snowglobe.jpg";
 import Calendar from "react-calendar";
 import AutocompleteDropdownContainer from "./autocomplete_dropdown_container";
+import * as SearchUtil from "../../util/search_util";
 import "../../styles/splash.css";
 
 class MainPage extends React.Component {
@@ -20,10 +21,20 @@ class MainPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputFromCalendar = this.handleInputFromCalendar.bind(this);
     this.closeCalendar = this.closeCalendar.bind(this);
+    this.debouncedFetchCities = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this);
+    this.debouncedFetchEvents = SearchUtil.debounce(this.fetchEventValues.bind(this), 500).bind(this);
   }
 
   componentWillMount() {
     document.addEventListener("click", this.handleClick);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchParams.location !== this.state.searchParams.location) {
+      this.debouncedFetchCities();
+    } else if (prevState.searchParams.event !== this.state.searchParams.event) {
+      this.debouncedFetchEvents();
+    }
   }
 
   showInputDropdown(dropdownType) {
@@ -46,21 +57,30 @@ class MainPage extends React.Component {
 
   handleInput(field) {
     const { searchParams } = this.state;
+    const newSearchParams = Object.assign({}, searchParams);
     return event => {
       if (field === "date") {
         if (event.target.value === "Pick a date...") {
-          searchParams[field] = "";
-          this.setState({ calendarShow: true, calendarClass: "active", searchParams });
+          newSearchParams[field] = "";
+          this.setState({ calendarShow: true, calendarClass: "active", searchParams: newSearchParams });
         } else {
           const datesAsIntegers = event.target.value.split(",").map( date => parseInt(date));
-          searchParams[field] = datesAsIntegers;
-          this.setState({ searchParams });
+          newSearchParams[field] = datesAsIntegers;
+          this.setState({ searchParams: newSearchParams });
         }
       } else {
-        searchParams[field] = event.target.value;
-        this.setState({ searchParams });
+        newSearchParams[field] = event.target.value;
+        this.setState({ searchParams: newSearchParams });
       }
     };
+  }
+
+  fetchCityValues() {
+    this.props.fetchCities({ city: this.state.searchParams.location });
+  }
+
+  fetchEventValues() {
+    console.log("will fetch events");
   }
 
   handleSubmit(event) {
@@ -177,7 +197,7 @@ class MainPage extends React.Component {
         <div className="search-form-select-arrow"/>
       </div>
     );
-    
+
     return (
       <div className="splash-page">
         <div className="splash-header">

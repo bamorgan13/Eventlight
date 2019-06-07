@@ -5,7 +5,7 @@ import { fetchCities } from "../../actions/city_actions";
 
 const mstp = state => {
   return {
-    cityFilterValue: state.ui.filter.city
+    
   };
 };
 
