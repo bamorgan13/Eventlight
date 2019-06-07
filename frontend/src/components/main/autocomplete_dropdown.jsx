@@ -17,7 +17,9 @@ class AutocompleteDropdown extends React.Component {
           <div className="autocomplete-dropdown-list-item-primary">
             {val.title}
             <div className="autocomplete-dropdown-list-item-secondary">{moment(new Date(val.start_date)).format("llll")}</div>
-            <div className="autocomplete-dropdown-list-item-tertiary">{val.location.location_name + val.location.city}</div>
+            <div className="autocomplete-dropdown-list-item-tertiary">
+              {`${val.location.location_name || val.location.location_address} ${val.city_info.city}, ${val.city_info.state}`}
+            </div>
           </div>
         </li> 
         );
