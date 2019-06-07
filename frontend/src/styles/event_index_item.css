@@ -107,6 +107,10 @@
 	background: rgb(245, 245, 245);
 }
 
+.event-index-list__item__like-button:focus {
+	outline: none;
+}
+
 .like-icon {
 	background-image: url('./heart-outline.png');
 	background-size: contain;

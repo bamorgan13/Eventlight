@@ -1,4 +1,4 @@
-import { RECEIVE_EVENT_ERRORS, RECEIVE_EVENTS, CLEAR_ERRORS } from '../actions/event_actions'
+import { RECEIVE_EVENT_ERRORS, RECEIVE_EVENTS, RECEIVE_EVENT, CLEAR_ERRORS } from '../actions/event_actions'
 
 const _nullErrors = []
 
@@ -8,6 +8,8 @@ const EventErrorsReducer = (state = _nullErrors, action) => {
 		case RECEIVE_EVENT_ERRORS:
 			return action.errors
 		case RECEIVE_EVENTS:
+			return _nullErrors
+		case RECEIVE_EVENT:
 			return _nullErrors
 		case CLEAR_ERRORS:
 			return _nullErrors
