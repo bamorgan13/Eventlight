@@ -1,4 +1,4 @@
-import { RECEIVE_CITIES, CLEAR_CITIES } from "../actions/city_actions"
+import { RECEIVE_CITIES_AUTO, CLEAR_AUTOCOMPLETE, CLEAR_CITIES } from "../actions/autocomplete_actions";
 
 const defaultState = {
   0: { _id: 0, city: "San Francisco", state: "CA"},
@@ -18,12 +18,15 @@ const CitiesAutocompleteReducer = (state = defaultState, action) => {
   Object.freeze(state);
 
   switch (action.type) {
-    case RECEIVE_CITIES:
+    case RECEIVE_CITIES_AUTO:
       const newState = {};
       action.cities.data.forEach( city => newState[city._id] = city );
       return newState;
 
     case CLEAR_CITIES:
+      return defaultState;
+
+    case CLEAR_AUTOCOMPLETE:
       return defaultState;
 
     default:

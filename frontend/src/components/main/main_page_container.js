@@ -1,8 +1,7 @@
 import { connect } from "react-redux"
 import MainPage from "./main_page";
 import { updateFilter } from "../../actions/filter_actions";
-import { fetchCitiesAuto } from "../../actions/city_actions";
-import { fetchEventsAuto } from "../../actions/event_actions";
+import { fetchCitiesAuto, fetchEventsAuto, clearAutocomplete } from "../../actions/autocomplete_actions";
 
 const mstp = state => {
   return {
@@ -15,7 +14,8 @@ const mdtp = dispatch => {
   return {
     updateFilter: filter => dispatch(updateFilter(filter)),
     fetchCitiesAuto: cityFilter => dispatch(fetchCitiesAuto(cityFilter)),
-    fetchEventsAuto: eventFilter => dispatch(fetchEventsAuto(eventFilter))
+    fetchEventsAuto: eventFilter => dispatch(fetchEventsAuto(eventFilter)),
+    clearAutocomplete: () => dispatch(clearAutocomplete()),
   };
 };
 

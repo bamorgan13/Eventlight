@@ -1,11 +1,10 @@
-import { getEvents, getEvent, getLikedEvents, fetchEventsAutocomplete } from '../util/event_api_util'
+import { getEvents, getEvent, getLikedEvents } from '../util/event_api_util'
 
 export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
 export const RECEIVE_LIKED_EVENTS = 'RECEIVE_LIKED_EVENTS'
 export const RECEIVE_EVENT = 'RECEIVE_EVENT'
 export const RECEIVE_EVENT_ERRORS = 'RECEIVE_EVENT_ERRORS'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
-export const RECEIVE_EVENTS_AUTO = 'RECEIVE_EVENTS_AUTO'
 
 export const receiveEvents = events => ({
 	type: RECEIVE_EVENTS,
@@ -35,20 +34,6 @@ export const fetchEvents = () => dispatch =>
 	getEvents()
 		.then(events => dispatch(receiveEvents(events)))
 		.catch(errors => dispatch(receiveEventErrors(errors)))
-
-export const receiveEventsAuto = events => {
-	return {
-		type: RECEIVE_EVENTS_AUTO,
-		events
-	};
-};
-
-export const fetchEventsAuto = filter => {
-	return dispatch => {
-		return fetchEventsAutocomplete(filter)
-			.then( events => dispatch(receiveEventsAuto(events)) );
-	};
-};
 
 export const fetchEvent = id => dispatch =>
 	getEvent(id)

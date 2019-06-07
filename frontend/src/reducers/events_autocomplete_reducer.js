@@ -1,4 +1,4 @@
-import { RECEIVE_EVENTS_AUTO } from "../actions/event_actions"
+import { RECEIVE_EVENTS_AUTO, CLEAR_AUTOCOMPLETE } from "../actions/autocomplete_actions"
 
 const EventsAutocompleteReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -8,6 +8,9 @@ const EventsAutocompleteReducer = (state = {}, action) => {
       const newState = {};
       action.events.data.forEach( event => newState[event._id] = event );
       return newState;
+
+    case CLEAR_AUTOCOMPLETE:
+      return {};
 
     default:
       return state;

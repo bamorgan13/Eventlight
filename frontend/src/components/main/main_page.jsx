@@ -34,6 +34,10 @@ class MainPage extends React.Component {
     setTimeout(() => this.props.fetchEventsAuto({ event: "" }), 3000);
   }
 
+  componentWillUnmount() {
+    this.props.clearAutocomplete();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchParams.city !== this.state.searchParams.city) {
       this.debouncedfetchCitiesAuto();
