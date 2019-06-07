@@ -14,11 +14,17 @@ router.get(
   '/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    res.json({
-      id: req.user.id,
-      full_name: req.user.full_name,
-      email: req.user.email
-    })
+    if (req.user) {
+      res.json({
+        id: req.user.id,
+        full_name: req.user.full_name,
+        email: req.user.email,
+        liked_events: req.user.liked_events,
+        registrations: req.user.registrations
+      })
+    } else {
+      res.status(400).json({ error: 'No current user' })
+    }
   }
 )
 
@@ -64,7 +70,9 @@ router.post('/register', (req, res) => {
               const payload = {
                 id: user.id,
                 email: user.email,
-                full_name: user.full_name
+                full_name: user.full_name,
+                liked_events: user.liked_events,
+                registrations: user.registrations
               }
 
               jwt.sign(
@@ -107,7 +115,9 @@ router.post('/login', (req, res) => {
         const payload = {
           id: user.id,
           email: user.email,
-          full_name: user.full_name
+          full_name: user.full_name,
+          liked_events: user.liked_events,
+          registrations: user.registrations
         }
 
         jwt.sign(

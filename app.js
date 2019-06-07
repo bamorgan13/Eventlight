@@ -5,6 +5,7 @@ const db = require('./config/keys').mongoURI
 const bodyParser = require('body-parser')
 const users = require('./routes/api/users')
 const events = require('./routes/api/events')
+const likes = require('./routes/api/likes')
 const passport = require('passport')
 const path = require('path')
 
@@ -31,5 +32,6 @@ app.use(bodyParser.json())
 app.get('/', (_, res) => res.send('Eventlight all day'))
 app.use('/api/users', users)
 app.use('/api/events', events)
+app.use('/api/likes', likes)
 
 app.listen(port, () => console.log(`Server is running on port ${port}`))

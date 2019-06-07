@@ -5,6 +5,7 @@ const EventsReducer = (state = {}, action) => {
 	let newState = Object.assign({}, state)
 	switch (action.type) {
 		case RECEIVE_EVENTS:
+			newState = {}
 			action.events.data.forEach(event => (newState[event._id] = event))
 			return newState
 		case RECEIVE_EVENT:
