@@ -221,6 +221,7 @@
 	padding: 0 15px;
 	display: flex;
 	padding-top: 50px;
+	padding-bottom: 30px;
 }
 
 .event-show__body__header {
@@ -262,4 +263,38 @@
 	font-size: 0.93333rem;
 	color: rgb(57, 54, 79);
 	line-height: 20px;
+}
+
+.organizer-container {
+	border-top: 1px solid #dbdae3;
+	width: 83.33333%;
+	margin-left: 8.33333%;
+	padding: 60px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.organizer-container > * {
+	max-width: 83.33333%;
+	font-size: 0.93333rem;
+	line-height: 1.25rem;
+}
+
+.organizer-name {
+	padding: 7px 0 22px;
+	font-weight: 600;
+	font-size: 15px;
+	text-transform: capitalize;
+	color: #1e0a3c;
+}
+
+.organized-by-title {
+	letter-spacing: 0.25px;
+	color: rgb(30, 10, 60);
+	margin-bottom: 30px;
+}
+
+.organizer-description {
+	color: #6f7287;
 }

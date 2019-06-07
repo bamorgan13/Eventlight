@@ -3,13 +3,6 @@ import { formatDateAndTime, formatMonth, formatLongDateNum } from '../../util/fo
 import '../../styles/event_show.css'
 
 class EventShow extends React.Component {
-	// constructor(props) {
-	// 	super(props)
-	// 	this.state = {
-	// 		event: {}
-	// 	}
-	// }
-
 	componentWillMount() {
 		this.props.fetchEvent(this.props.eventId)
 	}
@@ -88,6 +81,13 @@ class EventShow extends React.Component {
 									</div>
 								</div>
 							</div>
+						</div>
+						<div className="organizer-container">
+							<h2 className="organizer-name">{event.organizer_name}</h2>
+							<p className="organized-by-title">
+								{event.organizer_name ? `Organizer of ${event.title}` : null}
+							</p>
+							<p className="organizer-description">{event.organizer_description}</p>
 						</div>
 					</div>
 				</div>
