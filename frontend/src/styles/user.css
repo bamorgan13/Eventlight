@@ -14,7 +14,11 @@
 .profile {
   display: flex;
   align-items: center;
-  background-color: #eeedf2;
+  background: linear-gradient(
+    to bottom,
+    #eeedf270 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   padding: 72px;
 }
 
