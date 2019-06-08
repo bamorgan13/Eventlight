@@ -2,6 +2,8 @@ import React from 'react';
 import splashImage from "./bg-desktop-snowglobe.jpg";
 import Calendar from "react-calendar";
 import AutocompleteDropdown from "./autocomplete_dropdown";
+import LikeIndexContainer from "../likes/like_index_container";
+import EventIndexContainer from "../events/event_index_container";
 import * as SearchUtil from "../../util/search_util";
 import "../../styles/splash.css";
 
@@ -107,16 +109,16 @@ class MainPage extends React.Component {
     const newSearchParams = Object.assign({}, searchParams);
     return autocompleteValue => {
       newSearchParams[field] = autocompleteValue;
-      this.setState({ searchParams: newSearchParams });
+      this.setState({ searchParams: newSearchParams, [`${field}DropdownShow`]: "hidden" });
     }
   }
 
   fetchCityValues() {
-    this.props.fetchCitiesAuto({ city: this.state.searchParams.city });
+    this.props.fetchCitiesAuto({ city: this.state.searchParams.city })
   }
 
   fetchEventValues() {
-    this.props.fetchEventsAuto({ event: this.state.searchParams.event });
+    this.props.fetchEventsAuto({ event: this.state.searchParams.event })
   }
 
   closeCalendar(event) {
@@ -213,6 +215,15 @@ class MainPage extends React.Component {
                 <button onClick={this.handleSubmit}><i className="fas fa-search"></i></button>
               </div>
             </form>
+          </div>
+        </div>
+        <div className="splash-likes-container">
+          <LikeIndexContainer />
+        </div>
+        <div className="splash-events-background">
+          <div className="splash-events-container">
+            <h1>Live your best life</h1>
+            <EventIndexContainer />
           </div>
         </div>
         <footer>
