@@ -1,0 +1,77 @@
+.manage-events-container {
+  background: #f8f7fa;
+  min-height: calc(100vh - 60px);
+}
+
+.manage-events-container h1 {
+  max-width: 1080px;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.5px;
+  color: rgb(30, 10, 60);
+  margin: 0 auto;
+  padding: 20px 15px;
+  box-sizing: border-box;
+}
+
+.manage-events-list-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.manage-events-list-container ul {
+  list-style: none;
+}
+
+.manage-events-list-item {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  color: rgb(111, 114, 135);
+}
+
+.manage-events-list-item-info {
+  padding: 0 10px;
+  margin-top: 10px;
+}
+
+.manage-events-list-item i {
+  font-size: 12px;
+  width: 15px;
+}
+
+.manage-events-list-item-info h3 span {
+  cursor: pointer;
+  font-weight: 400;
+  color: rgb(61, 100, 255);
+}
+
+.manage-events-list-item-info h3, 
+.manage-events-list-item-info span, 
+.manage-events-list-item-actions li,
+.manage-events-list-item-capacity {
+  font-size: .9333333333rem;
+  line-height: 1.25rem;
+}
+
+.manage-events-list-item-actions {
+  display: flex;
+  margin-top: 10px;
+}
+
+.manage-events-list-item-actions:hover {
+  color: rgb(61, 100, 255);
+}
+
+.manage-events-list-item-actions li:hover {
+  cursor: pointer;
+}
+
+.manage-events-list-item-actions-text {
+  margin-right: 15px;
+}
