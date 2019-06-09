@@ -3,10 +3,11 @@ import { merge } from 'lodash'
 import {
   RECEIVE_EVENTS,
   RECEIVE_LIKED_EVENTS,
+  RECEIVE_REGISTRATIONS,
   RECEIVE_EVENT
 } from '../actions/event_actions'
 
-const initialState = { all: {}, liked_events: {} }
+const initialState = { all: {}, liked_events: {}, registrations: {} }
 
 const EventsReducer = (state = initialState, action) => {
   Object.freeze(state)
@@ -23,6 +24,12 @@ const EventsReducer = (state = initialState, action) => {
       newState['liked_events'] = {}
       action.events.data.forEach(
         event => (newState['liked_events'][event._id] = event)
+      )
+      return newState
+    case RECEIVE_REGISTRATIONS:
+      newState['registrations'] = {}
+      action.events.data.forEach(
+        event => (newState['registrations'][event._id] = event)
       )
       return newState
     default:
