@@ -31,19 +31,26 @@ router.get('/', (req, res) => {
 	if (queryFilters.type) {
 		populateFilters.type.match = { name: queryFilters.type }
 	}
+	if (queryFilters.type) {
+		populateFilters.type.match = { name: queryFilters.type }
+	}
 	if (queryFilters.category) {
 		populateFilters.category.match = { name: queryFilters.category }
 	}
 	if (queryFilters.city) {
-		populateFilters.city.match = { city: queryFilters.city.city, state: queryFilters.city.state }
+		let cityRegex = new RegExp( "^" + queryFilters.city, "i" );
+		populateFilters.city.match = { city: cityRegex  }
 	}
-	queryFilters.start_date = queryFilters.start_date ? new Date(queryFilters.start_date) : new Date()
+
+	queryFilters.start_date = queryFilters.start_date 
+		? new Date( parseInt(queryFilters.start_date) ) 
+		: new Date()
 
 	queryFilters.end_date = queryFilters.end_date
-		? new Date(queryFilters.end_date)
+		? new Date( parseInt(queryFilters.end_date) )
 		: new Date(9999, 11, 31, 23, 59, 59, 999)
 
-	Event.find()
+	Event.find({ title: new RegExp(queryFilters.title, "i") })
 		.populate(populateFilters.creator)
 		.populate(populateFilters.type)
 		.populate(populateFilters.category)
@@ -62,8 +69,7 @@ router.get('/', (req, res) => {
 })
 
 router.get("/auto", (req, res) => {
-	let queryRegex = new RegExp(req.query.event);
-  queryRegex = new RegExp(queryRegex.source, queryRegex.flags + "i");
+	let queryRegex = new RegExp(req.query.event, "i");
   Event.aggregate([
 		{ $match: { title: queryRegex } },
 		{ $limit: 10 },

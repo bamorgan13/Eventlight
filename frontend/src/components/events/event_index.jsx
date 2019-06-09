@@ -5,7 +5,7 @@ import '../../styles/event_index.css'
 
 class EventIndex extends React.Component {
   componentWillMount() {
-    this.props.fetchEvents()
+    this.props.fetchEvents(this.props.searchFilters)
   }
 
   render() {

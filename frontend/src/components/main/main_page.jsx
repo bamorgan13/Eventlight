@@ -30,6 +30,8 @@ class MainPage extends React.Component {
 
   componentWillMount() {
     document.addEventListener("click", this.handleClick);
+    this.props.clearFilters()
+    this.props.fetchEvents();
   }
 
   componentDidMount() {
@@ -92,10 +94,7 @@ class MainPage extends React.Component {
     const cityState = searchParams.city.split(",");
     const filterParams = { 
       title: searchParams.event, 
-      city: { 
-        city: cityState[0], 
-        state: cityState[1]
-      },
+      city: cityState[0], 
       // switching naming convention to snake case to agree with backend filter parsing
       start_date: searchParams.date[0],
       end_date: searchParams.date[1]
@@ -185,7 +184,7 @@ class MainPage extends React.Component {
                   dropdownType="events" 
                   dropdownShow={this.state.eventDropdownShow} 
                   autocomplete={this.autocomplete("event")}
-                  events={this.props.events}
+                  events={this.props.autocompleteEvents}
                 />
               </div>
               <div className="splash-header-search-form-content city-content">
@@ -203,7 +202,7 @@ class MainPage extends React.Component {
                   dropdownType="cities" 
                   dropdownShow={this.state.cityDropdownShow} 
                   autocomplete={this.autocomplete("city")}
-                  cities={this.props.cities}
+                  cities={this.props.autocompleteCities}
                 />
               </div>
               <div className="splash-header-search-form-content date-content">

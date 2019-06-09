@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export const getEvents = () => {
-  return axios.get('/api/events')
+export const getEvents = filters => {
+  return axios.get('/api/events', { params: { ...filters } })
 }
 
 export const getLikedEvents = () => {
