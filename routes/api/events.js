@@ -28,6 +28,9 @@ router.get('/', (req, res) => {
 		city: { path: 'location.city' }
 	}
 
+	if (queryFilters.currentUserId) {
+		populateFilters.creator.match = { _id: queryFilters.currentUserId }
+	}
 	if (queryFilters.type) {
 		populateFilters.type.match = { name: queryFilters.type }
 	}

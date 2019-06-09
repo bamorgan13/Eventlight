@@ -11,6 +11,7 @@ import EventIndexContainer from './events/event_index_container'
 import EventShowContainer from './events/event_show_container'
 import LikeIndexContainer from './likes/like_index_container'
 import RegistrationsPage from './registrations/registrations_page'
+import ManageEventsContainer from "./events/manage_events_container"
 
 const style = {
 	fontFamily: `Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif`
@@ -31,6 +32,7 @@ const App = () => (
         path="/registrations"
         component={RegistrationsPage}
       />
+      <ProtectedRoute exact path="/myevents" component={ManageEventsContainer} />
     </Switch>
   </div>
 )
