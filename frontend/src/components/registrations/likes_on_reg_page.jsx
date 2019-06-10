@@ -29,7 +29,7 @@ class LikedEvents extends React.Component {
         <Link to="/likes">
           <h2>
             Likes
-            <i class="fas fa-chevron-right" />
+            <i className="fas fa-chevron-right" />
           </h2>
         </Link>
         <EventIndex useSquareComponent={true} {...this.props} />
