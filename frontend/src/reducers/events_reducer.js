@@ -31,6 +31,8 @@ const EventsReducer = (state = initialState, action) => {
       newState["current_users_events"] = {}
       action.events.data.forEach(
         event => (newState['current_users_events'][event._id] = event)
+      )
+      return newState
     case RECEIVE_REGISTRATIONS:
       newState['registrations'] = {}
       action.events.data.forEach(
