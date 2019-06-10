@@ -14,6 +14,9 @@ class AutocompleteDropdown extends React.Component {
       if (dropdownType === "events") {
         return (
         <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.title)}>
+          <div className="autocomplete-dropdown-list-item-img-container">
+            <img src={`${val.image_url}`}/>
+          </div>
           <div className="autocomplete-dropdown-list-item-primary">
             {val.title}
             <div className="autocomplete-dropdown-list-item-secondary">{moment(new Date(val.start_date)).format("llll")}</div>
@@ -37,6 +40,7 @@ class AutocompleteDropdown extends React.Component {
 
     return (
       <div className={`autocomplete-dropdown-${this.props.dropdownShow} autocomplete-dropdown-${this.props.dropdownType}`}>
+        <h3>{dropdownType === "events" ? "Events" : "Locations"}</h3>
         <ul className="autocomplete-dropdown-list">
           {listItems}
         </ul>
