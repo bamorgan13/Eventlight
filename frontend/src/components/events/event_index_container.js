@@ -4,13 +4,14 @@ import EventIndex from './event_index'
 
 const msp = state => {
 	return {
-		events: Object.values(state.events.all)
+		events: Object.values(state.events.all),
+		searchFilters: state.ui.filter
 	}
 }
 
 const mdp = dispatch => {
 	return {
-		fetchEvents: () => dispatch(fetchEvents())
+		fetchEvents: filters => dispatch(fetchEvents(filters)),
 	}
 }
 

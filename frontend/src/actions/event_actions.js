@@ -41,10 +41,10 @@ export const clearErrors = () => ({
   type: CLEAR_ERRORS
 })
 
-export const fetchEvents = () => dispatch =>
-  getEvents()
-    .then(events => dispatch(receiveEvents(events)))
-    .catch(errors => dispatch(receiveEventErrors(errors)))
+export const fetchEvents = filters => dispatch => 
+	getEvents(filters)
+		.then(events => dispatch(receiveEvents(events)))
+		.catch(errors => dispatch(receiveEventErrors(errors)))
 
 export const fetchEvent = id => dispatch =>
   getEvent(id)
