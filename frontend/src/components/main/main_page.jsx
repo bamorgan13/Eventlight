@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 import splashImage from "./bg-desktop-snowglobe.jpg";
 import Calendar from "react-calendar";
 import AutocompleteDropdown from "./autocomplete_dropdown";
@@ -219,11 +220,17 @@ class MainPage extends React.Component {
         </div>
         <div className="splash-likes-container">
           <LikeIndexContainer />
+          <div className="splash-likes-link">
+            <Link to="/likes">See more Events</Link>
+          </div>
         </div>
         <div className="splash-events-background">
           <div className="splash-events-container">
             <h1>Live your best life</h1>
             <EventIndexContainer />
+            <div className="splash-events-link">
+              <Link to="/events">See more Events</Link>
+          </div>
           </div>
         </div>
         <footer>

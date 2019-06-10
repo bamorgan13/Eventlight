@@ -42,7 +42,7 @@ class AutocompleteDropdown extends React.Component {
       <div className={`autocomplete-dropdown-${this.props.dropdownShow} autocomplete-dropdown-${this.props.dropdownType}`}>
         <h3>{dropdownType === "events" ? "Events" : "Locations"}</h3>
         <ul className="autocomplete-dropdown-list">
-          {listItems}
+          {listItems.length ? listItems : <li className="autocomplete-dropdown-list-item">{`No ${dropdownType} found`}</li>}
         </ul>
       </div>
     );
