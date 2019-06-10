@@ -12,6 +12,8 @@ import EventShowContainer from './events/event_show_container'
 import LikeIndexContainer from './likes/like_index_container'
 import RegistrationsPage from './registrations/registrations_page'
 
+import SignInErrorModal from './modals/signin_error_modal'
+
 const style = {
 	fontFamily: `Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif`
 }
@@ -19,6 +21,7 @@ const style = {
 const App = () => (
   <div style={style}>
     <NavBarContainer />
+    <SignInErrorModal />
     <Switch>
       <Route exact path="/" component={MainPageContainer} />
       <AuthRoute exact path="/login" component={LoginFormContainer} />
