@@ -1,5 +1,6 @@
 import * as ApiUtils from '../util/user_api_util'
 import { showSignInErrorModal } from './signin_error_modal_actions'
+import { receiveCurrentUser } from './session_actions'
 
 export const UPDATE_LIKES = 'UPDATE_LIKES'
 
@@ -20,4 +21,10 @@ export const toggleLikeEvent = event_id => (dispatch, getState) => {
       })
     }
   )
+}
+
+export const updateUser = user => dispatch => {
+  return ApiUtils.updateUser(user).then(({ data: usr }) => {
+    dispatch(receiveCurrentUser(usr))
+  })
 }
