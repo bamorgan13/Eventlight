@@ -234,6 +234,10 @@
   width: auto;
 }
 
+/* .event-index-list__item__shortdate .month-day {
+  
+} */
+
 .autocomplete-dropdown-list-item-primary {
   font-size: 14px;
   line-height: 18px;
@@ -316,6 +320,11 @@
 
 .event-index-grid main {
   padding: 24px;
+  display: flex;
+}
+
+.event-index-list__item__shortdate {
+  padding-right: 16px;
 }
 
 .event-index-grid .event-index-list__item__like-button {

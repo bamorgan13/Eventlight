@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import '../../styles/event_index_item.css'
 import { toggleLikeEvent } from '../../actions/user_actions'
 import { connect } from 'react-redux'
 import { isLiked } from '../../selectors'
+import { formatMonth, formatLongDateNum } from '../../util/format_util'
 
 const mstp = (state, ownProps) => ({
   isLiked: isLiked(state, ownProps.event._id)
@@ -53,6 +54,18 @@ class EventIndexItem extends React.Component {
       .slice(0, -3)
       .concat(formattedDate.slice(-2).toLowerCase())
 
+    let monthDay = null;
+    if (this.props.location.pathname === "/") {
+      monthDay = (
+        <div className="event-index-list__item__shortdate">
+            <div className="month-day">
+              <h4>{formatMonth(event.start_date).toUpperCase()}</h4>
+              <h3>{formatLongDateNum(event.start_date)}</h3>
+            </div>
+        </div>
+      )
+    }
+    
     return (
       <li className="event-index-list__item">
         <div className="event-index-list__item__content-outer-container">
@@ -71,31 +84,34 @@ class EventIndexItem extends React.Component {
               {freeIndicator}
             </aside>
             <main className="event-index-list__item__title-link">
-              <Link
-                className="event-index-list__item__title-link__link"
-                to={`events/${event._id}`}
-              >
-                <h3 className="event-index-list__item__title-link__title">
-                  {event.title}
-                </h3>
-              </Link>
-              <div className="event-index-list__item__info">
-                <p className="event-index-list__item__info__date">
-                  {formattedDate}
-                </p>
-                <p className="event-index-list__item__info__location">
-                  {formattedLocation}
-                </p>
-                <p className="event-index-list__item__info__price">
-                  {formattedPrice}
-                </p>
+              { monthDay }
+              <div className="event-index-list__item__title-link__container">
+                <Link
+                  className="event-index-list__item__title-link__link"
+                  to={`events/${event._id}`}
+                >
+                  <h3 className="event-index-list__item__title-link__title">
+                    {event.title}
+                  </h3>
+                </Link>
+                <div className="event-index-list__item__info">
+                  <p className="event-index-list__item__info__date">
+                    {formattedDate}
+                  </p>
+                  <p className="event-index-list__item__info__location">
+                    {formattedLocation}
+                  </p>
+                  <p className="event-index-list__item__info__price">
+                    {formattedPrice}
+                  </p>
+                </div>
+                <button
+                  className="event-index-list__item__like-button"
+                  onClick={() => toggleLikeEvent(event._id)}
+                >
+                  <div className={isLiked ? 'like-icon--active' : 'like-icon'} />
+                </button>
               </div>
-              <button
-                className="event-index-list__item__like-button"
-                onClick={() => toggleLikeEvent(event._id)}
-              >
-                <div className={isLiked ? 'like-icon--active' : 'like-icon'} />
-              </button>
             </main>
           </div>
         </div>
@@ -107,4 +123,4 @@ class EventIndexItem extends React.Component {
 export default connect(
   mstp,
   mdtp
-)(EventIndexItem)
+)(withRouter(EventIndexItem))
