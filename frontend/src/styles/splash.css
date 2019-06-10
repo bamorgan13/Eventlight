@@ -115,7 +115,7 @@
 .react-calendar {
   z-index: 999;
   position: absolute;
-  top: 22px;
+  top: 25px;
 }
 
 .search-form-calendar-hidden {
@@ -126,7 +126,7 @@
   outline: none;
 }
 
-.event-content, .location-content {
+.event-content, .city-content {
   border-right: 1px solid white;
 }
 
@@ -188,9 +188,9 @@
   background: white;
   box-shadow: 0 1px 17px 0 rgba(40,44,53,0.1), 0 2px 4px 0 rgba(40,44,53,0.1);
   color: black;
-  top: 70px;
-  left: 30px;
-  right: 30px;
+  top: 72px;
+  left: 15px;
+  right: 15px;
 }
 
 .autocomplete-dropdown-active {

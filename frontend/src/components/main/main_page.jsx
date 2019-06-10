@@ -59,7 +59,8 @@ class MainPage extends React.Component {
   handleClick(event) {
     if (this.state.calendarShow && !event.target.className.includes("react-calendar") && event.target.nodeName !== "ABBR") {
       this.setState({ calendarClass: "hidden" });
-    } else if (!event.target.className.includes("autocomplete")) {
+    }
+    if (!event.target.className.includes("autocomplete")) {
       if (this.state.eventDropdownShow === "active" && !event.target.className.includes("event")) {
         this.setState({ eventDropdownShow: "hidden" });
       } else if (this.state.cityDropdownShow === "active" && !event.target.className.includes("city")) {
@@ -139,8 +140,8 @@ class MainPage extends React.Component {
     const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions;
     
     const dateInputEle = this.state.calendarShow ? (
-      <div className="search-form-select-wrapper">
-        <div>{SearchUtil.formatDates(this.state.searchParams.date)}</div>
+      <div className="search-form-select-wrapper search-form-select-wrapper-react-calendar" onClick={() => this.setState({ calendarClass: "active" })}>
+        <div className="search-form-select-react-calendar-date">{SearchUtil.formatDates(this.state.searchParams.date)}</div>
         <Calendar className={`search-form-calendar-${this.state.calendarClass}`} selectRange={true} returnValue="range" onChange={this.handleInputFromCalendar}/>
         <div className="search-form-select-close" onClick={this.closeCalendar}>&times;</div>
       </div>
