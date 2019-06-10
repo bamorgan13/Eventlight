@@ -35,9 +35,9 @@ class ManageEvents extends React.Component {
       .map( event => <ManageEventsItem key={event._id} event={event}/>);
     let manageEventItems;
     if (this.state.liveTab === "active") {
-      manageEventItems = ( manageEventItemsLive.length ? manageEventItemsLive : <li className="manage-events-list-item-none">You don't have any live events</li>);
+      manageEventItems = ( manageEventItemsLive.length ? manageEventItemsLive : <li className="manage-events-list-item-none"><i className="far fa-calendar-alt"></i><span>You don't have any live events</span></li>);
     } else {
-      manageEventItems = ( manageEventItemsPast.length ? manageEventItemsPast : <li className="manage-events-list-item-none">You don't have any past events</li>);
+      manageEventItems = ( manageEventItemsPast.length ? manageEventItemsPast : <li className="manage-events-list-item-none"><i className="far fa-calendar-alt"></i><span>You don't have any past events</span></li>);
     }
 
     return (

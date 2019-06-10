@@ -51,6 +51,29 @@
   font-size: 15px;
 }
 
+.manage-events-list-item-none {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  height: 150px;
+  color: #6F7287;
+  padding: 10px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.manage-events-list-item-none i {
+  font-size: 64px;
+}
+
+.manage-events-list-item-none span {
+  margin-top: 5px;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
 .manage-events-container h1 {
   max-width: 1080px;
   font-size: 2rem;
