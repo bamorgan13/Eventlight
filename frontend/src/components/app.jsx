@@ -11,28 +11,26 @@ import EventIndexContainer from './events/event_index_container'
 import EventShowContainer from './events/event_show_container'
 import LikeIndexContainer from './likes/like_index_container'
 import RegistrationsPage from './registrations/registrations_page'
+import CreateEventContainer from './events/event_create_form_container'
 
 const style = {
 	fontFamily: `Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif`
 }
 
 const App = () => (
-  <div style={style}>
-    <NavBarContainer />
-    <Switch>
-      <Route exact path="/" component={MainPageContainer} />
-      <AuthRoute exact path="/login" component={LoginFormContainer} />
-      <AuthRoute exact path="/register" component={RegisterFormContainer} />
-      <Route exact path="/events" component={EventIndexContainer} />
-      <Route path="/events/:eventId" component={EventShowContainer} />
-      <ProtectedRoute exact path="/likes" component={LikeIndexContainer} />
-      <ProtectedRoute
-        exact
-        path="/registrations"
-        component={RegistrationsPage}
-      />
-    </Switch>
-  </div>
+	<div style={style}>
+		<NavBarContainer />
+		<Switch>
+			<Route exact path="/" component={MainPageContainer} />
+			<AuthRoute exact path="/login" component={LoginFormContainer} />
+			<AuthRoute exact path="/register" component={RegisterFormContainer} />
+			<Route exact path="/events" component={EventIndexContainer} />
+			<Route path="/events/:eventId" component={EventShowContainer} />
+			<ProtectedRoute exact path="/likes" component={LikeIndexContainer} />
+			<ProtectedRoute exact path="/registrations" component={RegistrationsPage} />
+			<ProtectedRoute exact path="/myevents/create" component={CreateEventContainer} />
+		</Switch>
+	</div>
 )
 
 export default App
