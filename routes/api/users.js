@@ -139,4 +139,29 @@ router.post('/login', (req, res) => {
   })
 })
 
+router.patch(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const userOnFile = req.user
+    const updatedUser = req.body.user
+
+    if (userOnFile.id !== updatedUser.id) {
+      const errors = { id: 'Unauthorized' }
+      return res.status(400).json(errors)
+    }
+
+    userOnFile.full_name = updatedUser.full_name
+    userOnFile.save().then(user => {
+      res.json({
+        id: user.id,
+        full_name: user.full_name,
+        email: user.email,
+        liked_events: user.liked_events,
+        registrations: user.registrations
+      })
+    })
+  }
+)
+
 module.exports = router
