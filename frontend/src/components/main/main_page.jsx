@@ -1,49 +1,89 @@
 import React from 'react';
 import splashImage from "./bg-desktop-snowglobe.jpg";
 import Calendar from "react-calendar";
+import AutocompleteDropdown from "./autocomplete_dropdown";
+import LikeIndexContainer from "../likes/like_index_container";
+import EventIndexContainer from "../events/event_index_container";
+import * as SearchUtil from "../../util/search_util";
 import "../../styles/splash.css";
 
 class MainPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-       searchParams: { event: "", location: "", date: "" },
-       calendarShow: false,
-       calendarClass: "hidden",
+      searchParams: { event: "", city: "", date: "" },
+      calendarShow: false,
+      calendarClass: "hidden",
+      eventDropdownShow: "hidden",
+      cityDropdownShow: "hidden",
      };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputFromCalendar = this.handleInputFromCalendar.bind(this);
+    this.autocomplete = this.autocomplete.bind(this);
     this.closeCalendar = this.closeCalendar.bind(this);
+    this.debouncedfetchCitiesAuto = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this);
+    this.debouncedFetchEventsAuto = SearchUtil.debounce(this.fetchEventValues.bind(this), 500).bind(this);
   }
 
   componentWillMount() {
     document.addEventListener("click", this.handleClick);
+    this.props.clearFilters()
+    this.props.fetchEvents();
   }
 
+  componentDidMount() {
+    setTimeout(() => this.props.fetchEventsAuto({ event: "" }), 3000);
+  }
+
+  componentWillUnmount() {
+    this.props.clearAutocomplete();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchParams.city !== this.state.searchParams.city) {
+      this.debouncedfetchCitiesAuto();
+    } else if (prevState.searchParams.event !== this.state.searchParams.event) {
+      this.debouncedFetchEventsAuto();
+    }
+  }
+
+  toggleInputDropdown(dropdownType) {
+    return event => {
+      this.setState({ [`${dropdownType}DropdownShow`]: "active" });
+    };
+  }
+  
   handleClick(event) {
     if (this.state.calendarShow && !event.target.className.includes("react-calendar") && event.target.nodeName !== "ABBR") {
       this.setState({ calendarClass: "hidden" });
-    } 
+    } else if (!event.target.className.includes("autocomplete")) {
+      if (this.state.eventDropdownShow === "active" && !event.target.className.includes("event")) {
+        this.setState({ eventDropdownShow: "hidden" });
+      } else if (this.state.cityDropdownShow === "active" && !event.target.className.includes("city")) {
+        this.setState({ cityDropdownShow: "hidden" });
+      }
+    }
   }
 
   handleInput(field) {
     const { searchParams } = this.state;
+    const newSearchParams = Object.assign({}, searchParams);
     return event => {
       if (field === "date") {
         if (event.target.value === "Pick a date...") {
-          searchParams[field] = "";
-          this.setState({ calendarShow: true, calendarClass: "active", searchParams });
+          newSearchParams[field] = "";
+          this.setState({ calendarShow: true, calendarClass: "active", searchParams: newSearchParams });
         } else {
           const datesAsIntegers = event.target.value.split(",").map( date => parseInt(date));
-          searchParams[field] = datesAsIntegers;
-          this.setState({ searchParams });
+          newSearchParams[field] = datesAsIntegers;
+          this.setState({ searchParams: newSearchParams });
         }
       } else {
-        searchParams[field] = event.target.value;
-        this.setState({ searchParams });
+        newSearchParams[field] = event.target.value;
+        this.setState({ searchParams: newSearchParams });
       }
     };
   }
@@ -51,18 +91,33 @@ class MainPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { searchParams } = this.state;
-    const locationCityState = searchParams.location.split(",");
+    const cityState = searchParams.city.split(",");
     const filterParams = { 
       title: searchParams.event, 
-      city: { 
-        city: locationCityState[0], 
-        state: locationCityState[1]
-      },
+      city: cityState[0], 
       // switching naming convention to snake case to agree with backend filter parsing
       start_date: searchParams.date[0],
       end_date: searchParams.date[1]
     };
-    // send up search params here
+    this.props.updateFilter(filterParams);
+    this.props.history.push("./events");
+  }
+
+  autocomplete(field) {
+    const { searchParams } = this.state;
+    const newSearchParams = Object.assign({}, searchParams);
+    return autocompleteValue => {
+      newSearchParams[field] = autocompleteValue;
+      this.setState({ searchParams: newSearchParams, [`${field}DropdownShow`]: "hidden" });
+    }
+  }
+
+  fetchCityValues() {
+    this.props.fetchCitiesAuto({ city: this.state.searchParams.city })
+  }
+
+  fetchEventValues() {
+    this.props.fetchEventsAuto({ event: this.state.searchParams.event })
   }
 
   closeCalendar(event) {
@@ -79,69 +134,13 @@ class MainPage extends React.Component {
     this.setState({ searchParams });
   }
 
-  formatDates(dates) {
-      if (typeof dates === "string") return "";
-      const datesList = dates.map( date => new Date(date) );
-      const monthNames = [
-        "January", "February", "March",
-        "April", "May", "June", "July",
-        "August", "September", "October",
-        "November", "December"
-      ];
-      let prettyFormat = [];      
-      datesList.forEach(date => {
-        const day = date.getDate();
-        const monthIndex = date.getMonth();
-        const year = date.getFullYear();
-      
-        prettyFormat.push(day + ' ' + monthNames[monthIndex] + ' ' + year);
-      })
-    return prettyFormat.join(" - ");
-  }
-
-  getDates() {
-    let returnDates = {};
-    const now = new Date();
-    const todayStart = new Date().setHours(0,0,0,0);
-    const todayEnd = new Date().setHours(23,59,59,999);
-    returnDates["today"] = [todayStart, todayEnd];
-    const tomorrowStart = todayEnd + 1;
-    const tomorrowEnd = new Date(todayEnd).setDate(now.getDate() + 1);
-    returnDates["tomorrow"] = [tomorrowStart, tomorrowEnd];
-    let thisWeekendStart;
-    let thisWeekendEnd;
-    for (let i = 0; i < 7; i++) {
-      thisWeekendStart = null;
-      thisWeekendEnd = null;
-      const day = new Date(new Date(now).setDate(now.getDate() + i));
-      if (day.getDay() === 6) {
-        thisWeekendStart = day.setHours(0,0,0,0);
-        thisWeekendEnd = new Date(new Date(day).setDate(day.getDate() + 1)).setHours(23,59,59,999);
-        break;
-      }
-    }
-    returnDates["thisWeekend"] = [thisWeekendStart, thisWeekendEnd];
-    const thisWeekStart = now;
-    const thisWeekEnd = thisWeekendEnd;
-    returnDates["thisWeek"] = [thisWeekStart, thisWeekEnd];
-    const nextWeekStart = thisWeekEnd + 1;
-    const nextWeekEnd = new Date(new Date(nextWeekStart).setDate(new Date(nextWeekStart).getDate() + 6)).setHours(23,59,59,999);
-    returnDates["nextWeek"] = [nextWeekStart, nextWeekEnd];
-    const thisMonthStart = now;
-    const thisMonthEnd = new Date(new Date(new Date(thisMonthStart).setDate(32)).setDate(0)).setHours(23,59,59,999);
-    returnDates["thisMonth"] = [thisMonthStart, thisMonthEnd];
-    const nextMonthStart = thisMonthEnd + 1;
-    const nextMonthEnd = new Date(new Date(new Date(nextMonthStart).setDate(32)).setDate(0)).setHours(23,59,59,999);
-    returnDates["nextMonth"] = [nextMonthStart, nextMonthEnd];
-    return returnDates;
-  }
-
   render() {
-    const dateOptions = this.getDates();
+    const dateOptions = SearchUtil.getDates();
     const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions;
+    
     const dateInputEle = this.state.calendarShow ? (
       <div className="search-form-select-wrapper">
-        <div>{this.formatDates(this.state.searchParams.date)}</div>
+        <div>{SearchUtil.formatDates(this.state.searchParams.date)}</div>
         <Calendar className={`search-form-calendar-${this.state.calendarClass}`} selectRange={true} returnValue="range" onChange={this.handleInputFromCalendar}/>
         <div className="search-form-select-close" onClick={this.closeCalendar}>&times;</div>
       </div>
@@ -162,7 +161,7 @@ class MainPage extends React.Component {
       </div>
     );
 
-    return (
+        return (
       <div className="splash-page">
         <div className="splash-header">
           <div className="splash-header-image">
@@ -172,13 +171,39 @@ class MainPage extends React.Component {
             <form className="splash-header-search-form">
               <div className="splash-header-search-form-content event-content">
                 <div className="search-form-input-info">Looking for</div>
-                <input type="text" placeholder="Event" value={this.state.event} onChange={this.handleInput("event")}/>
+                <input 
+                  type="text" 
+                  value={this.state.searchParams.event}
+                  className="search-form-input-event"
+                  onMouseDown={this.toggleInputDropdown(("event"))} 
+                  placeholder="Event" 
+                  onChange={this.handleInput("event")}
+                />
                 <div className="input-styling-underline" />
+                <AutocompleteDropdown 
+                  dropdownType="events" 
+                  dropdownShow={this.state.eventDropdownShow} 
+                  autocomplete={this.autocomplete("event")}
+                  events={this.props.autocompleteEvents}
+                />
               </div>
-              <div className="splash-header-search-form-content location-content">
+              <div className="splash-header-search-form-content city-content">
                 <div className="search-form-input-info">In</div>
-                <input type="text" placeholder="Location    (e.g. San Francisco, CA)" value={this.state.location} onChange={this.handleInput("location")}/>
+                <input 
+                  type="text" 
+                  value={this.state.searchParams.city}
+                  className="search-form-input-city"
+                  onMouseDown={this.toggleInputDropdown("city")} 
+                  placeholder="Location"
+                  onChange={this.handleInput("city")}
+                />
                 <div className="input-styling-underline" />
+                <AutocompleteDropdown 
+                  dropdownType="cities" 
+                  dropdownShow={this.state.cityDropdownShow} 
+                  autocomplete={this.autocomplete("city")}
+                  cities={this.props.autocompleteCities}
+                />
               </div>
               <div className="splash-header-search-form-content date-content">
                 <div className="search-form-input-info">On</div>
@@ -189,6 +214,15 @@ class MainPage extends React.Component {
                 <button onClick={this.handleSubmit}><i className="fas fa-search"></i></button>
               </div>
             </form>
+          </div>
+        </div>
+        <div className="splash-likes-container">
+          <LikeIndexContainer />
+        </div>
+        <div className="splash-events-background">
+          <div className="splash-events-container">
+            <h1>Live your best life</h1>
+            <EventIndexContainer />
           </div>
         </div>
         <footer>
