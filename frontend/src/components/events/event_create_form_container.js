@@ -3,7 +3,6 @@ import { createEvent } from '../../actions/event_actions'
 import EventForm from './event_form'
 import { fetchTypes } from '../../actions/type_actions'
 import { fetchCategories } from '../../actions/category_actions'
-// import { fetchCitiesAuto, clearAutocomplete } from '../../actions/autocomplete_actions'
 
 const msp = state => {
 	return {
@@ -42,8 +41,6 @@ const mdp = dispatch => {
 		submit: data => dispatch(createEvent(data)),
 		fetchTypes: () => dispatch(fetchTypes()),
 		fetchCategories: () => dispatch(fetchCategories())
-		// fetchCitiesAuto: cityFilter => dispatch(fetchCitiesAuto(cityFilter)),
-		// clearAutocomplete: () => dispatch(clearAutocomplete())
 	}
 }
 

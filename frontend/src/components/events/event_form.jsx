@@ -1,7 +1,5 @@
 import React from 'react'
 import DateTimePicker from 'react-datetime-picker'
-// import AutocompleteDropdown from '../main/autocomplete_dropdown'
-// import * as SearchUtil from '../../util/search_util'
 import { merge } from 'lodash'
 
 class EventForm extends React.Component {
@@ -11,30 +9,18 @@ class EventForm extends React.Component {
 			event: props.event,
 			locationType: 'Venue',
 			activeForm: 'basicInfo'
-			// cityDropdownShow: 'hidden',
-			// searchParams: {
-			// 	city: ''
-			// }
 		}
 
-		// this.handleClick = this.handleClick.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handlePrevious = this.handlePrevious.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 		this.handleLocationChange = this.handleLocationChange.bind(this)
-		// this.debouncedfetchCitiesAuto = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this)
 	}
 
 	componentWillMount() {
-		// document.addEventListener('click', this.handleClick)
 		this.props.fetchTypes()
 		this.props.fetchCategories()
 	}
-
-	// componentDidUpdate(prevProps, prevState) {
-	// 	if (prevState.searchParams.city !== this.state.searchParams.city) {
-	// 		this.debouncedfetchCitiesAuto()
-	// 	}
-	// }
 
 	handleChange(field) {
 		return e => {
@@ -66,36 +52,15 @@ class EventForm extends React.Component {
 		}
 	}
 
-	// handleClick(e) {
-	// 	if (this.state.calendarShow && !e.target.className.includes('react-calendar') && e.target.nodeName !== 'ABBR') {
-	// 		this.setState({ calendarClass: 'hidden' })
-	// 	} else if (
-	// 		!e.target.className.includes('autocomplete') &&
-	// 		this.state.cityDropdownShow === 'active' &&
-	// 		!e.target.className.includes('city')
-	// 	) {
-	// 		this.setState({ cityDropdownShow: 'hidden' })
-	// 	}
-	// }
+	handlePrevious(e) {
+		e.preventDefault()
 
-	// autocomplete(field) {
-	// 	const { searchParams } = this.state
-	// 	const newSearchParams = Object.assign({}, searchParams)
-	// 	return autocompleteValue => {
-	// 		newSearchParams[field] = autocompleteValue
-	// 		this.setState({ searchParams: newSearchParams, [`${field}DropdownShow`]: 'hidden' })
-	// 	}
-	// }
-
-	// toggleInputDropdown(dropdownType) {
-	// 	return e => {
-	// 		this.setState({ [`${dropdownType}DropdownShow`]: 'active' })
-	// 	}
-	// }
-
-	// fetchCityValues() {
-	// 	this.props.fetchCitiesAuto({ city: this.state.searchParams.city })
-	// }
+		if (this.state.activeForm === 'details') {
+			this.setState({ activeForm: 'basicInfo' })
+		} else {
+			this.setState({ activeForm: 'details' })
+		}
+	}
 
 	render() {
 		const event = this.state.event
@@ -264,7 +229,6 @@ class EventForm extends React.Component {
 								calendarClassName="start-date calendar"
 								clockClassName="start-date clock"
 								disableClock={true}
-								required={true}
 								amPm={true}
 								onChange={this.handleDateTimeChange('start_date')}
 								value={event.start_date}
@@ -276,7 +240,6 @@ class EventForm extends React.Component {
 								calendarClassName="end-date calendar"
 								clockClassName="end-date clock"
 								disableClock={true}
-								required={true}
 								amPm={true}
 								onChange={this.handleDateTimeChange('end_date')}
 								value={event.end_date}
@@ -290,12 +253,18 @@ class EventForm extends React.Component {
 
 		const detailsForm = (
 			<form className="event-form__details-form" onSubmit={this.handleSubmit}>
+				<button className="event-form__previous-button" onClick={this.handlePrevious}>
+					Previous
+				</button>
 				<input className="event-form__submit-button" type="submit" value="Save" />
 			</form>
 		)
 
 		const ticketsForm = (
 			<form className="event-form__tickets-form" onSubmit={this.handleSubmit}>
+				<button className="event-form__previous-button" onClick={this.handlePrevious}>
+					Previous
+				</button>
 				<input className="event-form__submit-button" type="submit" value="Save" />
 			</form>
 		)
