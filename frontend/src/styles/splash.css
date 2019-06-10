@@ -89,6 +89,18 @@
   cursor: pointer;
 }
 
+.search-form-select-clear-input-hidden {
+  display: none;
+}
+
+.search-form-select-clear-input-active {
+  position: absolute;
+  top: 44px;
+  right: 33px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .search-form-select-close {
   position: absolute;
   top: -5px;
@@ -96,7 +108,7 @@
   font-size: 20px;
 }
 
-.search-form-select-close:hover {
+.search-form-select-close:hover, .search-form-select-clear-input-active:hover {
   cursor: pointer;
 }
 
@@ -275,6 +287,7 @@
 }
 
 .splash-likes-container .likes-page {
+  width: 100%;
   margin: 0;
 }
 

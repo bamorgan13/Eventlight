@@ -90,6 +90,15 @@ class MainPage extends React.Component {
     };
   }
 
+  clearInput(field) {
+    const { searchParams } = this.state;
+    const newSearchParams = Object.assign({}, searchParams);
+    return event => {
+      newSearchParams[field] = "";
+      this.setState({ searchParams: newSearchParams });
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const { searchParams } = this.state;
@@ -181,6 +190,7 @@ class MainPage extends React.Component {
                   placeholder="Event" 
                   onChange={this.handleInput("event")}
                 />
+                <div className={this.state.searchParams.event ? "search-form-select-clear-input-active" : "search-form-select-clear-input-hidden"} onClick={this.clearInput("event")}>&times;</div>
                 <div className="input-styling-underline" />
                 <AutocompleteDropdown 
                   dropdownType="events" 
@@ -199,6 +209,7 @@ class MainPage extends React.Component {
                   placeholder="Location"
                   onChange={this.handleInput("city")}
                 />
+                <div className={this.state.searchParams.city ? "search-form-select-clear-input-active" : "search-form-select-clear-input-hidden"} onClick={this.clearInput("city")}>&times;</div>
                 <div className="input-styling-underline" />
                 <AutocompleteDropdown 
                   dropdownType="cities" 
