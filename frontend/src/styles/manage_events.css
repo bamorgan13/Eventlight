@@ -55,6 +55,7 @@
 .manage-events-list-item-info span, 
 .manage-events-list-item-actions li,
 .manage-events-list-item-capacity,
+.manage-events-list-item-no-capacity,
 .manage-events-list-item-progress-fraction,
 .manage-events-list-item-progress-fraction span {
   font-size: .9333333333rem;
@@ -94,13 +95,22 @@
   background: #ededed;
 }
 
-.manage-events-list-item-progress-bar-total {
-  height: 100%;
-  width: 100%;
-  background: transparent;
-}
-
 .manage-events-list-item-progress-bar-progress {
   background: #0D8547;
   height: 100%;
+}
+
+.manage-events-list-item-progress-fraction {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.manage-events-list-item-progress-fraction span {
+  color: #0D8547;
+}
+
+.manage-events-list-item-no-capacity {
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
