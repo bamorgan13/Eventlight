@@ -23,6 +23,29 @@ class EventForm extends React.Component {
 		this.handleChange = this.handleChange.bind(this)
 	}
 
+	componentWillMount() {
+		this.props.fetchTypes()
+		this.props.fetchCategories()
+	}
+
+	handleChange(field) {
+		return e => this.setState({ [field]: e.currentTarget.value })
+	}
+
+	handleSubmit(e) {
+		e.preventDefault()
+		const event = {
+			title: this.state.title,
+			type: this.state.type,
+			category: this.state.category,
+			organizer_name: this.state.organizer_name,
+			location_address: this.state.location_address,
+			start_date: this.state.start_date,
+			end_date: this.state.end_date
+		}
+		// this.props.createEvent(event)
+	}
+
 	render() {
 		return (
 			<form onSubmit={this.handleSubmit}>
@@ -39,6 +62,27 @@ class EventForm extends React.Component {
 							<label className="event-form__basic-info__inputs__title__label">
 								Event Title <span className="input__required">*</span>
 							</label>
+							<input
+								type="text"
+								placeholder="Be clear and descriptive."
+								value={this.state.title}
+								onChange={this.handleChange('title')}
+							/>
+						</div>
+						<div>
+							<select>
+								<option value="">Type</option>
+								{typeOptions}
+							</select>
+						</div>
+						<div>
+							<select>
+								<option value="">Category</option>
+								{categoryOptions}
+							</select>
+						</div>
+						<div className="event-form__basic-info__inputs__organizer-name">
+							<label className="event-form__basic-info__inputs__organizer-name__label">Organizer</label>
 							<input
 								type="text"
 								placeholder="Be clear and descriptive."
