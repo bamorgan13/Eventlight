@@ -6,13 +6,21 @@ import { fetchTypes } from '../../actions/type_actions'
 import { fetchCategories } from '../../actions/category_actions'
 
 class EditEventForm extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.state = { event: this.props.event }
+	}
+
 	componentDidMount() {
 		this.props.fetchEvent(this.props.match.params.eventId)
 	}
 
-	componentDidUpdate(prevProps) {
+	componentWillReceiveProps(prevProps) {
 		if (prevProps.match.params.eventId !== this.props.match.params.eventId) {
-			this.props.fetchEvent(this.props.match.params.eventId)
+			this.props
+				.fetchEvent(this.props.match.params.eventId)
+				.then(() => this.setState({ event: this.props.event }))
 		}
 	}
 
@@ -27,7 +35,7 @@ class EditEventForm extends React.Component {
 			availableTypes,
 			availableCategories
 		} = this.props
-		if (event && event.creator !== currentUserId) {
+		if (event && ![event.creator, event.creator._id].includes(currentUserId)) {
 			this.props.history.push(`/events/${event._id}`)
 		}
 		return (

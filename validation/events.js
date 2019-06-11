@@ -28,10 +28,6 @@ module.exports = function validateEventInput(data) {
 		errors.location = 'Either location address or online url field are required'
 	}
 
-	if (Validator.isEmpty(data.price)) {
-		errors.price = 'Price field is required'
-	}
-
 	return {
 		errors,
 		isValid: Object.keys(errors).length === 0
