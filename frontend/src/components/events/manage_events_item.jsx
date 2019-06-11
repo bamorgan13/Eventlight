@@ -32,12 +32,9 @@ const ManageEventsItem = props => {
           <h3><span>{event.title}</span></h3>
           <span>{moment(event.start_date).format("lll")}</span>
           <ul className="manage-events-list-item-actions">
-            <li className="manage-events-list-item-actions-icon"><i className="fas fa-cog"></i></li>
-            <li className="manage-events-list-item-actions-text">Manage</li>
-            <li className="manage-events-list-item-actions-icon"><i className="fas fa-pencil-alt"></i></li>
-            <li className="manage-events-list-item-actions-text"><Link to={`/events/${event._id}/edit`}>Edit</Link></li>
-            <li className="manage-events-list-item-actions-icon"><i className="fas fa-external-link-alt"></i></li>
-            <li className="manage-events-list-item-actions-text"><Link to={`/events/${event._id}`}>View</Link></li>
+            <li className="manage-events-list-item-actions-text"><i className="fas fa-cog"></i>Manage</li>
+            <li className="manage-events-list-item-actions-text"><Link to={`/events/${event._id}/edit`}><i className="fas fa-pencil-alt"></i>Edit</Link></li>
+            <li className="manage-events-list-item-actions-text"><Link to={`/events/${event._id}`}><i className="fas fa-external-link-alt"></i>View</Link></li>
           </ul>
         </div>
         { capacityInfo }
