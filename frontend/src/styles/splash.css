@@ -222,17 +222,17 @@
 .autocomplete-dropdown-list-item {
   display: flex;  
   align-items: center;
-  padding: 16px 24px;
 }
 
 .autocomplete-dropdown-list-item a { 
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 16px 24px;
+  width: 100%;
 }
 
 .autocomplete-dropdown-list-item:hover {
   cursor: pointer;
-  padding: 16px 24px;
   background: #f8f7fa;
 }
 
