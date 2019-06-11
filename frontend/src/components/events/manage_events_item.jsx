@@ -12,7 +12,7 @@ const ManageEventsItem = props => {
     
    } else {
     const progressBarStyling = {
-      width: `${5 / event.capacity * 100}%`
+      width: `${event.attendees.length / event.capacity * 100}%`
     };
     capacityInfo = (
       <div className="manage-events-list-item-capacity">
@@ -20,7 +20,7 @@ const ManageEventsItem = props => {
           <div className="manage-events-list-item-progress-bar-progress" style={progressBarStyling}/>
         </div>
         <div className="manage-events-list-item-progress-fraction">
-          <span>0</span> / {event.capacity}
+          <span>{event.attendees.length}</span> / {event.capacity}
         </div>
       </div>
     );
