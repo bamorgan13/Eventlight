@@ -22,6 +22,7 @@ const style = {
 
 const App = () => (
 	<div style={style}>
+		<SignInErrorModal />
 		<NavBarContainer />
 		<Switch>
 			<Route exact path="/" component={MainPageContainer} />
