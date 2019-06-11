@@ -44,16 +44,6 @@ class RegisterForm extends React.Component {
     this.props.register(user, this.props.history)
   }
 
-  renderErrors() {
-    return (
-      <ul className="errors">
-        {Object.keys(this.state.errors).map((error, i) => (
-          <li key={`error-${i}`}>{this.state.errors[error]}</li>
-        ))}
-      </ul>
-    )
-  }
-
   render() {
     const show_password_label = this.state.password_focus || this.state.password
     const show_full_name_label =
@@ -72,9 +62,13 @@ class RegisterForm extends React.Component {
             <input
               type="text"
               value={this.state.email}
-              onChange={this.update('email')}
+              onChange={() => {}}
               placeholder=""
+              disabled={true}
             />
+            {this.state.errors.email ? (
+              <p className="error">{this.state.errors.email}</p>
+            ) : null}
             <div
               className="register__form__email_edit"
               onClick={() => this.props.history.push('/login')}
@@ -103,7 +97,11 @@ class RegisterForm extends React.Component {
               placeholder={show_full_name_label ? '' : 'Your full name'}
               onFocus={() => this.setState({ full_name_focus: true })}
               onBlur={() => this.setState({ full_name_focus: false })}
+              autoFocus={true}
             />
+            {this.state.errors.full_name ? (
+              <p className="error">{this.state.errors.full_name}</p>
+            ) : null}
           </div>
 
           <div
@@ -128,6 +126,10 @@ class RegisterForm extends React.Component {
               onFocus={() => this.setState({ password_focus: true })}
               onBlur={() => this.setState({ password_focus: false })}
             />
+            {this.state.errors.password ? (
+              <p className="error">{this.state.errors.password}</p>
+            ) : null}
+
             <div
               className="password_icon"
               onClick={() => {
@@ -149,7 +151,6 @@ class RegisterForm extends React.Component {
             value="Sign Up"
             className="register__form__submit"
           />
-          {this.renderErrors()}
         </form>
       </div>
     )
