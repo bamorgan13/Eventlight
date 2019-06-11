@@ -162,6 +162,8 @@ class MainPage extends React.Component {
       </div>
     );
 
+    const likesIndexEle = this.props.loggedIn ? <LikeIndexContainer /> : null;
+
     return (
       <div className="splash-page">
         <div className="splash-header">
@@ -218,7 +220,7 @@ class MainPage extends React.Component {
           </div>
         </div>
         <div className="splash-likes-container">
-          <LikeIndexContainer />
+          {likesIndexEle}
         </div>
         <div className="splash-events-background">
           <div className="splash-events-container">
