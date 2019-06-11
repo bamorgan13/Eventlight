@@ -5,3 +5,9 @@ export const toggleLikeEvent = id => {
     event_id: id
   })
 }
+
+export const updateUser = user => {
+  return axios.patch(`/api/users/${user.id}`, {
+    user
+  })
+}

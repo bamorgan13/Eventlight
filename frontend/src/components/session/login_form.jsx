@@ -20,18 +20,12 @@ class LoginForm extends React.Component {
     this.password_ref = React.createRef()
 
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.renderErrors = this.renderErrors.bind(this)
   }
 
   // Once the user has been authenticated, redirect to the home page
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentUser === true) {
       this.props.history.push('/')
-    }
-
-    // Set or clear errors
-    if (Object.keys(nextProps.errors).length > 0) {
-      this.setState({ errors: nextProps.errors, page: 1 })
     }
     this.setState({ errors: nextProps.errors })
   }
@@ -60,19 +54,6 @@ class LoginForm extends React.Component {
         if (!exists) this.props.history.push('/register')
       })
     }
-  }
-
-  // Render the session errors if there are any
-  renderErrors() {
-    return (
-      <ul className="login__form__errors">
-        {Object.keys(this.state.errors).map((error, i) => (
-          <li className="login__form__error" key={`error-${i}`}>
-            {this.state.errors[error]}
-          </li>
-        ))}
-      </ul>
-    )
   }
 
   render() {
@@ -121,7 +102,11 @@ class LoginForm extends React.Component {
               placeholder={show_email_label ? '' : 'Email address'}
               onFocus={() => this.setState({ email_focus: true })}
               onBlur={() => this.setState({ email_focus: false })}
+              disabled={this.state.page !== 1}
             />
+            {this.state.errors.email ? (
+              <p className="error">{this.state.errors.email}</p>
+            ) : null}
             <div
               className={show_edit_email_icon_class}
               onClick={() =>
@@ -155,6 +140,9 @@ class LoginForm extends React.Component {
               onFocus={() => this.setState({ password_focus: true })}
               onBlur={() => this.setState({ password_focus: false })}
             />
+            {this.state.errors.password ? (
+              <p className="error">{this.state.errors.password}</p>
+            ) : null}
             <div
               className="password_icon"
               onClick={() => {
@@ -176,7 +164,6 @@ class LoginForm extends React.Component {
             value={button_label}
             className="login__form__submit"
           />
-          {this.renderErrors()}
         </form>
       </div>
     )
