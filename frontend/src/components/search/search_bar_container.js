@@ -14,7 +14,8 @@ const mdtp = dispatch => {
   return {
     fetchCitiesAuto: cityFilter => dispatch(fetchCitiesAuto(cityFilter)),
     fetchEventsAuto: eventFilter => dispatch(fetchEventsAuto(eventFilter)),
-    clearAutocomplete: () => dispatch(clearAutocomplete())
+    clearAutocomplete: () => dispatch(clearAutocomplete()),
+    updateFilter: filterParams => dispatch(updateFilter(filterParams))
   };
 }
 

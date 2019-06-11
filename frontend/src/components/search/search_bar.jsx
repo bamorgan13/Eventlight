@@ -12,6 +12,7 @@ class SearchBar extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.debouncedFetchCitiesAuto = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this);
     this.debouncedFetchEventsAuto = SearchUtil.debounce(this.fetchEventValues.bind(this), 500).bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
   // componentDidUpdate(prevProps, prevState) {
@@ -22,8 +23,12 @@ class SearchBar extends React.Component {
   //   }
   // }
 
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.toggleDropdown);
+  }
+
   componentWillMount(){
-    document.addEventListener("mousedown", this.toggleDropdown("document"));
+    document.addEventListener("mousedown", this.toggleDropdown);
     setTimeout(() => this.props.fetchEventsAuto({ event: "" }), 3000);
   }
 
@@ -32,7 +37,7 @@ class SearchBar extends React.Component {
   }
   
   fetchCityValues() {
-    this.props.fetchCitiessAuto({ city: this.state.city });
+    this.props.fetchCitiesAuto({ city: this.state.city });
   }
 
   handleInput(field) {
@@ -45,24 +50,30 @@ class SearchBar extends React.Component {
  
   handleSubmit(event) {
     event.preventDefault();
-    // format filter parameters here
+    const filterParams = { 
+      title: this.state.event, 
+      city: this.state.city, 
+    };
+    this.props.updateFilter(filterParams);
+    this.forceUpdate();
   }
 
-  toggleDropdown(type) {
-    return event => {
-      if (type === "events") {
-        this.setState({ eventsDropdownShow: "active", citiesDropdownShow: "hidden" })
-      } else if (type === "cities") {
-        this.setState({ eventsDropdownShow: "hidden", citiesDropdownShow: "active" })
-      } else {
-        this.setState({ eventsDropdownShow: "hidden", citiesDropdownShow: "hidden" });
-      }
+  toggleDropdown(event) {
+    const eventsDropdownEles = document.getElementsByClassName("autocomplete-dropdown-events")[0];
+    const citiesDropdownEles = document.getElementsByClassName("autocomplete-dropdown-cities")[0];
+    if (event.target.className.includes("events-input") || eventsDropdownEles.contains(event.target)) {
+      this.setState({ eventsDropdownShow: "active", citiesDropdownShow: "hidden" })
+    } else if (event.target.className.includes("cities-input") || citiesDropdownEles.contains(event.target)) {
+      this.setState({ eventsDropdownShow: "hidden", citiesDropdownShow: "active" })
+    } else {
+      this.setState({ eventsDropdownShow: "hidden", citiesDropdownShow: "hidden" });
     }
   }
 
   autocomplete(field) {
+    const pluralizedField = field === "event" ? "events" : "cities";
     return autocompleteValue => {
-      this.setState({ [`${field}DropdownShow`]: "hidden" });
+      this.setState({ [field]: autocompleteValue, [`${pluralizedField}DropdownShow`]: "hidden" });
     }
   }
 
@@ -70,10 +81,10 @@ class SearchBar extends React.Component {
     return (
       <div className="search-bar-wrapper">
         <form>
-          <input type="text" onChange={this.handleInput("event")} onMouseDown={this.toggleDropdown("events")}/>
-          <AutocompleteDropdown dropdownType="events" dropdownShow={this.state.eventsDropdownShow} events={this.props.eventsAuto} autocomplete={this.autocomplete("events")}/>
-          <input type="text" onChange={this.handleInput("city")}  onMouseDown={this.toggleDropdown("cities")}/>
-          <AutocompleteDropdown dropdownType="cities" dropdownShow={this.state.citiesDropdownShow} cities={this.props.citiesAuto} autocomplete={this.autocomplete("cities")}/>
+          <input type="text" value={this.state.event} className="search-bar-events-input" onChange={this.handleInput("event")} onMouseDown={this.toggleDropdown}/>
+          <AutocompleteDropdown dropdownType="events" dropdownShow={this.state.eventsDropdownShow} events={this.props.eventsAuto} autocomplete={this.autocomplete("event")}/>
+          <input type="text" value={this.state.city} className="search-bar-cities-input" onChange={this.handleInput("city")}  onMouseDown={this.toggleDropdown}/>
+          <AutocompleteDropdown dropdownType="cities" dropdownShow={this.state.citiesDropdownShow} cities={this.props.citiesAuto} autocomplete={this.autocomplete("city")}/>
           <button onClick={this.handleSubmit}>Search</button>
         </form>
       </div>

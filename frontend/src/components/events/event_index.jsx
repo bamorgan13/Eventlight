@@ -11,6 +11,12 @@ class EventIndex extends React.Component {
     this.props.fetchEvents(this.props.searchFilters)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.searchFilters !== nextProps.searchFilters) {
+      this.props.fetchEvents(nextProps.searchFilters);
+    }
+  }
+
   render() {
     const indexType = this.props.location.pathname === "/" ? "grid" : "list";
     const searchBar = this.props.location.pathname === "/events" ? <SearchBarContainer /> : null;
