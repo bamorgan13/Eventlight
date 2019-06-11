@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import splashImage from './bg-desktop-snowglobe.jpg'
 import Calendar from 'react-calendar'
 import AutocompleteDropdown from './autocomplete_dropdown'
@@ -64,7 +65,8 @@ class MainPage extends React.Component {
 			event.target.nodeName !== 'ABBR'
 		) {
 			this.setState({ calendarClass: 'hidden' })
-		} else if (!event.target.className.includes('autocomplete')) {
+		}
+		if (!event.target.className.includes('autocomplete')) {
 			if (this.state.eventDropdownShow === 'active' && !event.target.className.includes('event')) {
 				this.setState({ eventDropdownShow: 'hidden' })
 			} else if (this.state.cityDropdownShow === 'active' && !event.target.className.includes('city')) {
@@ -90,6 +92,15 @@ class MainPage extends React.Component {
 				newSearchParams[field] = event.target.value
 				this.setState({ searchParams: newSearchParams })
 			}
+		}
+	}
+
+	clearInput(field) {
+		const { searchParams } = this.state
+		const newSearchParams = Object.assign({}, searchParams)
+		return event => {
+			newSearchParams[field] = ''
+			this.setState({ searchParams: newSearchParams })
 		}
 	}
 
@@ -144,8 +155,13 @@ class MainPage extends React.Component {
 		const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions
 
 		const dateInputEle = this.state.calendarShow ? (
-			<div className="search-form-select-wrapper">
-				<div>{SearchUtil.formatDates(this.state.searchParams.date)}</div>
+			<div
+				className="search-form-select-wrapper search-form-select-wrapper-react-calendar"
+				onClick={() => this.setState({ calendarClass: 'active' })}
+			>
+				<div className="search-form-select-react-calendar-date">
+					{SearchUtil.formatDates(this.state.searchParams.date)}
+				</div>
 				<Calendar
 					className={`search-form-calendar-${this.state.calendarClass}`}
 					selectRange={true}
@@ -175,6 +191,15 @@ class MainPage extends React.Component {
 			</div>
 		)
 
+		const likesIndex = this.props.loggedIn ? (
+			<div className="splash-likes-container">
+				<LikeIndexContainer />
+				<div className="splash-likes-link">
+					<Link to="/likes">See more Events</Link>
+				</div>
+			</div>
+		) : null
+
 		return (
 			<div className="splash-page">
 				<div className="splash-header">
@@ -193,6 +218,16 @@ class MainPage extends React.Component {
 									placeholder="Event"
 									onChange={this.handleInput('event')}
 								/>
+								<div
+									className={
+										this.state.searchParams.event
+											? 'search-form-select-clear-input-active'
+											: 'search-form-select-clear-input-hidden'
+									}
+									onClick={this.clearInput('event')}
+								>
+									&times;
+								</div>
 								<div className="input-styling-underline" />
 								<AutocompleteDropdown
 									dropdownType="events"
@@ -211,6 +246,16 @@ class MainPage extends React.Component {
 									placeholder="Location"
 									onChange={this.handleInput('city')}
 								/>
+								<div
+									className={
+										this.state.searchParams.city
+											? 'search-form-select-clear-input-active'
+											: 'search-form-select-clear-input-hidden'
+									}
+									onClick={this.clearInput('city')}
+								>
+									&times;
+								</div>
 								<div className="input-styling-underline" />
 								<AutocompleteDropdown
 									dropdownType="cities"
@@ -232,13 +277,21 @@ class MainPage extends React.Component {
 						</form>
 					</div>
 				</div>
-				<div className="splash-likes-container">
-					<LikeIndexContainer />
-				</div>
-				<div className="splash-events-background">
+				{likesIndex}
+				<div
+					className="splash-events-background"
+					style={
+						this.props.loggedIn
+							? { background: 'linear-gradient(176deg, #FFE6BE 300px, white 0)' }
+							: { background: 'white' }
+					}
+				>
 					<div className="splash-events-container">
 						<h1>Live your best life</h1>
 						<EventIndexContainer />
+						<div className="splash-events-link">
+							<Link to="/events">See more Events</Link>
+						</div>
 					</div>
 				</div>
 				<footer>
