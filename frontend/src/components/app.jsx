@@ -12,6 +12,8 @@ import EventShowContainer from './events/event_show_container'
 import LikeIndexContainer from './likes/like_index_container'
 import RegistrationsPage from './registrations/registrations_page'
 import ManageEventsContainer from "./events/manage_events_container"
+import CreateEventContainer from './events/event_create_form_container'
+import EditEventContainer from './events/event_edit_form_container'
 
 import SignInErrorModal from './modals/signin_error_modal'
 
@@ -20,24 +22,21 @@ const style = {
 }
 
 const App = () => (
-  <div style={style}>
-    <NavBarContainer />
-    <SignInErrorModal />
-    <Switch>
-      <Route exact path="/" component={MainPageContainer} />
-      <AuthRoute exact path="/login" component={LoginFormContainer} />
-      <AuthRoute exact path="/register" component={RegisterFormContainer} />
-      <Route exact path="/events" component={EventIndexContainer} />
-      <Route path="/events/:eventId" component={EventShowContainer} />
-      <ProtectedRoute exact path="/likes" component={LikeIndexContainer} />
-      <ProtectedRoute
-        exact
-        path="/registrations"
-        component={RegistrationsPage}
-      />
+	<div style={style}>
+		<NavBarContainer />
+		<Switch>
+			<Route exact path="/" component={MainPageContainer} />
+			<AuthRoute exact path="/login" component={LoginFormContainer} />
+			<AuthRoute exact path="/register" component={RegisterFormContainer} />
+			<Route exact path="/events" component={EventIndexContainer} />
+			<Route exact path="/events/:eventId" component={EventShowContainer} />
+			<ProtectedRoute exact path="/events/:eventId/edit" component={EditEventContainer} />
+			<ProtectedRoute exact path="/likes" component={LikeIndexContainer} />
+			<ProtectedRoute exact path="/registrations" component={RegistrationsPage} />
+			<ProtectedRoute exact path="/myevents/create" component={CreateEventContainer} />
       <ProtectedRoute exact path="/myevents" component={ManageEventsContainer} />
-    </Switch>
-  </div>
+		</Switch>
+	</div>
 )
 
 export default App

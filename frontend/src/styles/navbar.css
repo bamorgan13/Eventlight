@@ -85,7 +85,11 @@
   color: #39364f;
 }
 
-.nav-minor-dropdown-list-active li {
+.nav-minor-dropdown-list-item a {
+  padding: 16px 20px;
+}
+
+.nav-minor-dropdown-list-item a:hover {
   padding: 16px 20px;
 }
 

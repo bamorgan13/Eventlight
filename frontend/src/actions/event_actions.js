@@ -1,9 +1,4 @@
-import {
-  getEvents,
-  getEvent,
-  getLikedEvents,
-  getRegistrations
-} from '../util/event_api_util'
+import { getEvents, getEvent, getLikedEvents, getRegistrations, postEvent, patchEvent } from '../util/event_api_util'
 
 export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
 export const RECEIVE_LIKED_EVENTS = 'RECEIVE_LIKED_EVENTS'
@@ -14,18 +9,18 @@ export const RECEIVE_REGISTRATIONS = 'RECEIVE_REGISTRATIONS'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 
 export const receiveEvents = events => ({
-  type: RECEIVE_EVENTS,
-  events
+	type: RECEIVE_EVENTS,
+	events
 })
 
 export const receiveLikedEvents = events => ({
-  type: RECEIVE_LIKED_EVENTS,
-  events
+	type: RECEIVE_LIKED_EVENTS,
+	events
 })
 
 export const receiveRegistrations = events => ({
-  type: RECEIVE_REGISTRATIONS,
-  events
+	type: RECEIVE_REGISTRATIONS,
+	events
 })
 
 export const receiveCurrentUsersEvents = events => ({
@@ -34,32 +29,33 @@ export const receiveCurrentUsersEvents = events => ({
 })
 
 export const receiveEvent = event => ({
-  type: RECEIVE_EVENT,
-  event
+	type: RECEIVE_EVENT,
+	event
 })
 
 export const receiveEventErrors = errors => ({
-  type: RECEIVE_EVENT_ERRORS,
-  errors
+	type: RECEIVE_EVENT_ERRORS,
+	errors
 })
 
 export const clearErrors = () => ({
-  type: CLEAR_ERRORS
+	type: CLEAR_ERRORS
 })
 
-export const fetchEvents = filters => dispatch => 
+export const fetchEvents = filters => dispatch =>
 	getEvents(filters)
 		.then(events => dispatch(receiveEvents(events)))
-		.catch(errors => dispatch(receiveEventErrors(errors)))
+		.catch(errors => dispatch(receiveEventErrors(errors.response.data)))
 
 export const fetchEvent = id => dispatch =>
-  getEvent(id)
-    .then(event => dispatch(receiveEvent(event)))
-    .catch(errors => dispatch(receiveEventErrors(errors)))
+	getEvent(id)
+		.then(event => dispatch(receiveEvent(event)))
+		.catch(errors => dispatch(receiveEventErrors(errors.response.data)))
 
 export const fetchLikedEvents = () => dispatch =>
 	getLikedEvents()
 		.then(events => dispatch(receiveLikedEvents(events)))
+<<<<<<< HEAD
 		.catch(errors => dispatch(receiveEventErrors(errors)))
 
 export const fetchCurrentUsersEvents = currentUserId => {
@@ -69,8 +65,31 @@ export const fetchCurrentUsersEvents = currentUserId => {
 			.catch( errors => dispatch(receiveEventErrors(errors)) )
 	};
 } 
+=======
+		.catch(errors => dispatch(receiveEventErrors(errors.response.data)))
+>>>>>>> master
 
 export const fetchRegistrations = () => dispatch =>
-  getRegistrations()
-    .then(events => dispatch(receiveRegistrations(events)))
-    .catch(errors => dispatch(receiveEventErrors(errors)))
+	getRegistrations()
+		.then(events => dispatch(receiveRegistrations(events)))
+		.catch(errors => dispatch(receiveEventErrors(errors.response.data)))
+
+export const createEvent = event => dispatch => {
+	return postEvent(event)
+		.then(event => {
+			dispatch(receiveEvent(event))
+		})
+		.catch(errors => {
+			dispatch(receiveEventErrors(errors.response.data))
+		})
+}
+
+export const updateEvent = event => dispatch => {
+	return patchEvent(event)
+		.then(event => {
+			dispatch(receiveEvent(event))
+		})
+		.catch(errors => {
+			dispatch(receiveEventErrors(errors.response.data))
+		})
+}
