@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     require: true
   },
   liked_events: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
-  registrations: [{ type: Schema.Types.ObjectId, ref: 'Registration' }]
+  registrations: [{ type: Schema.Types.ObjectId, ref: 'Event' }]
 })
 
 module.exports = mongoose.model('User', UserSchema)
