@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 const moment = require("moment");
 
 class AutocompleteDropdown extends React.Component {
@@ -13,22 +14,26 @@ class AutocompleteDropdown extends React.Component {
     const listItems = this.props[dropdownType].map( val => {
       if (dropdownType === "events") {
         return (
-        <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.title)}>
-          <div className="autocomplete-dropdown-list-item-img-container">
-            <img src={`${val.image_url}`}/>
-          </div>
-          <div className="autocomplete-dropdown-list-item-primary">
-            {val.title}
-            <div className="autocomplete-dropdown-list-item-secondary">{moment(new Date(val.start_date)).format("llll")}</div>
-            <div className="autocomplete-dropdown-list-item-tertiary">
-              {`${val.location.location_name || val.location.location_address} ${val.city_info.city}, ${val.city_info.state}`}
+        // <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.title)}>
+        <li key={val._id} className="autocomplete-dropdown-list-item" >
+          <Link to={`/events/${val._id}`}>
+            <div className="autocomplete-dropdown-list-item-img-container">
+              <img src={`${val.image_url}`}/>
             </div>
-          </div>
+            <div className="autocomplete-dropdown-list-item-primary">
+              {val.title}
+              <div className="autocomplete-dropdown-list-item-secondary">{moment(new Date(val.start_date)).format("llll")}</div>
+              <div className="autocomplete-dropdown-list-item-tertiary">
+                {`${val.location.location_name || val.location.location_address} ${val.city_info.city}, ${val.city_info.state}`}
+              </div>
+            </div>
+          </Link>
         </li> 
         );
       } else {
         return (
-        <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.city)}>
+        // <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.city)}>
+        <li key={val._id} className="autocomplete-dropdown-list-item">
           <div className="autocomplete-dropdown-list-item-primary">
             {val.city}
             <div className="autocomplete-dropdown-list-item-secondary">{val.state}, United States</div>

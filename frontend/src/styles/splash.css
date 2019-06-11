@@ -148,7 +148,7 @@
 
 .splash-header-search-form-content input::placeholder {
   font-weight: 600;
-  color: white;
+  color: #a9a8b3;
 }
 
 .input-styling-underline {
@@ -223,6 +223,11 @@
   display: flex;  
   align-items: center;
   padding: 16px 24px;
+}
+
+.autocomplete-dropdown-list-item a { 
+  display: flex;
+  justify-content: center;
 }
 
 .autocomplete-dropdown-list-item:hover {
