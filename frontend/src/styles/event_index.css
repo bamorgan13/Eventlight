@@ -28,3 +28,15 @@
   margin-right: -0.25px;
   font-weight: 600;
 }
+
+.event-index-list__main-index {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 1260px;
+  width: auto;
+}
+
+.event-index-list__main-index .event-index-list__item {
+  width: 75%;
+}

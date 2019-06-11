@@ -1,7 +1,78 @@
-.search-bar-wrapper form {
+.search-bar-wrapper {
+  padding-left: 12px;
+  padding-bottom: 8px;
+  max-width: 1260px;
+  margin: auto;
+}
+
+.search-bar-form {
   display: flex;
+  flex-direction: column;
 }
 
 .search-bar-wrapper .autocomplete-dropdown-hidden {
   display: none;
+}
+
+.search-bar-form input,
+.search-bar-form input::placeholder {
+  text-decoration: underline;
+  text-decoration-color: #A9A8B3;
+  color: #A9A8B3;
+  font-size: 1.875rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.search-bar-form input {
+  color: black;
+  border: none;
+  padding: 12px 14px;
+}
+
+.search-bar-form input:focus {
+  outline: none;
+}
+
+.search-bar-form span {
+  font-size: 1.875rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.5px;
+  color: #c2c2cc;
+  font-weight: 700;
+  margin-left: 16px;
+}
+
+.search-bar-upper-input-wrapper, .search-bar-lower-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar-wrapper .autocomplete-dropdown-active {
+  position: absolute;
+  max-width: 450px;
+  top: 55px;
+  left: -5px;
+}
+
+.search-bar-wrapper .autocomplete-dropdown-cities {
+  left: 40px;
+}
+
+.search-bar-form button {
+  background: rgb(209, 65, 12);
+  height: 44px;
+  padding: 0 30px 1px;
+  color: white;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  line-height: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  border-radius: 4px;
+  cursor: pointer;
 }

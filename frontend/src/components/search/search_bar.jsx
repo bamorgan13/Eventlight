@@ -80,12 +80,41 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div className="search-bar-wrapper">
-        <form>
-          <input type="text" value={this.state.event} className="search-bar-events-input" onChange={this.handleInput("event")} onMouseDown={this.toggleDropdown}/>
-          <AutocompleteDropdown dropdownType="events" dropdownShow={this.state.eventsDropdownShow} events={this.props.eventsAuto} autocomplete={this.autocomplete("event")}/>
-          <input type="text" value={this.state.city} className="search-bar-cities-input" onChange={this.handleInput("city")}  onMouseDown={this.toggleDropdown}/>
-          <AutocompleteDropdown dropdownType="cities" dropdownShow={this.state.citiesDropdownShow} cities={this.props.citiesAuto} autocomplete={this.autocomplete("city")}/>
-          <button onClick={this.handleSubmit}>Search</button>
+        <form className="search-bar-form">
+          <div className="search-bar-upper-input-wrapper">
+            <input 
+              type="text" 
+              value={this.state.event} 
+              className="search-bar-events-input"
+              placeholder="Search anything" 
+              onChange={this.handleInput("event")} 
+              onMouseDown={this.toggleDropdown}
+            />
+            <AutocompleteDropdown 
+              dropdownType="events" 
+              dropdownShow={this.state.eventsDropdownShow} 
+              events={this.props.eventsAuto} 
+              autocomplete={this.autocomplete("event")}
+            />
+          </div>
+          <div className="search-bar-lower-input-wrapper">
+            <span>in</span>
+            <input 
+              type="text" 
+              value={this.state.city} 
+              className="search-bar-cities-input" 
+              placeholder="Location" 
+              onChange={this.handleInput("city")}  
+              onMouseDown={this.toggleDropdown}
+            />
+            <AutocompleteDropdown 
+              dropdownType="cities" 
+              dropdownShow={this.state.citiesDropdownShow} 
+              cities={this.props.citiesAuto} 
+              autocomplete={this.autocomplete("city")}
+            />
+            <button onClick={this.handleSubmit}>Search</button>
+          </div>
         </form>
       </div>
     )
