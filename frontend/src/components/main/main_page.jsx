@@ -30,7 +30,7 @@ class MainPage extends React.Component {
 
   componentWillMount() {
     document.addEventListener("click", this.handleClick);
-    this.props.clearFilters()
+    this.props.clearFilters();
     this.props.fetchEvents();
   }
 
