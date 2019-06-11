@@ -38,12 +38,12 @@ const EventSchema = new Schema({
 			index: true
 		},
 		location_address: {
-			type: String,
-			required: true
+			type: String
 		},
 		city: {
 			type: Schema.Types.ObjectId,
-			ref: 'City'
+			ref: 'City',
+			required: false
 		}
 	},
 	online_url: {
@@ -68,7 +68,8 @@ const EventSchema = new Schema({
 	image_url: {
 		type: String,
 		get: img_name => `${image_storage_root}${img_name}`
-	}
+	},
+  attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 
 module.exports = mongoose.model('Event', EventSchema)

@@ -1,6 +1,7 @@
 import React from 'react'
 import { formatDateAndTime, formatMonth, formatLongDateNum } from '../../util/format_util'
 import '../../styles/event_show.css'
+import Parser from 'html-react-parser'
 
 class EventShow extends React.Component {
 	componentWillMount() {
@@ -8,7 +9,7 @@ class EventShow extends React.Component {
 	}
 
 	render() {
-		const { event, isLiked, toggleLikeEvent } = this.props
+		const { event, isLiked, isRegistered, toggleLikeEvent, registerForEvent } = this.props
 
 		if (!event) {
 			return <div>Event not found</div>
@@ -23,7 +24,16 @@ class EventShow extends React.Component {
 		const locationAddress = event.location.location_address ? (
 			<p className="location__body__address">{event.location.location_address}</p>
 		) : null
-		const locationCity = `${event.location.city.city}, ${event.location.city.state}`
+		const locationCity = event.location.city ? (
+			<p className="location__body__city">
+				{event.location.city.city}, {event.location.city.state}
+			</p>
+		) : null
+		const onlineUrl = event.online_url ? (
+			<a href={event.online_url} className="location__body__online-url">
+				{event.online_url}
+			</a>
+		) : null
 
 		return (
 			<div className="event-show">
@@ -58,14 +68,22 @@ class EventShow extends React.Component {
 							</button>
 						</div>
 						<div className="register-container fade-in delay-18">
-							<button className="register-button">Tickets</button>
+							<button className="register-button" onClick={() => registerForEvent(event._id)}>
+								<div
+									className={
+										isRegistered ? 'registered-indicator not-registered' : 'registered-indicator'
+									}
+								>
+									{isRegistered ? 'You are going to this event!' : 'Tickets'}
+								</div>
+							</button>
 						</div>
 					</div>
 					<div className="event-show__body-container">
 						<div className="event-show__body">
 							<div className="event-show__body__description-container">
 								<h3 className="event-show__body__header description">Description</h3>
-								<pre className="description__body">{event.description}</pre>
+								<pre className="description__body">{Parser(event.description)}</pre>
 							</div>
 							<div className="event-show__body__details-container">
 								<div className="event-show__body__date-container">
@@ -77,7 +95,8 @@ class EventShow extends React.Component {
 									<div className="location__body-container">
 										{locationName}
 										{locationAddress}
-										<p className="location__body__city">{locationCity}</p>
+										{locationCity}
+										{onlineUrl}
 									</div>
 								</div>
 							</div>

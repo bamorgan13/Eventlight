@@ -38,19 +38,17 @@ router.get('/', (req, res) => {
 		populateFilters.category.match = { name: queryFilters.category }
 	}
 	if (queryFilters.city) {
-		let cityRegex = new RegExp( "^" + queryFilters.city, "i" );
-		populateFilters.city.match = { city: cityRegex  }
+		let cityRegex = new RegExp('^' + queryFilters.city, 'i')
+		populateFilters.city.match = { city: cityRegex }
 	}
 
-	queryFilters.start_date = queryFilters.start_date 
-		? new Date( parseInt(queryFilters.start_date) ) 
-		: new Date()
+	queryFilters.start_date = queryFilters.start_date ? new Date(parseInt(queryFilters.start_date)) : new Date()
 
 	queryFilters.end_date = queryFilters.end_date
-		? new Date( parseInt(queryFilters.end_date) )
+		? new Date(parseInt(queryFilters.end_date))
 		: new Date(9999, 11, 31, 23, 59, 59, 999)
 
-	Event.find({ title: new RegExp(queryFilters.title, "i") })
+	Event.find({ title: new RegExp(queryFilters.title, 'i') })
 		.populate(populateFilters.creator)
 		.populate(populateFilters.type)
 		.populate(populateFilters.category)
@@ -60,7 +58,9 @@ router.get('/', (req, res) => {
 		.lte(queryFilters.end_date)
 		.sort({ start_date: 1 })
 		.then(events => {
-			events = events.filter(event => event.creator && event.type && event.category && event.location.city)
+			events = events.filter(
+				event => event.creator && event.type && event.category && (event.location.city || event.online_url)
+			)
 			res.json(events)
 		})
 		.catch(err => {
@@ -68,25 +68,24 @@ router.get('/', (req, res) => {
 		})
 })
 
-router.get("/auto", (req, res) => {
-	let queryRegex = new RegExp(req.query.event, "i");
-  Event.aggregate([
+router.get('/auto', (req, res) => {
+	let queryRegex = new RegExp(req.query.event, 'i')
+	Event.aggregate([
 		{ $match: { title: queryRegex } },
 		{ $limit: 10 },
 		{
-			$lookup: 
-			{
-				from: "cities",
-				localField: "location.city",
-				foreignField: "_id",
-				as: "city_info"
+			$lookup: {
+				from: 'cities',
+				localField: 'location.city',
+				foreignField: '_id',
+				as: 'city_info'
 			}
 		},
-		{ $unwind: "$city_info" },
+		{ $unwind: '$city_info' }
 	])
-    .then( events => res.json(events))
-    .catch( error => res.status(404).json({ noEventsFound: "No events found" }));
-});
+		.then(events => res.json(events))
+		.catch(error => res.status(404).json({ noEventsFound: 'No events found' }))
+})
 
 router.get('/:id', (req, res) => {
 	const eventId = req.query._id
@@ -94,6 +93,44 @@ router.get('/:id', (req, res) => {
 		.populate({ path: 'location.city' })
 		.then(event => res.json(event))
 		.catch(err => res.status(404).json({ invalidEventId: 'Event not found' }))
+})
+
+router.post('/', (req, res) => {
+	const { errors, isValid } = validateEventInput(req.body)
+
+	if (!isValid) {
+		return res.status(400).json(errors)
+	}
+	if (!req.body.online_url) {
+		City.findOne({ city: req.body.location.city.city, state: req.body.location.city.state })
+			.then(city => {
+				req.body.location.city = city._id
+				const newEvent = new Event(req.body)
+				newEvent
+					.save()
+					.then(event => res.json({ success: true, event }))
+					.catch(err => res.status(400).json(err))
+			})
+			.catch(err => res.status(404).json({ invalidCity: 'City not found' }))
+	} else {
+		delete req.body.location.city
+		const newEvent = new Event(req.body)
+		newEvent
+			.save()
+			.then(event => res.json({ success: true, event }))
+			.catch(err => res.status(400).json(err))
+	}
+})
+
+router.patch('/:id', (req, res) => {
+	const { errors, isValid } = validateEventInput(req.body)
+
+	if (!isValid) {
+		return res.status(400).json(errors)
+	}
+	Event.update({ _id: req.body._id }, { $set: req.body })
+		.then(event => res.json({ success: true, event }))
+		.catch(err => res.status(400).json(err))
 })
 
 module.exports = router

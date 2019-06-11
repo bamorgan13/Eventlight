@@ -187,8 +187,10 @@
 }
 
 .register-button {
+	position: relative;
 	box-sizing: border-box;
 	width: 100%;
+	min-width: 320px;
 	max-width: 320px;
 	height: 44px;
 	line-height: 26px;
@@ -202,11 +204,19 @@
 	color: #fff;
 	background-color: #0d8547;
 	transition: 0.2s ease-out;
+	display: flex;
+	align-items: center;
 }
 
 .register-button:hover {
 	background-color: #179c55;
 	cursor: pointer;
+}
+
+.registered-indicator {
+	width: 100%;
+	height: 100%;
+	transition: 0.2s ease-out;
 }
 
 .event-show__body-container {

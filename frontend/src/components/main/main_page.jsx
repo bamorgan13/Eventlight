@@ -39,7 +39,8 @@ class MainPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.clearAutocomplete();
+		this.props.clearAutocomplete();
+		document.removeEventListener("click", this.handleClick);
   }
 
   componentDidUpdate(prevProps, prevState) {
