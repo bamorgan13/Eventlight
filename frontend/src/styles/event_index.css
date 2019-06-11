@@ -28,3 +28,13 @@
   margin-right: -0.25px;
   font-weight: 600;
 }
+
+.no-events-found {
+  background-image: url('../assets//images/no_results.png');
+  background-repeat: no-repeat;
+  width: 126px;
+  height: 98px;
+  margin: auto;
+  padding-top: 98px;
+  margin-top: 25%;
+}

@@ -14,7 +14,7 @@ class EventIndex extends React.Component {
     const indexType = this.props.location.pathname === "/" ? "grid" : "list";
 
     if (this.props.events.length === 0) {
-      return <div className="no-events-found">There are no events</div>
+      return <div className="no-events-found">No Events Found</div>
     } else {
       return (
         <ul className={`event-index-${indexType}`}>
