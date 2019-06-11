@@ -29,10 +29,10 @@ const ManageEventsItem = props => {
   return (
     <li className="manage-events-list-item">
         <div className="manage-events-list-item-info">
-          <h3><span>{event.title}</span></h3>
+          <Link to={`/events/${event._id}/edit`}><h3><span>{event.title}</span></h3></Link>
           <span>{moment(event.start_date).format("lll")}</span>
           <ul className="manage-events-list-item-actions">
-            <li className="manage-events-list-item-actions-text"><i className="fas fa-cog"></i>Manage</li>
+            <li className="manage-events-list-item-actions-text"><Link to={`/events/${event._id}/edit`}><i className="fas fa-cog"></i>Manage</Link></li>
             <li className="manage-events-list-item-actions-text"><Link to={`/events/${event._id}/edit`}><i className="fas fa-pencil-alt"></i>Edit</Link></li>
             <li className="manage-events-list-item-actions-text"><Link to={`/events/${event._id}`}><i className="fas fa-external-link-alt"></i>View</Link></li>
           </ul>
