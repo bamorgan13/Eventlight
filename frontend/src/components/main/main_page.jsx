@@ -172,6 +172,15 @@ class MainPage extends React.Component {
       </div>
     );
 
+    const likesIndex = this.props.loggedIn ? (
+      <div className="splash-likes-container">
+        <LikeIndexContainer />
+        <div className="splash-likes-link">
+          <Link to="/likes">See more Events</Link>
+        </div>
+      </div>
+    ) : (null);
+
     return (
       <div className="splash-page">
         <div className="splash-header">
@@ -229,13 +238,8 @@ class MainPage extends React.Component {
             </form>
           </div>
         </div>
-        <div className="splash-likes-container">
-          <LikeIndexContainer />
-          <div className="splash-likes-link">
-            <Link to="/likes">See more Events</Link>
-          </div>
-        </div>
-        <div className="splash-events-background">
+        { likesIndex }
+        <div className="splash-events-background" style={ this.props.loggedIn ? { background: "linear-gradient(176deg, #FFE6BE 300px, white 0)" } : { background: "white" }}>
           <div className="splash-events-container">
             <h1>Live your best life</h1>
             <EventIndexContainer />

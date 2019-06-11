@@ -32,11 +32,12 @@ class AutocompleteDropdown extends React.Component {
         );
       } else {
         return (
-        // <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.city)}>
-        <li key={val._id} className="autocomplete-dropdown-list-item">
-          <div className="autocomplete-dropdown-list-item-primary">
-            {val.city}
-            <div className="autocomplete-dropdown-list-item-secondary">{val.state}, United States</div>
+        <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.city)}>
+          <div className="autocomplete-dropdown-list-item-text-container">
+            <div className="autocomplete-dropdown-list-item-primary">
+              {val.city}
+              <div className="autocomplete-dropdown-list-item-secondary">{val.state}, United States</div>
+            </div>
           </div>
         </li> 
         );

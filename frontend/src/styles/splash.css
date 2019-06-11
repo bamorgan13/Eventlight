@@ -224,7 +224,7 @@
   align-items: center;
 }
 
-.autocomplete-dropdown-list-item a { 
+.autocomplete-dropdown-list-item a, .autocomplete-dropdown-list-item-text-container { 
   display: flex;
   justify-content: flex-start;
   padding: 16px 24px;
@@ -271,7 +271,6 @@
 }
 
 .splash-events-background {
-  background: linear-gradient(176deg, #FFE6BE 300px, white 0);
   width: 100vw;
 }
 
