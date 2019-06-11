@@ -58,6 +58,10 @@ export const fetchRegistrations = () => dispatch =>
 
 export const createEvent = event => dispatch => {
 	return postEvent(event)
-		.then(event => dispatch(receiveEvent(event)))
-		.catch(errors => dispatch(receiveEventErrors(errors.response.data)))
+		.then(event => {
+			dispatch(receiveEvent(event))
+		})
+		.catch(errors => {
+			dispatch(receiveEventErrors(errors.response.data))
+		})
 }

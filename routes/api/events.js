@@ -58,7 +58,9 @@ router.get('/', (req, res) => {
 		.lte(queryFilters.end_date)
 		.sort({ start_date: 1 })
 		.then(events => {
-			events = events.filter(event => event.creator && event.type && event.category && event.location.city)
+			events = events.filter(
+				event => event.creator && event.type && event.category && (event.location.city || event.online_url)
+			)
 			res.json(events)
 		})
 		.catch(err => {
@@ -99,14 +101,25 @@ router.post('/', (req, res) => {
 	if (!isValid) {
 		return res.status(400).json(errors)
 	}
-
-	const city = City.find({ city: req.body.location.city.city, state: req.body.location.city.state })
-	req.body.location.city = city._id
-	const newEvent = new Event(req.body)
-	newEvent
-		.save()
-		.then(event => res.json({ success: true, event }))
-		.catch(err => res.status(400).json(err))
+	if (!req.body.online_url) {
+		City.findOne({ city: req.body.location.city.city, state: req.body.location.city.state })
+			.then(city => {
+				req.body.location.city = city._id
+				const newEvent = new Event(req.body)
+				newEvent
+					.save()
+					.then(event => res.json({ success: true, event }))
+					.catch(err => res.status(400).json(err))
+			})
+			.catch(err => res.status(404).json({ invalidCity: 'City not found' }))
+	} else {
+		delete req.body.location.city
+		const newEvent = new Event(req.body)
+		newEvent
+			.save()
+			.then(event => res.json({ success: true, event }))
+			.catch(err => res.status(400).json(err))
+	}
 })
 
 module.exports = router

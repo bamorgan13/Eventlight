@@ -9,11 +9,10 @@ const msp = state => {
 		currentUser: state.session.user,
 		availableTypes: state.types,
 		availableCategories: state.categories,
-		autocompleteCities: Object.values(state.ui.autocomplete.cities),
 		event: {
 			title: '',
 			description: '',
-			creator: state.session.user._id,
+			creator: state.session.user.id,
 			organizer_name: '',
 			organizer_description: '',
 			start_date: '',

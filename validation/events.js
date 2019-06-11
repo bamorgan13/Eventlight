@@ -23,8 +23,9 @@ module.exports = function validateEventInput(data) {
 	}
 
 	data.location.location_address = validText(data.location.location_address) ? data.location.location_address : ''
-	if (Validator.isEmpty(data.location.location_address)) {
-		errors.location = 'Location address field is required'
+	data.online_url = validText(data.online_url) ? data.online_url : ''
+	if (Validator.isEmpty(data.location.location_address) && Validator.isEmpty(data.online_url)) {
+		errors.location = 'Either location address or online url field are required'
 	}
 
 	if (Validator.isEmpty(data.price)) {

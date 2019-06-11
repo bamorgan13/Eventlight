@@ -1,6 +1,8 @@
 import React from 'react'
 import DateTimePicker from 'react-datetime-picker'
+import ReactQuill from 'react-quill'
 import { merge } from 'lodash'
+import 'react-quill/dist/quill.snow.css'
 
 class EventForm extends React.Component {
 	constructor(props) {
@@ -28,16 +30,16 @@ class EventForm extends React.Component {
 		}
 	}
 
+	handleThirdPartyChange(field) {
+		return e => this.setState(merge({}, this.state, { event: { [field]: e } }))
+	}
+
 	handleLocationChange(field) {
 		return e => this.setState(merge({}, this.state, { event: { location: { [field]: e.target.value } } }))
 	}
 
 	handleCityStateChange(field) {
 		return e => this.setState(merge({}, this.state, { event: { location: { city: { [field]: e.target.value } } } }))
-	}
-
-	handleDateTimeChange(field) {
-		return e => this.setState(merge({}, this.state, { event: { [field]: e } }))
 	}
 
 	handleSubmit(e) {
@@ -49,6 +51,7 @@ class EventForm extends React.Component {
 			this.setState({ activeForm: 'tickets' })
 		} else {
 			this.props.submit(this.state.event)
+			this.props.history.push('/myevents')
 		}
 	}
 
@@ -230,7 +233,7 @@ class EventForm extends React.Component {
 								clockClassName="start-date clock"
 								disableClock={true}
 								amPm={true}
-								onChange={this.handleDateTimeChange('start_date')}
+								onChange={this.handleThirdPartyChange('start_date')}
 								value={event.start_date}
 							/>
 						</div>
@@ -241,7 +244,7 @@ class EventForm extends React.Component {
 								clockClassName="end-date clock"
 								disableClock={true}
 								amPm={true}
-								onChange={this.handleDateTimeChange('end_date')}
+								onChange={this.handleThirdPartyChange('end_date')}
 								value={event.end_date}
 							/>
 						</div>
@@ -253,6 +256,40 @@ class EventForm extends React.Component {
 
 		const detailsForm = (
 			<form className="event-form__details-form" onSubmit={this.handleSubmit}>
+				<div className="event-form__details">
+					<div className="event-form__details__event-image">
+						<div className="event-form__details__event-image__instructions">
+							<h1 className="event-form__details__event-image__instructions__header">Main Event Image</h1>
+							<p className="event-form__details__description__instructions__details">
+								This is the first image attendees will see at the top of your listing. Use a high
+								quality image: 2160x1080px (2:1 ratio).
+							</p>
+						</div>
+						<div className="event-form__details__event-image__inputs">
+							<label className="event-form__details__event-image__inputs__label">Image URL</label>
+							<input
+								className="event-form__details__inputs__event-image__input"
+								type="text"
+								placeholder="URL where image is hosted."
+								value={event.image_url}
+								onChange={this.handleChange('image_url')}
+							/>
+						</div>
+					</div>
+					<div className="event-form__details__description__instructions">
+						<h1 className="event-form__details__description__instructions__header">Description</h1>
+						<p className="event-form__details__description__instructions__details">
+							Add more details to your event like your schedule, sponsors, or featured guests.
+						</p>
+						<div className="event-form__details__quill-container">
+							<ReactQuill
+								placeholder="Write a description about your event."
+								value={event.description}
+								onChange={this.handleThirdPartyChange('description')}
+							/>
+						</div>
+					</div>
+				</div>
 				<button className="event-form__previous-button" onClick={this.handlePrevious}>
 					Previous
 				</button>
@@ -262,6 +299,35 @@ class EventForm extends React.Component {
 
 		const ticketsForm = (
 			<form className="event-form__tickets-form" onSubmit={this.handleSubmit}>
+				<div className="event-form__tickets">
+					<div className="event-form__tickets__instructions">
+						<h1 className="event-form__tickets__instructions__header">Create your tickets</h1>
+						<p className="event-form__details__instructions__details">
+							Add information about ticket availability and price.
+						</p>
+					</div>
+					<div className="event-form__tickets__inputs__quantity">
+						<label className="event-form__tickets__inputs__quantity__label">Quantity</label>
+						<input
+							className="event-form__tickets__inputs__quantity__input"
+							type="text"
+							placeholder="Number of tickets available."
+							value={event.capacity}
+							onChange={this.handleChange('capacity')}
+						/>
+					</div>
+					<div className="event-form__tickets__inputs__price">
+						<label className="event-form__tickets__inputs__price__dollar_label">$</label>
+						<label className="event-form__tickets__inputs__price__label">Price</label>
+						<input
+							className="event-form__tickets__inputs__price__input"
+							type="text"
+							placeholder="0.00"
+							value={event.price}
+							onChange={this.handleChange('price')}
+						/>
+					</div>
+				</div>
 				<button className="event-form__previous-button" onClick={this.handlePrevious}>
 					Previous
 				</button>
