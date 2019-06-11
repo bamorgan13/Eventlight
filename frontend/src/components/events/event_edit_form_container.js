@@ -27,7 +27,6 @@ class EditEventForm extends React.Component {
 			availableTypes,
 			availableCategories
 		} = this.props
-		debugger
 		if (event && event.creator !== currentUserId) {
 			this.props.history.push(`/events/${event._id}`)
 		}

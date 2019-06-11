@@ -128,7 +128,6 @@ router.patch('/:id', (req, res) => {
 	if (!isValid) {
 		return res.status(400).json(errors)
 	}
-	debugger
 	Event.update({ _id: req.body._id }, { $set: req.body })
 		.then(event => res.json({ success: true, event }))
 		.catch(err => res.status(400).json(err))

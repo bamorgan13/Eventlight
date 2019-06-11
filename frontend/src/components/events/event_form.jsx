@@ -8,7 +8,6 @@ import { withRouter } from 'react-router-dom'
 class EventForm extends React.Component {
 	constructor(props) {
 		super(props)
-		// debugger
 		this.state = {
 			event: props.event,
 			locationType: 'Venue',
@@ -24,11 +23,6 @@ class EventForm extends React.Component {
 	componentWillMount() {
 		this.props.fetchTypes()
 		this.props.fetchCategories()
-		// debugger
-		// if (this.props.eventId) {
-		// 	debugger
-		// 	this.props.fetchEvent(this.props.eventId)
-		// }
 	}
 
 	componentWillUpdate(prevProps) {
