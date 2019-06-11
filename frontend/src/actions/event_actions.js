@@ -6,6 +6,7 @@ export const RECEIVE_CURRENT_USERS_EVENTS = 'RECEIVE_CURRENT_USERS_EVENTS'
 export const RECEIVE_EVENT = 'RECEIVE_EVENT'
 export const RECEIVE_EVENT_ERRORS = 'RECEIVE_EVENT_ERRORS'
 export const RECEIVE_REGISTRATIONS = 'RECEIVE_REGISTRATIONS'
+export const RECEIVE_UPDATED_EVENT = 'RECEIVE_UPDATED_EVENT'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 
 export const receiveEvents = events => ({
@@ -30,6 +31,11 @@ export const receiveCurrentUsersEvents = events => ({
 
 export const receiveEvent = event => ({
 	type: RECEIVE_EVENT,
+	event
+})
+
+export const receiveUpdatedEvent = event => ({
+	type: RECEIVE_UPDATED_EVENT,
 	event
 })
 
@@ -59,11 +65,11 @@ export const fetchLikedEvents = () => dispatch =>
 
 export const fetchCurrentUsersEvents = currentUserId => {
 	return dispatch => {
-		return getEvents({ currentUserId })	
-			.then( events => dispatch(receiveCurrentUsersEvents(events)) )
-			.catch( errors => dispatch(receiveEventErrors(errors)) )
-	};
-} 
+		return getEvents({ currentUserId })
+			.then(events => dispatch(receiveCurrentUsersEvents(events)))
+			.catch(errors => dispatch(receiveEventErrors(errors)))
+	}
+}
 
 export const fetchRegistrations = () => dispatch =>
 	getRegistrations()
@@ -83,7 +89,7 @@ export const createEvent = event => dispatch => {
 export const updateEvent = event => dispatch => {
 	return patchEvent(event)
 		.then(event => {
-			dispatch(receiveEvent(event))
+			dispatch(receiveUpdatedEvent(event))
 		})
 		.catch(errors => {
 			dispatch(receiveEventErrors(errors.response.data))

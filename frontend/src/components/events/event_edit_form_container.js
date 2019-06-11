@@ -18,8 +18,9 @@ class EditEventForm extends React.Component {
 
 	componentWillReceiveProps(prevProps) {
 		if (prevProps.match.params.eventId !== this.props.match.params.eventId) {
-			this.props.fetchEvent(this.props.match.params.eventId)
-			this.setState({ event: this.props.event })
+			this.props
+				.fetchEvent(this.props.match.params.eventId)
+				.then(() => this.setState({ event: this.props.event }))
 		}
 	}
 

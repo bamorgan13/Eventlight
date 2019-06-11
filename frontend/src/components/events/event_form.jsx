@@ -58,8 +58,7 @@ class EventForm extends React.Component {
 		} else if (this.state.activeForm === 'details') {
 			this.setState({ activeForm: 'tickets' })
 		} else {
-			this.props.submit(this.state.event)
-			this.props.history.push('/myevents')
+			this.props.submit(this.state.event).then(() => this.props.history.push('/myevents'))
 		}
 	}
 
