@@ -120,7 +120,7 @@
   align-self: stretch;
   display: flex;
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .login__form__password.first {
@@ -209,6 +209,7 @@
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.3, 1);
   align-self: stretch;
+  margin-top: 10px;
 }
 
 /* Register */
@@ -300,7 +301,7 @@
   align-self: stretch;
   display: flex;
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .register__form__full_name input {
@@ -354,11 +355,11 @@
 
 /* Errors */
 
-.errors {
-  font-size: 0.75rem;
-  line-height: 1rem;
+.error {
   text-rendering: optimizeLegibility;
-  padding-top: 4px;
-  color: #c5162e;
-  list-style: none;
+  position: absolute;
+  bottom: -18px;
+  left: 12px;
+  color: indianred;
+  font-size: 12px;
 }
