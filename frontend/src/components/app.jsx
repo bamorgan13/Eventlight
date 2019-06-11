@@ -11,6 +11,7 @@ import EventIndexContainer from './events/event_index_container'
 import EventShowContainer from './events/event_show_container'
 import LikeIndexContainer from './likes/like_index_container'
 import RegistrationsPage from './registrations/registrations_page'
+import ManageEventsContainer from "./events/manage_events_container"
 import CreateEventContainer from './events/event_create_form_container'
 import EditEventContainer from './events/event_edit_form_container'
 
@@ -34,6 +35,7 @@ const App = () => (
 			<ProtectedRoute exact path="/likes" component={LikeIndexContainer} />
 			<ProtectedRoute exact path="/registrations" component={RegistrationsPage} />
 			<ProtectedRoute exact path="/myevents/create" component={CreateEventContainer} />
+      <ProtectedRoute exact path="/myevents" component={ManageEventsContainer} />
 		</Switch>
 	</div>
 )
