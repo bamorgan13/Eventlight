@@ -162,7 +162,7 @@ class MainPage extends React.Component {
       </div>
     );
 
-        return (
+    return (
       <div className="splash-page">
         <div className="splash-header">
           <div className="splash-header-image">
