@@ -38,12 +38,12 @@ const EventSchema = new Schema({
 			index: true
 		},
 		location_address: {
-			type: String,
-			required: true
+			type: String
 		},
 		city: {
 			type: Schema.Types.ObjectId,
-			ref: 'City'
+			ref: 'City',
+			required: false
 		}
 	},
 	online_url: {
