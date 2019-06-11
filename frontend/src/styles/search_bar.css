@@ -1,0 +1,7 @@
+.search-bar-wrapper form {
+  display: flex;
+}
+
+.search-bar-wrapper .autocomplete-dropdown-hidden {
+  display: none;
+}
