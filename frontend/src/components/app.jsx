@@ -14,6 +14,8 @@ import RegistrationsPage from './registrations/registrations_page'
 import CreateEventContainer from './events/event_create_form_container'
 import EditEventContainer from './events/event_edit_form_container'
 
+import SignInErrorModal from './modals/signin_error_modal'
+
 const style = {
 	fontFamily: `Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif`
 }
