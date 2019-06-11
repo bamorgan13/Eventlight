@@ -11,7 +11,7 @@ Eventlight and is meant to demonstrate the efficient use of the MERN stack. This
 ## The Team
 
 The team consisted of:
-**Gordy Cooper** (), **Bryce Morgan** (), and **Richard Robinson** ([github: richierob62](https://github.com/richierob62), [Twitter: @kindredcoder](https://twitter.com/kindredcoder))
+**Gordy Cooper** ([github: gcoooop](https://github.com/gcoooop)), **Bryce Morgan** ([github: bamorgan13](https://github.com/bamorgan13)), and **Richard Robinson** ([github: richierob62](https://github.com/richierob62), [Twitter: @kindredcoder](https://twitter.com/kindredcoder))
 
 ## Functionality
 
