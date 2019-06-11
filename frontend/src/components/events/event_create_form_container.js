@@ -6,7 +6,6 @@ import { fetchCategories } from '../../actions/category_actions'
 
 const msp = state => {
 	return {
-		currentUser: state.session.user,
 		availableTypes: state.types,
 		availableCategories: state.categories,
 		event: {

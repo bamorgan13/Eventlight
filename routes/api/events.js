@@ -122,4 +122,16 @@ router.post('/', (req, res) => {
 	}
 })
 
+router.patch('/:id', (req, res) => {
+	const { errors, isValid } = validateEventInput(req.body)
+
+	if (!isValid) {
+		return res.status(400).json(errors)
+	}
+	debugger
+	Event.update({ _id: req.body._id }, { $set: req.body })
+		.then(event => res.json({ success: true, event }))
+		.catch(err => res.status(400).json(err))
+})
+
 module.exports = router

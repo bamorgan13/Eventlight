@@ -1,4 +1,4 @@
-import { getEvents, getEvent, getLikedEvents, getRegistrations, postEvent } from '../util/event_api_util'
+import { getEvents, getEvent, getLikedEvents, getRegistrations, postEvent, patchEvent } from '../util/event_api_util'
 
 export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
 export const RECEIVE_LIKED_EVENTS = 'RECEIVE_LIKED_EVENTS'
@@ -58,6 +58,16 @@ export const fetchRegistrations = () => dispatch =>
 
 export const createEvent = event => dispatch => {
 	return postEvent(event)
+		.then(event => {
+			dispatch(receiveEvent(event))
+		})
+		.catch(errors => {
+			dispatch(receiveEventErrors(errors.response.data))
+		})
+}
+
+export const updateEvent = event => dispatch => {
+	return patchEvent(event)
 		.then(event => {
 			dispatch(receiveEvent(event))
 		})

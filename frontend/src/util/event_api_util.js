@@ -23,3 +23,7 @@ export const fetchEventsAutocomplete = filter => {
 export const postEvent = event => {
 	return axios.post('/api/events', event)
 }
+
+export const patchEvent = event => {
+	return axios.patch('/api/events/:id', event)
+}
