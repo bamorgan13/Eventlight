@@ -2,6 +2,7 @@ import { getEvents, getEvent, getLikedEvents, getRegistrations, postEvent, patch
 
 export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
 export const RECEIVE_LIKED_EVENTS = 'RECEIVE_LIKED_EVENTS'
+export const RECEIVE_CURRENT_USERS_EVENTS = 'RECEIVE_CURRENT_USERS_EVENTS'
 export const RECEIVE_EVENT = 'RECEIVE_EVENT'
 export const RECEIVE_EVENT_ERRORS = 'RECEIVE_EVENT_ERRORS'
 export const RECEIVE_REGISTRATIONS = 'RECEIVE_REGISTRATIONS'
@@ -19,6 +20,11 @@ export const receiveLikedEvents = events => ({
 
 export const receiveRegistrations = events => ({
 	type: RECEIVE_REGISTRATIONS,
+	events
+})
+
+export const receiveCurrentUsersEvents = events => ({
+	type: RECEIVE_CURRENT_USERS_EVENTS,
 	events
 })
 
@@ -50,6 +56,14 @@ export const fetchLikedEvents = () => dispatch =>
 	getLikedEvents()
 		.then(events => dispatch(receiveLikedEvents(events)))
 		.catch(errors => dispatch(receiveEventErrors(errors.response.data)))
+
+export const fetchCurrentUsersEvents = currentUserId => {
+	return dispatch => {
+		return getEvents({ currentUserId })	
+			.then( events => dispatch(receiveCurrentUsersEvents(events)) )
+			.catch( errors => dispatch(receiveEventErrors(errors)) )
+	};
+} 
 
 export const fetchRegistrations = () => dispatch =>
 	getRegistrations()

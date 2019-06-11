@@ -3,6 +3,7 @@ import { merge } from 'lodash'
 import {
   RECEIVE_EVENTS,
   RECEIVE_LIKED_EVENTS,
+  RECEIVE_CURRENT_USERS_EVENTS,
   RECEIVE_REGISTRATIONS,
   RECEIVE_EVENT
 } from '../actions/event_actions'
@@ -24,6 +25,12 @@ const EventsReducer = (state = initialState, action) => {
       newState['liked_events'] = {}
       action.events.data.forEach(
         event => (newState['liked_events'][event._id] = event)
+      )
+      return newState
+    case RECEIVE_CURRENT_USERS_EVENTS:
+      newState["current_users_events"] = {}
+      action.events.data.forEach(
+        event => (newState['current_users_events'][event._id] = event)
       )
       return newState
     case RECEIVE_REGISTRATIONS:

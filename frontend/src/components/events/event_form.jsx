@@ -3,6 +3,7 @@ import DateTimePicker from 'react-datetime-picker'
 import ReactQuill from 'react-quill'
 import { merge } from 'lodash'
 import 'react-quill/dist/quill.snow.css'
+import '../../styles/event_form.css'
 import { withRouter } from 'react-router-dom'
 
 class EventForm extends React.Component {
@@ -77,7 +78,7 @@ class EventForm extends React.Component {
 		if (event) {
 			const typeOptions = Object.keys(this.props.availableTypes).map(typeId => {
 				return this.state.event.type === this.props.availableTypes[typeId] ? (
-					<option key={typeId} value={typeId} selected={true}>
+					<option className="type-option" key={typeId} value={typeId} selected={true}>
 						{this.props.availableTypes[typeId].name}
 					</option>
 				) : (
@@ -92,7 +93,7 @@ class EventForm extends React.Component {
 						{this.props.availableCategories[categoryId].name}
 					</option>
 				) : (
-					<option key={categoryId} value={categoryId}>
+					<option className="category-option" key={categoryId} value={categoryId}>
 						{this.props.availableCategories[categoryId].name}
 					</option>
 				)
@@ -111,7 +112,7 @@ class EventForm extends React.Component {
 							/>
 						</div>
 						<div className="event-form__location__inputs__street-address">
-							<h2 className="event-form__location__inputs__street-address__label">Street Address</h2>
+							<h2 className="event-form__location__inputs__street-address__header">Street Address</h2>
 							<div className="event-form__location__inputs__location-address">
 								<label className="event-form__location__inputs__location-address__label">Address</label>
 								<input
@@ -178,21 +179,31 @@ class EventForm extends React.Component {
 									onChange={this.handleChange('title')}
 								/>
 							</div>
-							<div>
-								<select onChange={this.handleChange('type')} value={event.type}>
-									<option value="" disabled={true}>
-										Type
-									</option>
-									{typeOptions}
-								</select>
-							</div>
-							<div>
-								<select onChange={this.handleChange('category')} value={event.category}>
-									<option value="" disabled={true}>
-										Category
-									</option>
-									{categoryOptions}
-								</select>
+							<div className="event-form__basic-info__select__container">
+								<div className="type-select-container">
+									<select
+										className="type-select"
+										onChange={this.handleChange('type')}
+										value={event.type}
+									>
+										<option className="type-option" value="" disabled={true}>
+											Type
+										</option>
+										{typeOptions}
+									</select>
+								</div>
+								<div className="category-select-container">
+									<select
+										className="category-select"
+										onChange={this.handleChange('category')}
+										value={event.category}
+									>
+										<option className="category-option" value="" disabled={true}>
+											Category
+										</option>
+										{categoryOptions}
+									</select>
+								</div>
 							</div>
 							<div className="event-form__basic-info__inputs__organizer-name">
 								<label className="event-form__basic-info__inputs__organizer-name__label">
@@ -218,11 +229,16 @@ class EventForm extends React.Component {
 						<div className="event-form__location__inputs">
 							<div className="event-form__location__inputs__location-type">
 								<select
+									className="location-type-select"
 									onChange={e => this.setState({ locationType: e.target.value })}
 									value={this.state.locationType}
 								>
-									<option value="Venue">Venue</option>
-									<option value="Online">Online event</option>
+									<option className="location-type-option" value="Venue">
+										Venue
+									</option>
+									<option className="location-type-option" value="Online">
+										Online event
+									</option>
 								</select>
 								{locationInputs}
 							</div>
@@ -237,6 +253,9 @@ class EventForm extends React.Component {
 						</div>
 						<div className="event-form__date__inputs">
 							<div className="event-form__date__inputs__start-date">
+								<label className="event-form__date__inputs__start-date__label">
+									Event Starts <span className="input__required">*</span>
+								</label>
 								<DateTimePicker
 									className="start-date"
 									calendarClassName="start-date calendar"
@@ -248,6 +267,9 @@ class EventForm extends React.Component {
 								/>
 							</div>
 							<div className="event-form__date__inputs__end-date">
+								<label className="event-form__date__inputs__end-date__label">
+									Event Ends <span className="input__required">*</span>
+								</label>
 								<DateTimePicker
 									className="end-date"
 									calendarClassName="end-date calendar"
@@ -272,7 +294,7 @@ class EventForm extends React.Component {
 								<h1 className="event-form__details__event-image__instructions__header">
 									Main Event Image
 								</h1>
-								<p className="event-form__details__description__instructions__details">
+								<p className="event-form__details__event-image__instructions__details">
 									This is the first image attendees will see at the top of your listing. Use a high
 									quality image: 2160x1080px (2:1 ratio).
 								</p>
@@ -288,11 +310,13 @@ class EventForm extends React.Component {
 								/>
 							</div>
 						</div>
-						<div className="event-form__details__description__instructions">
-							<h1 className="event-form__details__description__instructions__header">Description</h1>
-							<p className="event-form__details__description__instructions__details">
-								Add more details to your event like your schedule, sponsors, or featured guests.
-							</p>
+						<div className="event-form__details__description">
+							<div className="event-form__details__description__instructions">
+								<h1 className="event-form__details__description__instructions__header">Description</h1>
+								<p className="event-form__details__description__instructions__details">
+									Add more details to your event like your schedule, sponsors, or featured guests.
+								</p>
+							</div>
 							<div className="event-form__details__quill-container">
 								<ReactQuill
 									placeholder="Write a description about your event."
@@ -302,10 +326,12 @@ class EventForm extends React.Component {
 							</div>
 						</div>
 					</div>
-					<button className="event-form__previous-button" onClick={this.handlePrevious}>
-						Previous
-					</button>
-					<input className="event-form__submit-button" type="submit" value="Save" />
+					<div className="event-form__nav-buttons">
+						<button className="event-form__previous-button" onClick={this.handlePrevious}>
+							Previous
+						</button>
+						<input className="event-form__submit-button" type="submit" value="Save" />
+					</div>
 				</form>
 			)
 
@@ -314,7 +340,7 @@ class EventForm extends React.Component {
 					<div className="event-form__tickets">
 						<div className="event-form__tickets__instructions">
 							<h1 className="event-form__tickets__instructions__header">Create your tickets</h1>
-							<p className="event-form__details__instructions__details">
+							<p className="event-form__tickets__instructions__details">
 								Add information about ticket availability and price.
 							</p>
 						</div>
@@ -340,10 +366,12 @@ class EventForm extends React.Component {
 							/>
 						</div>
 					</div>
-					<button className="event-form__previous-button" onClick={this.handlePrevious}>
-						Previous
-					</button>
-					<input className="event-form__submit-button" type="submit" value="Save" />
+					<div className="event-form__nav-buttons">
+						<button className="event-form__previous-button" onClick={this.handlePrevious}>
+							Previous
+						</button>
+						<input className="event-form__submit-button" type="submit" value="Finish" />
+					</div>
 				</form>
 			)
 
