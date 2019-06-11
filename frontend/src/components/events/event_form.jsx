@@ -3,6 +3,7 @@ import DateTimePicker from 'react-datetime-picker'
 import ReactQuill from 'react-quill'
 import { merge } from 'lodash'
 import 'react-quill/dist/quill.snow.css'
+import '../../styles/event_form.css'
 import { withRouter } from 'react-router-dom'
 
 class EventForm extends React.Component {
@@ -77,7 +78,7 @@ class EventForm extends React.Component {
 		if (event) {
 			const typeOptions = Object.keys(this.props.availableTypes).map(typeId => {
 				return this.state.event.type === this.props.availableTypes[typeId] ? (
-					<option key={typeId} value={typeId} selected={true}>
+					<option className="type-option" key={typeId} value={typeId} selected={true}>
 						{this.props.availableTypes[typeId].name}
 					</option>
 				) : (
@@ -92,7 +93,7 @@ class EventForm extends React.Component {
 						{this.props.availableCategories[categoryId].name}
 					</option>
 				) : (
-					<option key={categoryId} value={categoryId}>
+					<option className="category-option" key={categoryId} value={categoryId}>
 						{this.props.availableCategories[categoryId].name}
 					</option>
 				)
@@ -178,21 +179,31 @@ class EventForm extends React.Component {
 									onChange={this.handleChange('title')}
 								/>
 							</div>
-							<div>
-								<select onChange={this.handleChange('type')} value={event.type}>
-									<option value="" disabled={true}>
-										Type
-									</option>
-									{typeOptions}
-								</select>
-							</div>
-							<div>
-								<select onChange={this.handleChange('category')} value={event.category}>
-									<option value="" disabled={true}>
-										Category
-									</option>
-									{categoryOptions}
-								</select>
+							<div className="event-form__basic-info__select__container">
+								<div className="type-select-container">
+									<select
+										className="type-select"
+										onChange={this.handleChange('type')}
+										value={event.type}
+									>
+										<option className="type-option" value="" disabled={true}>
+											Type
+										</option>
+										{typeOptions}
+									</select>
+								</div>
+								<div className="category-select-container">
+									<select
+										className="category-select"
+										onChange={this.handleChange('category')}
+										value={event.category}
+									>
+										<option className="category-option" value="" disabled={true}>
+											Category
+										</option>
+										{categoryOptions}
+									</select>
+								</div>
 							</div>
 							<div className="event-form__basic-info__inputs__organizer-name">
 								<label className="event-form__basic-info__inputs__organizer-name__label">
