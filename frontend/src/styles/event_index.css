@@ -29,7 +29,6 @@
   font-weight: 600;
 }
 
-<<<<<<< HEAD
 .event-index-list__main-index {
   display: flex;
   flex-direction: column;
@@ -41,7 +40,6 @@
 .event-index-list__main-index .event-index-list__item {
   width: 75%;
 }
-=======
 .no-events-found {
   background-image: url('../assets//images/no_results.png');
   background-repeat: no-repeat;
@@ -51,4 +49,3 @@
   padding-top: 98px;
   margin-top: 25%;
 }
->>>>>>> master
