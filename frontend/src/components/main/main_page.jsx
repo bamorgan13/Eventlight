@@ -1,7 +1,7 @@
 import React from 'react';
 import splashImage from "./bg-desktop-snowglobe.jpg";
 import Calendar from "react-calendar";
-import AutocompleteDropdown from "./autocomplete_dropdown";
+import AutocompleteDropdown from "../search/autocomplete_dropdown";
 import LikeIndexContainer from "../likes/like_index_container";
 import EventIndexContainer from "../events/event_index_container";
 import * as SearchUtil from "../../util/search_util";
@@ -24,7 +24,7 @@ class MainPage extends React.Component {
     this.handleInputFromCalendar = this.handleInputFromCalendar.bind(this);
     this.autocomplete = this.autocomplete.bind(this);
     this.closeCalendar = this.closeCalendar.bind(this);
-    this.debouncedfetchCitiesAuto = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this);
+    this.debouncedFetchCitiesAuto = SearchUtil.debounce(this.fetchCityValues.bind(this), 500).bind(this);
     this.debouncedFetchEventsAuto = SearchUtil.debounce(this.fetchEventValues.bind(this), 500).bind(this);
   }
 
@@ -44,7 +44,7 @@ class MainPage extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchParams.city !== this.state.searchParams.city) {
-      this.debouncedfetchCitiesAuto();
+      this.debouncedFetchCitiesAuto();
     } else if (prevState.searchParams.event !== this.state.searchParams.event) {
       this.debouncedFetchEventsAuto();
     }
