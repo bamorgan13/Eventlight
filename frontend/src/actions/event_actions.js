@@ -55,8 +55,7 @@ export const fetchEvent = id => dispatch =>
 export const fetchLikedEvents = () => dispatch =>
 	getLikedEvents()
 		.then(events => dispatch(receiveLikedEvents(events)))
-<<<<<<< HEAD
-		.catch(errors => dispatch(receiveEventErrors(errors)))
+		.catch(errors => dispatch(receiveEventErrors(errors.response.data)))
 
 export const fetchCurrentUsersEvents = currentUserId => {
 	return dispatch => {
@@ -65,9 +64,6 @@ export const fetchCurrentUsersEvents = currentUserId => {
 			.catch( errors => dispatch(receiveEventErrors(errors)) )
 	};
 } 
-=======
-		.catch(errors => dispatch(receiveEventErrors(errors.response.data)))
->>>>>>> master
 
 export const fetchRegistrations = () => dispatch =>
 	getRegistrations()
