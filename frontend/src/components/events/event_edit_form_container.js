@@ -1,24 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateEvent, fetchCurrentUsersEvents } from '../../actions/event_actions'
+import { updateEvent, fetchEvent } from '../../actions/event_actions'
 import EventForm from './event_form'
 import { fetchTypes } from '../../actions/type_actions'
 import { fetchCategories } from '../../actions/category_actions'
 
 class EditEventForm extends React.Component {
-	constructor(props) {
-		super(props)
-
-		this.state = { event: this.props.event }
-	}
-
 	componentDidMount() {
-		this.props.fetchCurrentUsersEvents()
+		if (!this.props.event) {
+			this.props.fetchEvent(this.props.eventId)
+		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.event && (!this.props.event || nextProps.event.eventId !== this.props.event.eventId)) {
-			this.props.fetchCurrentUsersEvents().then(() => this.setState({ event: this.props.event }))
+	componentDidUpdate(prevProps) {
+		if (prevProps.eventId !== this.props.eventId) {
+			this.props.fetchEvent(this.props.eventId)
 		}
 	}
 
@@ -27,7 +23,6 @@ class EditEventForm extends React.Component {
 			submit,
 			fetchTypes,
 			fetchCategories,
-			fetchEvent,
 			event,
 			currentUserId,
 			availableTypes,
@@ -42,7 +37,6 @@ class EditEventForm extends React.Component {
 				submit={submit}
 				fetchTypes={fetchTypes}
 				fetchCategories={fetchCategories}
-				fetchEvent={fetchEvent}
 				availableTypes={availableTypes}
 				availableCategories={availableCategories}
 			/>
@@ -53,18 +47,20 @@ class EditEventForm extends React.Component {
 }
 
 const msp = (state, ownProps) => {
+	const eventId = ownProps.match.params.eventId
 	return {
 		availableTypes: state.types,
 		availableCategories: state.categories,
 		currentUserId: state.session.user.id,
-		event: state.events.current_users_events[ownProps.match.params.eventId]
+		event: state.events.all[eventId],
+		eventId
 	}
 }
 
 const mdp = dispatch => {
 	return {
 		submit: data => dispatch(updateEvent(data)),
-		fetchCurrentUsersEvents: () => dispatch(fetchCurrentUsersEvents()),
+		fetchEvent: id => dispatch(fetchEvent(id)),
 		fetchTypes: () => dispatch(fetchTypes()),
 		fetchCategories: () => dispatch(fetchCategories())
 	}
