@@ -6,21 +6,15 @@ import { fetchTypes } from '../../actions/type_actions'
 import { fetchCategories } from '../../actions/category_actions'
 
 class EditEventForm extends React.Component {
-	constructor(props) {
-		super(props)
-
-		this.state = { event: this.props.event }
-	}
-
 	componentDidMount() {
-		this.props.fetchEvent(this.props.match.params.eventId)
+		if (!this.props.event) {
+			this.props.fetchEvent(this.props.eventId)
+		}
 	}
 
-	componentWillReceiveProps(prevProps) {
-		if (prevProps.match.params.eventId !== this.props.match.params.eventId) {
-			this.props
-				.fetchEvent(this.props.match.params.eventId)
-				.then(() => this.setState({ event: this.props.event }))
+	componentDidUpdate(prevProps) {
+		if (prevProps.eventId !== this.props.eventId) {
+			this.props.fetchEvent(this.props.eventId)
 		}
 	}
 
@@ -29,7 +23,6 @@ class EditEventForm extends React.Component {
 			submit,
 			fetchTypes,
 			fetchCategories,
-			fetchEvent,
 			event,
 			currentUserId,
 			availableTypes,
@@ -38,26 +31,29 @@ class EditEventForm extends React.Component {
 		if (event && ![event.creator, event.creator._id].includes(currentUserId)) {
 			this.props.history.push(`/events/${event._id}`)
 		}
-		return (
+		return event ? (
 			<EventForm
 				event={event}
 				submit={submit}
 				fetchTypes={fetchTypes}
 				fetchCategories={fetchCategories}
-				fetchEvent={fetchEvent}
 				availableTypes={availableTypes}
 				availableCategories={availableCategories}
 			/>
+		) : (
+			<div>Fetching Event</div>
 		)
 	}
 }
 
 const msp = (state, ownProps) => {
+	const eventId = ownProps.match.params.eventId
 	return {
 		availableTypes: state.types,
 		availableCategories: state.categories,
 		currentUserId: state.session.user.id,
-		event: state.events.all[ownProps.match.params.eventId]
+		event: state.events.all[eventId],
+		eventId
 	}
 }
 
