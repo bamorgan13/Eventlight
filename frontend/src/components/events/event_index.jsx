@@ -19,7 +19,7 @@ class EventIndex extends React.Component {
 
   render() {
     const indexType = this.props.location.pathname === "/" ? "grid" : "list";
-    const searchBar = this.props.location.pathname === "/events" ? <SearchBarContainer /> : null;
+    const searchBar = this.props.location.pathname === "/events" ? <SearchBarContainer classPrefix="index"/> : null;
     let eventIndexListClass = "";
     if (this.props.location.pathname === "/events" || this.props.location.pathname === "/likes") {
       eventIndexListClass = "event-index-list__main-index"

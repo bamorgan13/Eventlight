@@ -9,7 +9,15 @@ import "../../styles/splash_search.css";
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { event: "", city: "", date: "", eventsDropdownShow: "hidden", citiesDropdownShow: "hidden", calendarShow: false, calendarClass: "hidden" };
+    this.state = { 
+      event: "", 
+      city: "", 
+      date: "", 
+      eventsDropdownShow: "hidden", 
+      citiesDropdownShow: "hidden", 
+      calendarShow: false, 
+      calendarClass: "hidden" 
+    };
 
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -104,7 +112,8 @@ class SearchBar extends React.Component {
     const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions;
 
     const inputUnderline = classPrefix === "splash" ? <div className="input-styling-underline" /> : null;
-
+    const buttonText = classPrefix === "splash" ? <i className="fas fa-search"></i> : "Search"
+    
     const dateInputEle = this.state.calendarShow ? (
       <div className={`${classPrefix}-search-bar-select-wrapper`}>
         <div className={`${classPrefix}-search-bar-date-input`}>{SearchUtil.formatDates(this.state.date)}</div>
@@ -128,50 +137,6 @@ class SearchBar extends React.Component {
       </div>
     );
 
-    // return (
-    //   <div className="search-bar-wrapper">
-    //     <form className="search-bar-form">
-    //       <div className="search-bar-upper-input-wrapper">
-    //         <input 
-    //           type="text" 
-    //           value={this.state.event} 
-    //           className="search-bar-events-input"
-    //           placeholder="Search anything" 
-    //           onChange={this.handleInput("event")} 
-    //           onMouseDown={this.toggleDropdown}
-    //         />
-    //         <AutocompleteDropdown 
-    //           dropdownType="events" 
-    //           dropdownShow={this.state.eventsDropdownShow} 
-    //           events={this.props.eventsAuto} 
-    //           autocomplete={this.autocomplete("event")}
-    //         />
-    //       </div>
-    //       <div className="search-bar-lower-input-wrapper">
-    //         <span>in</span>
-    //         <input 
-    //           type="text" 
-    //           value={this.state.city} 
-    //           className="search-bar-cities-input" 
-    //           placeholder="Location" 
-    //           onChange={this.handleInput("city")}  
-    //           onMouseDown={this.toggleDropdown}
-    //         />
-    //         <AutocompleteDropdown 
-    //           dropdownType="cities" 
-    //           dropdownShow={this.state.citiesDropdownShow} 
-    //           cities={this.props.citiesAuto} 
-    //           autocomplete={this.autocomplete("city")}
-    //         />
-    //         <button onClick={this.handleSubmit}>Search</button>
-    //       </div>
-    //       {/* <div className="search-bar-select-date-wrapper">
-    //         {dateInputEle}
-    //       </div> */}
-    //     </form>
-    //   </div>
-    // )
-    
     return (
       <div className={`${classPrefix}-search-bar-wrapper`}>
         <form className={`${classPrefix}-search-bar-form`}>
@@ -223,7 +188,7 @@ class SearchBar extends React.Component {
             { inputUnderline }
           </div>
           <div className={`${classPrefix}-search-bar-submit`}>
-            <button onClick={this.handleSubmit}><i className="fas fa-search"></i></button>
+            <button onClick={this.handleSubmit}>{buttonText}</button>
           </div>
         </form>
       </div>

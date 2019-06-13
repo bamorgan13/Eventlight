@@ -1,10 +1,8 @@
 import React from 'react';
 import splashImage from "./bg-desktop-snowglobe.jpg";
-import Calendar from "react-calendar";
 import SearchBar from "../search/search_bar_container";
 import LikeIndexContainer from "../likes/like_index_container";
 import EventIndexContainer from "../events/event_index_container";
-import * as SearchUtil from "../../util/search_util";
 import "../../styles/splash.css";
 
 class MainPage extends React.Component {
@@ -48,53 +46,3 @@ class MainPage extends React.Component {
 }
 
 export default MainPage
-
-
-{/* <div className="splash-header-search">
-  <form className="splash-header-search-form">
-    <div className="splash-header-search-form-content event-content">
-      <div className="search-form-input-info">Looking for</div>
-      <input 
-        type="text" 
-        value={this.state.searchParams.event}
-        className="search-form-input-event"
-        onMouseDown={this.toggleInputDropdown(("event"))} 
-        placeholder="Event" 
-        onChange={this.handleInput("event")}
-      />
-      <div className="input-styling-underline" />
-      <AutocompleteDropdown 
-        dropdownType="events" 
-        dropdownShow={this.state.eventDropdownShow} 
-        autocomplete={this.autocomplete("event")}
-        events={this.props.autocompleteEvents}
-      />
-    </div>
-    <div className="splash-header-search-form-content city-content">
-      <div className="search-form-input-info">In</div>
-      <input 
-        type="text" 
-        value={this.state.searchParams.city}
-        className="search-form-input-city"
-        onMouseDown={this.toggleInputDropdown("city")} 
-        placeholder="Location"
-        onChange={this.handleInput("city")}
-      />
-      <div className="input-styling-underline" />
-      <AutocompleteDropdown 
-        dropdownType="cities" 
-        dropdownShow={this.state.cityDropdownShow} 
-        autocomplete={this.autocomplete("city")}
-        cities={this.props.autocompleteCities}
-      />
-    </div>
-    <div className="splash-header-search-form-content date-content">
-      <div className="search-form-input-info">On</div>
-      {dateInputEle}
-      <div className="input-styling-underline" />
-    </div>
-    <div className="splash-header-search-form-submit">
-      <button onClick={this.handleSubmit}><i className="fas fa-search"></i></button>
-    </div>
-  </form>
-</div> */}

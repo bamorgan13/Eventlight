@@ -1,22 +1,23 @@
-.search-bar-wrapper {
+.index-search-bar-wrapper {
   padding-left: 12px;
   padding-bottom: 8px;
   max-width: 1260px;
   margin: auto;
 }
 
-.search-bar-form {
+.index-search-bar-form {
   display: flex;
   flex-direction: column;
   width: 750px;
 }
 
-.search-bar-wrapper .autocomplete-dropdown-hidden {
-  display: none;
+.index-search-bar-wrapper .city-content {
+  display: flex;
+  align-items: center;
 }
 
-.search-bar-form input,
-.search-bar-form input::placeholder {
+.index-search-bar-wrapper input,
+.index-search-bar-wrapper input::placeholder {
   text-decoration: underline;
   text-decoration-color: #A9A8B3;
   color: #A9A8B3;
@@ -26,17 +27,17 @@
   font-weight: 700;
 }
 
-.search-bar-form input {
+.index-search-bar-wrapper input {
   color: black;
   border: none;
   padding: 12px 14px;
 }
 
-.search-bar-form input:focus {
+.index-search-bar-wrapper input:focus {
   outline: none;
 }
 
-.search-bar-form span {
+.index-search-bar-input-info {
   font-size: 1.875rem;
   line-height: 2.5rem;
   letter-spacing: 0.5px;
@@ -45,28 +46,7 @@
   margin-left: 16px;
 }
 
-.search-bar-upper-input-wrapper, .search-bar-lower-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-bar-wrapper .autocomplete-dropdown-active {
-  position: absolute;
-  max-width: 450px;
-  top: 55px;
-  left: -5px;
-}
-
-.search-bar-wrapper .autocomplete-dropdown-cities {
-  left: 40px;
-}
-
-.search-bar-lower-input-wrapper > button:hover {
-  background: #f05537;
-}
-
-.search-bar-lower-input-wrapper > button {
+.index-search-bar-submit button {
   background: rgb(209, 65, 12);
   height: 44px;
   padding: 0 30px 1px;
@@ -83,36 +63,54 @@
   cursor: pointer;
 }
 
-.search-bar-select-date-wrapper {
-  width: 300px;
+.index-search-bar-submit button:hover {
+  background: #f05537;
 }
 
-.search-bar-select-date-wrapper .search-form-select-close {
+.index-search-bar-select-wrapper {
+  position: relative;
+  width: 250px;
+}
+
+.index-search-bar-select-close {
   color: black;
 }
 
-.search-bar-select-date-wrapper select:focus {
+.index-search-bar-select-wrapper select:focus {
   outline: none;
 }
 
-.search-bar-select-date-wrapper select {
+.index-search-bar-select {
   cursor: pointer;
-  background: #eeedf2;
-}
-
-.search-bar-select-date-wrapper .search-bar-select {
+  height: 36px;
+  width: 108px;
   font-size: 14px;
-  padding: 12px 14px;
-  line-height: 22px;
+  padding: 0 14px;
+  border-radius: 18px;
   background: #f8f7fa;
   color: #39364f;
   border: none;
-  background: transparent;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	-ms-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
   -o-appearance: none;
   appearance: none;
+}
+
+.index-search-bar-select:hover { 
+  background: #eeedf2;
+}
+
+.index-search-bar-select-arrow:after {
+	font-family: "Font Awesome 5 Free";
+  content: "\f107";
+  font-size: 15px;
+  font-weight: 900;
+  position: absolute;
+  top: 12px;
+  left: 84px;
+  color: #39364f;
+  pointer-events: none;
 }
 
 .search-bar-select-date-wrapper .search-form-select-wrapper div {
@@ -121,4 +119,19 @@
 
 .search-bar-select-date-wrapper .search-form-select-arrow {
   color: #39364f;
+}
+
+.index-search-bar-wrapper .autocomplete-dropdown-hidden {
+  display: none;
+}
+
+.search-bar-wrapper .autocomplete-dropdown-active {
+  position: absolute;
+  max-width: 450px;
+  top: 55px;
+  left: -5px;
+}
+
+.search-bar-wrapper .autocomplete-dropdown-cities {
+  left: 40px;
 }
