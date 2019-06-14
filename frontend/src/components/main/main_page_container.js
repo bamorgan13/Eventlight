@@ -1,6 +1,5 @@
 import { connect } from "react-redux"
-// import MainPage from "./main_page";
-import MainPage from "./main_page_refactor";
+import MainPage from "./main_page";
 import { fetchEvents } from "../../actions/event_actions";
 import { updateFilter, clearFilters } from "../../actions/filter_actions";
 import { fetchCitiesAuto, fetchEventsAuto, clearAutocomplete } from "../../actions/autocomplete_actions";

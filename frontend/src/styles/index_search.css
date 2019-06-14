@@ -16,6 +16,10 @@
   align-items: center;
 }
 
+.index-search-bar-content {
+  position: relative;
+}
+
 .index-search-bar-wrapper input,
 .index-search-bar-wrapper input::placeholder {
   text-decoration: underline;
@@ -70,6 +74,10 @@
   top: -105px;
 }
 
+.index-search-bar-submit button:focus {
+  outline: none;
+}
+
 .index-search-bar-submit button:hover {
   border: 2px solid #f05537;
   background: #f05537;
@@ -86,8 +94,8 @@
 
 .index-search-bar-select {
   cursor: pointer;
+  display: inline-block;
   height: 36px;
-  width: 125px;
   font-size: 12px;
   font-weight: 600;
   padding: 0 14px;
@@ -113,7 +121,7 @@
   font-weight: 900;
   position: absolute;
   top: 12px;
-  left: 100px;
+  left: 85px;
   color: #39364f;
   pointer-events: none;
 }
@@ -137,46 +145,50 @@
 }
 
 .index-search-bar-date-input {
-  display: flex;
-  align-items: center;
-  width: 125px;
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
   height: 36px;
-  font-size: 12px;
+  line-height: 36px;
+  font-size: 11.5px;
   font-weight: 600;
-  padding: 0 14px;
+  padding-left: 14px;
+  padding-right: 42px;
   border-radius: 18px;
-  background: #f8f7fa;
-  color: #39364f;
+  background: rgb(218, 71, 24);
+  color: white;
 }
 
-.index-search-bar-select-close {
+.index-search-bar-select-close, 
+.index-search-bar-select-clear {
   cursor: pointer;
-  color: #39364f;
+  color: white;
   position: absolute;
-  top: 5px;
-  left: 125px;
+  top: -1px;
+  right: 14px;
   font-size: 20px;
 }
 
-/* .search-bar-select-date-wrapper .search-form-select-wrapper div {
-  background: #f05537;
+.index-search-bar-select-clear {
+  color: white;
 }
-
-.search-bar-select-date-wrapper .search-form-select-arrow {
-  color: #39364f;
-} */
 
 .index-search-bar-wrapper .autocomplete-dropdown-hidden {
   display: none;
 }
 
-.search-bar-wrapper .autocomplete-dropdown-active {
+.index-search-bar-wrapper .autocomplete-dropdown-active {
   position: absolute;
-  max-width: 450px;
-  top: 55px;
+  max-width: 425px;
+  top: 65px;
   left: -5px;
 }
 
-.search-bar-wrapper .autocomplete-dropdown-cities {
+.index-search-bar-wrapper .autocomplete-dropdown-cities {
   left: 40px;
+}
+
+.autocomplete-dropdown-image {
+  height: 100%;
+  width: auto;
 }
