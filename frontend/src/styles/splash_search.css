@@ -129,10 +129,15 @@
   pointer-events: none;
 }
 
+.splash-search-bar-wrapper .react-calendar abbr {
+  font-size: 12px;
+}
+
 .splash-search-bar-wrapper .react-calendar {
   z-index: 999;
   position: absolute;
   top: 25px;
+  color: black; 
 }
 
 .splash-search-bar-calendar-hidden {

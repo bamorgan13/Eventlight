@@ -30,6 +30,7 @@ class SearchBar extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.toggleDropdown);
+    if (this.props.location.pathname === "/events") this.props.clearFilters();
   }
 
   componentWillMount(){
@@ -117,7 +118,12 @@ class SearchBar extends React.Component {
     const dateInputEle = this.state.calendarShow ? (
       <div className={`${classPrefix}-search-bar-select-wrapper`}>
         <div className={`${classPrefix}-search-bar-date-input`}>{SearchUtil.formatDates(this.state.date)}</div>
-        <Calendar className={`${classPrefix}-search-bar-calendar-${this.state.calendarClass}`} selectRange={true} returnValue="range" onChange={this.handleInputFromCalendar}/>
+        <Calendar 
+          className={`${classPrefix}-search-bar-calendar-${this.state.calendarClass}`} 
+          selectRange={true} returnValue="range" 
+          onChange={this.handleInputFromCalendar}
+          minDate={new Date()}
+        />
         <div className={`${classPrefix}-search-bar-select-close`} onClick={this.closeCalendar}>&times;</div>
       </div>
     ) : (
