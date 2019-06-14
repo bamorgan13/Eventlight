@@ -22,9 +22,8 @@ export const debounce = (func, interval) => {
   datesList.forEach(date => {
     const day = date.getDate();
     const monthIndex = date.getMonth();
-    const year = date.getFullYear();
   
-    prettyFormat.push(day + ' ' + monthNames[monthIndex] + ' ' + year);
+    prettyFormat.push(monthNames[monthIndex].slice(0,3) + ' ' + day );
   })
 return prettyFormat.join(" - ");
 }
