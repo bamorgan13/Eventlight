@@ -18,7 +18,7 @@ class AutocompleteDropdown extends React.Component {
         <li key={val._id} className="autocomplete-dropdown-list-item" >
           <Link to={`/events/${val._id}`}>
             <div className="autocomplete-dropdown-list-item-img-container">
-              <img src={`${val.image_url}`}/>
+              <img className="autocomplete-dropdown-image" src={`${val.image_url}`}/>
             </div>
             <div className="autocomplete-dropdown-list-item-primary">
               {val.title}

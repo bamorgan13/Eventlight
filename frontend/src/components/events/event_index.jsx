@@ -19,32 +19,35 @@ class EventIndex extends React.Component {
 
   render() {
     const indexType = this.props.location.pathname === "/" ? "grid" : "list";
-    const searchBar = this.props.location.pathname === "/events" ? <SearchBarContainer /> : null;
+    const searchBar = this.props.location.pathname === "/events" ? <SearchBarContainer classPrefix="index"/> : null;
     let eventIndexListClass = "";
     if (this.props.location.pathname === "/events" || this.props.location.pathname === "/likes") {
       eventIndexListClass = "event-index-list__main-index"
     }
 
-    if (this.props.events.length === 0) {
-      return <div className="no-events-found">No Events Found</div>
-    } else {
-      return (
-        <div className="event-index-wrapper">
-          {searchBar}
-          <ul className={`event-index-${indexType} ${eventIndexListClass}`}>
-            {this.props.events.map(event =>
-              this.props.useDateComponent ? (
-                <EventIndexItemWithDate key={event._id} event={event} />
-              ) : this.props.useSquareComponent ? (
-                <LikeInSquareWithDate key={event._id} event={event} />
-              ) : (
-                <EventIndexItem key={event._id} event={event} />
-              )
-            )}
-          </ul>
-        </div>
+    let eventIndexItems;
+    if (this.props.events.length) {
+      eventIndexItems = this.props.events.map(event =>
+        this.props.useDateComponent ? (
+          <EventIndexItemWithDate key={event._id} event={event} />
+        ) : this.props.useSquareComponent ? (
+          <LikeInSquareWithDate key={event._id} event={event} />
+        ) : (
+          <EventIndexItem key={event._id} event={event} />
+        )
       )
-    }
+    } else {
+      eventIndexItems = <div className="no-events-found">No Events Found</div>
+    } 
+
+    return (
+      <div className="event-index-wrapper">
+        {searchBar}
+        <ul className={`event-index-${indexType} ${eventIndexListClass}`}>
+          { eventIndexItems }
+        </ul>
+      </div>
+    )
   }
 }
 

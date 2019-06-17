@@ -1,13 +1,23 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import Calendar from "react-calendar";
 import AutocompleteDropdown from "./autocomplete_dropdown";
 import * as SearchUtil from "../../util/search_util";
-import "../../styles/search_bar.css";
+import "../../styles/index_search.css";
+import "../../styles/splash_search.css";
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { event: "", city: "", date: "", eventsDropdownShow: "hidden", citiesDropdownShow: "hidden", calendarShow: false, calendarClass: "hidden" };
+    this.state = { 
+      event: "", 
+      city: "", 
+      date: "", 
+      eventsDropdownShow: "hidden", 
+      citiesDropdownShow: "hidden", 
+      calendarShow: false, 
+      calendarClass: "hidden" 
+    };
 
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,10 +26,13 @@ class SearchBar extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.closeCalendar = this.closeCalendar.bind(this);
     this.handleInputFromCalendar = this.handleInputFromCalendar.bind(this);
+    this.getSelectText = this.getSelectText.bind(this);
+    this.clearInput = this.clearInput.bind(this);
   }
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.toggleDropdown);
+    if (this.props.location.pathname === "/events") this.props.clearFilters();
   }
 
   componentWillMount(){
@@ -61,11 +74,11 @@ class SearchBar extends React.Component {
       end_date: this.state.date[1]
     };
     this.props.updateFilter(filterParams);
-    this.forceUpdate();
+    // this.forceUpdate();
+    this.props.history.push("./events")
   }
 
   toggleDropdown(event) {
-    console.log(event.target)
     const eventsDropdownEles = document.getElementsByClassName("autocomplete-dropdown-events")[0];
     const citiesDropdownEles = document.getElementsByClassName("autocomplete-dropdown-cities")[0];
     if (event.target.className.includes("events-input") || eventsDropdownEles.contains(event.target)) {
@@ -74,6 +87,8 @@ class SearchBar extends React.Component {
       this.setState({ eventsDropdownShow: "hidden", citiesDropdownShow: "active" })
     } else if (event.target.className.includes("react-calendar") || event.target.nodeName === "ABBR") {
       // retain active state so do nothing
+    } else if (event.target.className.includes("input-clear")) {
+      // also do nothing
     } else {
       this.setState({ eventsDropdownShow: "hidden", citiesDropdownShow: "hidden", calendarClass: "hidden" });
     }
@@ -81,9 +96,11 @@ class SearchBar extends React.Component {
 
   autocomplete(field) {
     const pluralizedField = field === "event" ? "events" : "cities";
+    const pluralizedFieldCap = field === "event" ? "Events" : "Cities";
     return autocompleteValue => {
       this.setState({ [field]: autocompleteValue, [`${pluralizedField}DropdownShow`]: "hidden" });
-    }
+      this[`debouncedFetch${pluralizedFieldCap}Auto`]();
+    };
   }
 
   closeCalendar(event) {
@@ -96,45 +113,103 @@ class SearchBar extends React.Component {
     this.setState({ date: [startDate, endDate] });
   }
 
-  render() {
-    // const dateOptions = SearchUtil.getDates();
-    // const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions;
+  getSelectText() {
+    if (!this.state.date) return "";
+    const selectEle = document.getElementsByClassName("index-search-bar-select")[0];
+    return selectEle.options[selectEle.selectedIndex].text;
+  }
 
-    // const dateInputEle = this.state.calendarShow ? (
-    //   <div className="search-form-select-wrapper">
-    //     <div>{SearchUtil.formatDates(this.state.date)}</div>
-    //     <Calendar className={`search-form-calendar-${this.state.calendarClass}`} selectRange={true} returnValue="range" onChange={this.handleInputFromCalendar}/>
-    //     <div className="search-form-select-close" onClick={this.closeCalendar}>&times;</div>
-    //   </div>
-    // ) : (
-    //   <div className="search-form-select-wrapper">
-    //     <select className="search-bar-select" onChange={this.handleInput("date")} defaultValue="">
-    //       <option value="" disabled={true}>Any Date</option>
-    //       <option value={today}>Today</option>
-    //       <option value={tomorrow}>Tomorrow</option>
-    //       <option value={thisWeekend}>This weekend</option>
-    //       <option value={thisWeek}>This week</option>
-    //       <option value={nextWeek}>Next week</option>
-    //       <option value={thisMonth}>This month</option>
-    //       <option value={nextMonth}>Next month</option>
-    //       <option>Pick a date...</option>
-    //     </select>
-    //     <div className="search-form-select-arrow"/>
-    //   </div>
-    // );
+  clearInput(field) {
+    const pluralizedField = field === "event" ? "Events" : "Cities";
+    return () => {
+      this.setState({ [field]: "" });
+      if (field === "date") {
+        const selectEle = document.getElementsByClassName("index-search-bar-select")[0];
+        selectEle.selectedIndex = 0;
+      } else {
+        this[`debouncedFetch${pluralizedField}Auto`]();
+      }
+    };
+  }
+
+  render() {
+    const { classPrefix } = this.props;
+    const dateOptions = SearchUtil.getDates();
+    const { today, tomorrow, thisWeekend, thisWeek, nextWeek, thisMonth, nextMonth } = dateOptions;
+
+    const inputUnderline = classPrefix === "splash" ? <div className="input-styling-underline" /> : null;
+    const buttonText = classPrefix === "splash" ? <i className="fas fa-search"></i> : "Search";
+    
+    let dateInputEle;
+    if (this.state.calendarShow) {
+      dateInputEle = (
+        <div className={`${classPrefix}-search-bar-select-wrapper`}>
+          <div className={`${classPrefix}-search-bar-date-input`}>
+            {SearchUtil.formatDates(this.state.date)}
+            <div className={`${classPrefix}-search-bar-select-close`} onClick={this.closeCalendar}>&times;</div>
+          </div>
+          <Calendar 
+            className={`${classPrefix}-search-bar-calendar-${this.state.calendarClass}`} 
+            selectRange={true} returnValue="range" 
+            onChange={this.handleInputFromCalendar}
+            minDate={new Date()}
+          />
+        </div>
+      );
+    } else {
+      const unselectedOptionStyle = { display: "none" };
+      const selectedSelectStyle = { display: "none" };
+      dateInputEle = (
+        <div className={`${classPrefix}-search-bar-select-wrapper`}>
+          { 
+            classPrefix === "splash" 
+            ? null
+            : <div className={`${classPrefix}-search-bar-date-input`} style={ this.state.date ? {} : unselectedOptionStyle }>
+              {this.getSelectText()}
+              <div className={`${classPrefix}-search-bar-select-clear`} onClick={this.clearInput("date")}>&times;</div> 
+            </div> 
+          }
+          <select className={`${classPrefix}-search-bar-select`} onChange={this.handleInput("date")} defaultValue="" style={ classPrefix === "index" && this.state.date ? selectedSelectStyle : {} }>
+            <option value="" disabled={true}>Any date</option>
+            <option value={today}>Today</option>
+            <option value={tomorrow}>Tomorrow</option>
+            <option value={thisWeekend}>This weekend</option>
+            <option value={thisWeek}>This week</option>
+            <option value={nextWeek}>Next week</option>
+            <option value={thisMonth}>This month</option>
+            <option value={nextMonth}>Next month</option>
+            <option>Pick a date...</option>
+          </select>
+          { 
+            classPrefix === "index" && this.state.date
+            ? null
+            : <div className={`${classPrefix}-search-bar-select-arrow`}/> 
+          }
+        </div>
+      );
+    }
 
     return (
-      <div className="search-bar-wrapper">
-        <form className="search-bar-form">
-          <div className="search-bar-upper-input-wrapper">
+      <div className={`${classPrefix}-search-bar-wrapper`}>
+        <form className={`${classPrefix}-search-bar-form`}>
+          <div className={`${classPrefix}-search-bar-content event-content`}>
+            <div className={`${classPrefix}-search-bar-input-info`}>
+              {classPrefix === "splash" ? "Looking for" : "" }
+            </div>
             <input 
               type="text" 
               value={this.state.event} 
-              className="search-bar-events-input"
-              placeholder="Search anything" 
+              className={`${classPrefix}-search-bar-events-input`}
+              placeholder={classPrefix === "splash" ? "Event" : "Search anything" }
               onChange={this.handleInput("event")} 
               onMouseDown={this.toggleDropdown}
             />
+            { 
+              classPrefix === "splash" && this.state.event
+              ? <div className={`${classPrefix}-search-bar-input-clear`} onClick={this.clearInput("event")}>&times;</div> 
+              : null
+            }
+            { inputUnderline }
             <AutocompleteDropdown 
               dropdownType="events" 
               dropdownShow={this.state.eventsDropdownShow} 
@@ -142,31 +217,45 @@ class SearchBar extends React.Component {
               autocomplete={this.autocomplete("event")}
             />
           </div>
-          <div className="search-bar-lower-input-wrapper">
-            <span>in</span>
+          <div className={`${classPrefix}-search-bar-content city-content`}>
+            <div className={`${classPrefix}-search-bar-input-info`}>
+              {classPrefix === "splash" ? "In" : "in" }
+            </div>
             <input 
               type="text" 
               value={this.state.city} 
-              className="search-bar-cities-input" 
+              className={`${classPrefix}-search-bar-cities-input`}
               placeholder="Location" 
               onChange={this.handleInput("city")}  
               onMouseDown={this.toggleDropdown}
             />
+            { 
+              classPrefix === "splash" && this.state.city
+              ? <div className={`${classPrefix}-search-bar-input-clear`} onClick={this.clearInput("city")}>&times;</div> 
+              : null
+            }
+            { inputUnderline }
             <AutocompleteDropdown 
               dropdownType="cities" 
               dropdownShow={this.state.citiesDropdownShow} 
               cities={this.props.citiesAuto} 
               autocomplete={this.autocomplete("city")}
             />
-            <button onClick={this.handleSubmit}>Search</button>
           </div>
-          {/* <div className="search-bar-select-date-wrapper">
+          <div className={`${classPrefix}-search-bar-content date-content`}>
+            <div className={`${classPrefix}-search-bar-input-info`}>
+              {classPrefix === "splash" ? "On" : "" }
+            </div>
             {dateInputEle}
-          </div> */}
+            { inputUnderline }
+          </div>
+          <div className={`${classPrefix}-search-bar-submit`}>
+            <button onClick={this.handleSubmit}>{buttonText}</button>
+          </div>
         </form>
       </div>
     )
   }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);
