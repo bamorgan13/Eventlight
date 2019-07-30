@@ -8,13 +8,13 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const configureStore = (preloadedState = {}) => {
   if (process.env.NODE_ENV === 'production') {
-    createStore(
+    return createStore(
       rootReducer,
       preloadedState,
       composeEnhancers(applyMiddleware(thunk))
     )
   } else {
-      createStore(
+      return createStore(
         rootReducer,
         preloadedState,
         composeEnhancers(applyMiddleware(thunk, logger))
