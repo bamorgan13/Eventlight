@@ -5,7 +5,8 @@ import Parser from 'html-react-parser'
 
 class EventShow extends React.Component {
 	componentWillMount() {
-		this.props.fetchEvent(this.props.eventId)
+    this.props.fetchEvent(this.props.eventId)
+    document.documentElement.scrollTop = 0;
 	}
 
 	render() {

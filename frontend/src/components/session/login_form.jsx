@@ -19,6 +19,7 @@ class LoginForm extends React.Component {
     this.email_ref = React.createRef()
     this.password_ref = React.createRef()
 
+    this.demoLogin = this.demoLogin.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -36,6 +37,15 @@ class LoginForm extends React.Component {
       this.setState({
         [field]: e.currentTarget.value
       })
+  }
+
+  demoLogin(event) {
+    event.preventDefault();
+    const demoUser = {
+      email: "demouser@gmail.com",
+      password: "password"
+    }
+    this.props.login(demoUser)
   }
 
   // Handle form submission
@@ -165,6 +175,10 @@ class LoginForm extends React.Component {
             className="login__form__submit"
           />
         </form>
+        <div className="demo-login-container">
+          <p className="demo-login-p">or</p>
+          <button className="demo-login-button" onClick={this.demoLogin}>Demo Login</button>
+        </div>
       </div>
     )
   }
