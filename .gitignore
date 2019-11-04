@@ -9,3 +9,4 @@ categories.csv
 us_cities.csv
 seed_events.js
 notes.txt
+.env
