@@ -22,13 +22,6 @@ class LoginForm extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	// Once the user has been authenticated, redirect to the home page
-	componentDidUpdate(prevProps) {
-		if (this.props.currentUser === true) {
-			this.props.history.push('/');
-		}
-	}
-
 	// Handle field updates (called in the render method)
 	update(field) {
 		return e =>

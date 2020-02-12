@@ -14,7 +14,6 @@ class AutocompleteDropdown extends React.Component {
 		const listItems = this.props[dropdownType].map(val => {
 			if (dropdownType === 'events') {
 				return (
-					// <li key={val._id} className="autocomplete-dropdown-list-item" onClick={this.runAutocomplete(val.title)}>
 					<li key={val._id} className="autocomplete-dropdown-list-item">
 						<Link to={`/events/${val._id}`}>
 							<div className="autocomplete-dropdown-list-item-img-container">

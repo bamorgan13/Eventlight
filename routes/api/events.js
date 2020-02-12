@@ -11,6 +11,8 @@ const Event = require('../../models/Event');
 const validateEventInput = require('../../validation/events');
 
 router.get('/', (req, res) => {
+	// Example queryFilters structure:
+	//
 	// const queryFilters = {
 	// 	type: 'Festival',
 	// 	category: 'Food & Drink',

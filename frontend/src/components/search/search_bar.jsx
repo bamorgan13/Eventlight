@@ -74,7 +74,6 @@ class SearchBar extends React.Component {
 			end_date: this.state.date[1]
 		};
 		this.props.updateFilter(filterParams);
-		// this.forceUpdate();
 		this.props.history.push('./events');
 	}
 

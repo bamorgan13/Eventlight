@@ -15,12 +15,6 @@ class RegisterForm extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	componentDidUpdate(prevProps) {
-		if (this.props.signedIn === true) {
-			this.props.history.push('/');
-		}
-	}
-
 	update(field) {
 		return e =>
 			this.setState({
