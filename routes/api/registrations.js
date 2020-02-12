@@ -35,4 +35,15 @@ router.post('/', passport.authenticate('jwt', { session: false }), async (req, r
 	return res.json(payload);
 });
 
+router.delete('/:eventId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	const userId = req.user.id;
+	const eventId = req.params.eventId;
+	let payload = {};
+	let updatedEvent = await Event.findOneAndUpdate({ _id: eventId }, { $pull: { attendees: userId } }, { new: true });
+	let updatedUser = await User.findOneAndUpdate({ _id: userId }, { $pull: { registrations: eventId } }, { new: true });
+	payload.attendees = updatedEvent.attendees;
+	payload.registrations = updatedUser.registrations;
+	return res.json(payload);
+});
+
 module.exports = router;
