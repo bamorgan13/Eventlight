@@ -10,7 +10,7 @@ class EventShow extends React.Component {
 	}
 
 	render() {
-		const { event, isLiked, isRegistered, toggleLikeEvent, registerForEvent } = this.props;
+		const { event, isLiked, isRegistered, toggleLikeEvent, registerForEvent, deleteEventRegistration } = this.props;
 
 		if (!event) {
 			return <div>Event not found</div>;
@@ -61,9 +61,12 @@ class EventShow extends React.Component {
 							</button>
 						</div>
 						<div className="register-container fade-in delay-18">
-							<button className="register-button" onClick={() => registerForEvent(event._id)}>
+							<button
+								className="register-button"
+								onClick={() => (isRegistered ? deleteEventRegistration(event._id) : registerForEvent(event._id))}
+							>
 								<div className={isRegistered ? 'registered-indicator not-registered' : 'registered-indicator'}>
-									{isRegistered ? 'You are going to this event!' : 'Tickets'}
+									{isRegistered ? 'Unregister for this Event' : 'Purchase Tickets'}
 								</div>
 							</button>
 						</div>
