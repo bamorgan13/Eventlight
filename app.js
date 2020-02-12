@@ -42,5 +42,6 @@ app.use('/api/registrations', registrations);
 app.use('/api/categories', categories);
 app.use('/api/types', types);
 app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));

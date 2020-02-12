@@ -1,22 +1,16 @@
 import React from 'react';
-import splashImage from './bg-desktop-snowglobe.jpg';
 import SearchBar from '../search/search_bar_container';
 import LikeIndexContainer from '../likes/like_index_container';
 import EventIndexContainer from '../events/event_index_container';
 import '../../styles/splash.css';
-import axios from 'axios';
 
 class MainPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { splash: '#' };
 	}
-	componentWillMount() {
+	componentDidMount() {
 		this.props.fetchEvents();
-		// axios.get('/static/bg-desktop-snowglobe.jpg').then(img => {
-		// 	debugger;
-		// 	this.setState({ splash: img.config.url });
-		// });
 	}
 
 	componentWillUnmount() {

@@ -113,7 +113,6 @@
 
 .like-icon {
 	background-image: url('../assets/images/heart-outline.png');
-	background-image: url('/static/bg-desktop-snowglobe.jpg');
 	background-size: contain;
 	width: 16px;
 	height: 16px;
