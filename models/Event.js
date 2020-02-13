@@ -1,6 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-const image_storage_root = 'https://s3.amazonaws.com/whatever/'
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
 	title: {
@@ -66,10 +65,9 @@ const EventSchema = new Schema({
 		required: true
 	},
 	image_url: {
-		type: String,
-		get: img_name => `${image_storage_root}${img_name}`
+		type: String
 	},
-  attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }]
-})
+	attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+});
 
-module.exports = mongoose.model('Event', EventSchema)
+module.exports = mongoose.model('Event', EventSchema);

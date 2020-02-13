@@ -15,7 +15,13 @@ class EventForm extends React.Component {
 			activeForm: 'basicInfo'
 		};
 
+		const type = this.state.event.type;
+		this.state.event.type = typeof type === 'object' ? type._id : type;
+		const category = this.state.event.category;
+		this.state.event.category = typeof type === 'object' ? category._id : category;
+
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleFile = this.handleFile.bind(this);
 		this.handlePrevious = this.handlePrevious.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleLocationChange = this.handleLocationChange.bind(this);
@@ -50,6 +56,17 @@ class EventForm extends React.Component {
 		return e => this.setState(merge({}, this.state, { event: { location: { city: { [field]: e.target.value } } } }));
 	}
 
+	handleFile(e) {
+		const file = e.currentTarget.files[0];
+		const fileReader = new FileReader();
+		fileReader.onloadend = () => {
+			this.setState({ imageFile: file, imageUrl: fileReader.result });
+		};
+		if (file) {
+			fileReader.readAsDataURL(file);
+		}
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 
@@ -58,7 +75,15 @@ class EventForm extends React.Component {
 		} else if (this.state.activeForm === 'details') {
 			this.setState({ activeForm: 'tickets' });
 		} else {
-			this.props.submit(this.state.event).then(() => this.props.history.push('/myevents'));
+			const formData = new FormData();
+			Object.keys(this.state.event).forEach(key => formData.append(key, this.state.event[key]));
+			formData.append('location[location_address]', this.state.event.location.location_address);
+			formData.append('location[city][city]', this.state.event.location.city.city);
+			formData.append('location[city][state]', this.state.event.location.city.state);
+			if (this.state.imageFile) {
+				formData.append('file', this.state.imageFile);
+			}
+			this.props.submit(formData).then(() => this.props.history.push('/myevents'));
 		}
 	}
 
@@ -252,7 +277,7 @@ class EventForm extends React.Component {
 									disableClock={true}
 									amPm={true}
 									onChange={this.handleThirdPartyChange('start_date')}
-									value={event.start_date}
+									value={event.start_date && new Date(event.start_date || null)}
 								/>
 							</div>
 							<div className="event-form__date__inputs__end-date">
@@ -266,7 +291,7 @@ class EventForm extends React.Component {
 									disableClock={true}
 									amPm={true}
 									onChange={this.handleThirdPartyChange('end_date')}
-									value={event.end_date}
+									value={event.end_date && new Date(event.end_date || null)}
 								/>
 							</div>
 						</div>
@@ -274,7 +299,14 @@ class EventForm extends React.Component {
 					<input className="event-form__submit-button" type="submit" value="Save" />
 				</form>
 			);
-
+			const preview =
+				this.state.imageUrl || this.state.event.image_url ? (
+					<img
+						className="server-icon-preview"
+						src={this.state.imageUrl || this.state.event.image_url}
+						alt="server_icon_image_preview"
+					/>
+				) : null;
 			const detailsForm = (
 				<form className="event-form__details-form" onSubmit={this.handleSubmit}>
 					<div className="event-form__details">
@@ -287,14 +319,8 @@ class EventForm extends React.Component {
 								</p>
 							</div>
 							<div className="event-form__details__event-image__inputs">
-								<label className="event-form__details__event-image__inputs__label">Image URL</label>
-								<input
-									className="event-form__details__inputs__event-image__input"
-									type="text"
-									placeholder="URL where image is hosted."
-									value={event.image_url}
-									onChange={this.handleChange('image_url')}
-								/>
+								{preview}
+								<input type="file" onChange={this.handleFile} />
 							</div>
 						</div>
 						<div className="event-form__details__description">

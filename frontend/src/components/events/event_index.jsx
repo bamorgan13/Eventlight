@@ -30,11 +30,11 @@ class EventIndex extends React.Component {
 			eventIndexItems = this.props.events.map(
 				event =>
 					this.props.useDateComponent ? (
-						<EventIndexItemWithDate key={event._id} event={event} />
+						<EventIndexItemWithDate key={`eventDate:${event._id}`} event={event} />
 					) : this.props.useSquareComponent ? (
-						<LikeInSquareWithDate key={event._id} event={event} />
+						<LikeInSquareWithDate key={`eventLike:${event._id}`} event={event} />
 					) : (
-						<EventIndexItem key={event._id} event={event} />
+						<EventIndexItem key={`event:${event._id}`} event={event} />
 					)
 			);
 		} else {
