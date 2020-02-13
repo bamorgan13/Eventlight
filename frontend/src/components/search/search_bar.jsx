@@ -37,7 +37,7 @@ class SearchBar extends React.Component {
 
 	componentDidMount() {
 		document.addEventListener('mousedown', this.toggleDropdown);
-		setTimeout(() => this.props.fetchEventsAuto({ event: '' }), 3000);
+		setTimeout(() => this.props.fetchEventsAuto({ events: '' }), 3000);
 	}
 
 	fetchEventValues() {
