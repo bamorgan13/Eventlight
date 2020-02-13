@@ -12,8 +12,8 @@ export const getRegistrations = () => {
 	return axios.get('/api/registrations');
 };
 
-export const getEvent = _id => {
-	return axios.get('/api/events/:id', { params: { _id } });
+export const getEvent = id => {
+	return axios.get(`/api/events/${id}`);
 };
 
 export const fetchEventsAutocomplete = filter => {
@@ -25,5 +25,5 @@ export const postEvent = event => {
 };
 
 export const patchEvent = event => {
-	return axios.patch('/api/events/:id', event, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+	return axios.patch(`/api/events/${event.get('_id')}`, event);
 };

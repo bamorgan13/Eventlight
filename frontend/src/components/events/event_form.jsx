@@ -19,8 +19,6 @@ class EventForm extends React.Component {
 		this.state.event.type = typeof type === 'object' ? type._id : type;
 		const category = this.state.event.category;
 		this.state.event.category = typeof type === 'object' ? category._id : category;
-		const creator = this.state.event.creator;
-		this.state.event.creator = typeof type === 'object' ? creator._id : creator;
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleFile = this.handleFile.bind(this);

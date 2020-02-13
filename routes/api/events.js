@@ -100,7 +100,7 @@ router.get('/auto', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-	const eventId = req.query._id;
+	const eventId = req.params.id;
 	Event.findById(eventId)
 		.populate({ path: 'location.city' })
 		.then(event => res.json(event))
@@ -198,7 +198,8 @@ router.patch('/:id', upload.single('file'), async (req, res) => {
 			ContentType: file.mimetype,
 			ACL: 'public-read'
 		};
-
+		delete req.body.attendees;
+		delete req.body.creator;
 		s3bucket.upload(params, function(err, data) {
 			if (err) {
 				res.status(500).json({ error: true, Message: err });
@@ -215,7 +216,7 @@ router.patch('/:id', upload.single('file'), async (req, res) => {
 			}
 		});
 	} else {
-		Event.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true })
+		Event.findOneAndUpdate({ _id: req.params._id }, { $set: req.body }, { new: true })
 			.then(event => {
 				res.json({ success: true, event });
 			})
