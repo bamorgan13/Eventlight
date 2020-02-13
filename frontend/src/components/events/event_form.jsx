@@ -279,7 +279,7 @@ class EventForm extends React.Component {
 									disableClock={true}
 									amPm={true}
 									onChange={this.handleThirdPartyChange('start_date')}
-									value={event.start_date}
+									value={event.start_date && new Date(event.start_date || null)}
 								/>
 							</div>
 							<div className="event-form__date__inputs__end-date">
@@ -293,7 +293,7 @@ class EventForm extends React.Component {
 									disableClock={true}
 									amPm={true}
 									onChange={this.handleThirdPartyChange('end_date')}
-									value={event.end_date}
+									value={event.end_date && new Date(event.end_date || null)}
 								/>
 							</div>
 						</div>

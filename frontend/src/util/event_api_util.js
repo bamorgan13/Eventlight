@@ -25,6 +25,5 @@ export const postEvent = event => {
 };
 
 export const patchEvent = event => {
-	debugger;
 	return axios.patch('/api/events/:id', event, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
 };
