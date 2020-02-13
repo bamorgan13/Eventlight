@@ -41,7 +41,7 @@ class SearchBar extends React.Component {
 	}
 
 	fetchEventValues() {
-		this.props.fetchEventsAuto({ event: this.state.event });
+		this.props.fetchEventsAuto({ events: this.state.event });
 	}
 
 	fetchCityValues() {

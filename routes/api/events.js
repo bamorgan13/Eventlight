@@ -81,7 +81,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/auto', (req, res) => {
-	let queryRegex = new RegExp(req.query.event, 'i');
+	let queryRegex = new RegExp(req.query.events, 'i');
 	Event.aggregate([
 		{ $match: { title: queryRegex } },
 		{ $limit: 10 },
