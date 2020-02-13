@@ -180,6 +180,9 @@ router.patch('/:id', upload.single('file'), async (req, res) => {
 		delete req.body.location.city;
 	}
 
+	delete req.body.attendees;
+	delete req.body.creator;
+
 	const file = req.file;
 
 	if (file) {
@@ -198,15 +201,14 @@ router.patch('/:id', upload.single('file'), async (req, res) => {
 			ContentType: file.mimetype,
 			ACL: 'public-read'
 		};
-		delete req.body.attendees;
-		delete req.body.creator;
+
 		s3bucket.upload(params, function(err, data) {
 			if (err) {
 				res.status(500).json({ error: true, Message: err });
 			} else {
 				delete req.body.file;
 				req.body.image_url = s3FileURL + file.originalname;
-				Event.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true })
+				Event.findOneAndUpdate({ _id: req.body.id }, { $set: req.body }, { new: true })
 					.then(event => {
 						res.json({ success: true, event });
 					})
@@ -216,7 +218,7 @@ router.patch('/:id', upload.single('file'), async (req, res) => {
 			}
 		});
 	} else {
-		Event.findOneAndUpdate({ _id: req.params._id }, { $set: req.body }, { new: true })
+		Event.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true })
 			.then(event => {
 				res.json({ success: true, event });
 			})
